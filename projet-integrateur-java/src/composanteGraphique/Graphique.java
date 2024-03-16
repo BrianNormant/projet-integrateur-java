@@ -14,5 +14,4 @@ public class Graphique extends JPanel{
 		g2d.translate(0, getHeight());
         g2d.scale(1, -1);
 	}
-
 }
