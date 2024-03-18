@@ -1,41 +1,42 @@
 package interfaces;
 
 import java.awt.EventQueue;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class Station extends JFrame {
+public class Station extends JPanel {
 
 	private JPanel contentPane;
+	private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
+	
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+		PCS.addPropertyChangeListener(listener);
+	}
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Station frame = new Station();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+	
+	public Station(int x, int y, int tailleX, int tailleY) {
+		setBounds(100, 100, 450, 300);
+		setLayout(null);
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				back();
 			}
 		});
+		btnBack.setBounds(10, 11, 89, 23);
+		add(btnBack);
+		requestFocusInWindow();
 	}
-
-	/**
-	 * Create the frame.
-	 */
-	public Station() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		setContentPane(contentPane);
+	
+	public void back() {
+		PCS.firePropertyChange("back", 0, -1);
 	}
-
 }
