@@ -11,7 +11,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Reservation extends JPanel {
+public class ReservationInterface extends JPanel {
 
 	private JPanel contentPane;
 	private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
@@ -21,7 +21,7 @@ public class Reservation extends JPanel {
 	}
 
 	
-	public Reservation(int x, int y, int tailleX, int tailleY) {
+	public ReservationInterface(int x, int y, int tailleX, int tailleY) {
 		setBounds(100, 100, 898, 582);
 		setLayout(null);
 		

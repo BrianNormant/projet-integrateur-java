@@ -11,7 +11,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Station extends JPanel {
+public class StationInterface extends JPanel {
 
 	private JPanel contentPane;
 	private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
@@ -21,7 +21,7 @@ public class Station extends JPanel {
 	}
 
 	
-	public Station(int x, int y, int tailleX, int tailleY) {
+	public StationInterface(int x, int y, int tailleX, int tailleY) {
 		setBounds(100, 100, 450, 300);
 		setLayout(null);
 		

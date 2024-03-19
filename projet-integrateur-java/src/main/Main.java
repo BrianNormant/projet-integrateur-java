@@ -3,16 +3,21 @@ package main;
 import java.awt.EventQueue;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import interfaces.Carte;
-import interfaces.Login;
-import interfaces.Reservation;
-import interfaces.Station;
-import interfaces.Train;
+import composanteGraphique.Graphique;
+import composanteGraphique.Ligne;
+import composanteGraphique.Point;
+import gestionInformation.ReseauTMP;
+import interfaces.CarteInterface;
+import interfaces.LoginInterface;
+import interfaces.ReservationInterface;
+import interfaces.StationInterface;
+import interfaces.TrainInterface;
 
 public class Main extends JFrame {
 
@@ -21,11 +26,12 @@ public class Main extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private Carte carte = new Carte(getX(),getY(),getWidth(),getHeight());
-	private Login login = new Login(getX(),getY(),getWidth(),getHeight());
-	private Reservation reservation = new Reservation (getX(),getY(),getWidth(),getHeight());
-	private Station station = new Station(getX(),getY(),getWidth(),getHeight());
-	private Train train = new Train(getX(),getY(),getWidth(),getHeight());
+	private CarteInterface carte = new CarteInterface(getX(),getY(),getWidth(),getHeight());
+	private LoginInterface login = new LoginInterface(getX(),getY(),getWidth(),getHeight());
+	private ReservationInterface reservation = new ReservationInterface (getX(),getY(),getWidth(),getHeight());
+	private StationInterface station = new StationInterface(getX(),getY(),getWidth(),getHeight());
+	private TrainInterface train = new TrainInterface(getX(),getY(),getWidth(),getHeight());
+
 
 	/**
 	 * Launch the application.
@@ -48,6 +54,7 @@ public class Main extends JFrame {
 	 * Create the frame.
 	 */
 	public Main() {
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 996, 623);
 		contentPane = new JPanel();

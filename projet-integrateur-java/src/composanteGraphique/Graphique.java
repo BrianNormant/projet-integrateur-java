@@ -17,8 +17,10 @@ public class Graphique extends JPanel{
 	private ArrayList<Point> points = new ArrayList();
 	private ArrayList<Ligne> lignes = new ArrayList();
 	
-	public Graphique (double largeur) {
+	public Graphique (double largeur, ArrayList<Point> points, ArrayList<Ligne> lignes) {
 		this.largeur = largeur;
+		this.points = points;
+		this.lignes = lignes;
 	}
 	
 	@Override
@@ -30,16 +32,23 @@ public class Graphique extends JPanel{
 		g2d.translate(0, getHeight());
 		mat.scale(ppm, -ppm);
 		
-		for (int i = 0; i< points.size(); i++) {
-			points.get(i).dessiner(g2d, ppm);
-		}
-		
 		for (int i = 0; i< lignes.size(); i++) {
 			lignes.get(i).dessiner(g2d, ppm);
+		}
+		
+		for (int i = 0; i< points.size(); i++) {
+			points.get(i).dessiner(g2d, ppm);
 		}
 		
 		Rectangle2D.Double test = new Rectangle2D.Double(0, 0, 100, 100);
 		g2d.setColor(Color.RED);
 		g2d.fill(mat.createTransformedShape(test));
+	}
+	
+	public void setPoints(ArrayList<Point> points) {
+		this.points = points;
+	}
+	public void setLignes(ArrayList<Ligne> lignes) {
+		this.lignes = lignes;
 	}
 }

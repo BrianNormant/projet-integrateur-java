@@ -3,6 +3,7 @@ package interfaces;
 import java.awt.EventQueue;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -11,8 +12,11 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import composanteGraphique.Graphique;
+import composanteGraphique.Ligne;
+import composanteGraphique.Point;
+import gestionInformation.ReseauTMP;
 
-public class Carte extends JPanel {
+public class CarteInterface extends JPanel {
 
 	private JPanel contentPane;
 	private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
@@ -23,7 +27,7 @@ public class Carte extends JPanel {
 	}
 
 	
-	public Carte(int x, int y, int tailleX, int tailleY) {
+	public CarteInterface(int x, int y, int tailleX, int tailleY) {
 		
 		setBounds(100, 100, 1000, 511);
 		setLayout(null);
@@ -64,7 +68,9 @@ public class Carte extends JPanel {
 		btnLogout.setBounds(406, 477, 122, 23);
 		add(btnLogout);
 		
-		graphique = new Graphique(5972);
+		ArrayList<Point> listePoints= ReseauTMP.ajouterStation();
+		ArrayList<Ligne> listeLignes = ReseauTMP.ajouterRails(listePoints);
+		graphique = new Graphique(5972, listePoints, listeLignes);
 		graphique.setBounds(10, 11, 980, 455);
 		add(graphique);
 		requestFocusInWindow();
