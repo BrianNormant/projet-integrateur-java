@@ -10,11 +10,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import composanteGraphique.Graphique;
 
 public class Carte extends JPanel {
 
 	private JPanel contentPane;
 	private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
+	private Graphique graphique;
 	
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		PCS.addPropertyChangeListener(listener);
@@ -32,7 +34,7 @@ public class Carte extends JPanel {
 				reservation();
 			}
 		});
-		btnReservation.setBounds(418, 87, 122, 23);
+		btnReservation.setBounds(10, 477, 122, 23);
 		add(btnReservation);
 		
 		JButton btnStation = new JButton("Station");
@@ -41,7 +43,7 @@ public class Carte extends JPanel {
 				station();
 			}
 		});
-		btnStation.setBounds(418, 135, 122, 23);
+		btnStation.setBounds(142, 477, 122, 23);
 		add(btnStation);
 		
 		JButton btnTrain = new JButton("Train");
@@ -50,7 +52,7 @@ public class Carte extends JPanel {
 				train();
 			}
 		});
-		btnTrain.setBounds(418, 179, 122, 23);
+		btnTrain.setBounds(274, 477, 122, 23);
 		add(btnTrain);
 		
 		JButton btnLogout = new JButton("Logout");
@@ -59,8 +61,12 @@ public class Carte extends JPanel {
 				logout();
 			}
 		});
-		btnLogout.setBounds(418, 227, 122, 23);
+		btnLogout.setBounds(406, 477, 122, 23);
 		add(btnLogout);
+		
+		graphique = new Graphique(5972);
+		graphique.setBounds(10, 11, 980, 455);
+		add(graphique);
 		requestFocusInWindow();
 		
 		

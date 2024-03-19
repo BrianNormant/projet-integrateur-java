@@ -1,17 +1,45 @@
 package composanteGraphique;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
 public class Graphique extends JPanel{
 	
+	private double ppm;
+	private double largeur;
+	private ArrayList<Point> points = new ArrayList();
+	private ArrayList<Ligne> lignes = new ArrayList();
+	
+	public Graphique (double largeur) {
+		this.largeur = largeur;
+	}
+	
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
+		AffineTransform mat = new AffineTransform();
+		ppm = getWidth() / largeur;
 		g2d.translate(0, getHeight());
-        g2d.scale(1, -1);
+		mat.scale(ppm, -ppm);
+		
+		for (int i = 0; i< points.size(); i++) {
+			points.get(i).dessiner(g2d, ppm);
+		}
+		
+		for (int i = 0; i< lignes.size(); i++) {
+			lignes.get(i).dessiner(g2d, ppm);
+		}
+		
+		Rectangle2D.Double test = new Rectangle2D.Double(0, 0, 100, 100);
+		g2d.setColor(Color.RED);
+		g2d.fill(mat.createTransformedShape(test));
 	}
 }
