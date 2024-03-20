@@ -51,4 +51,10 @@ public class Graphique extends JPanel{
 	public void setLignes(ArrayList<Ligne> lignes) {
 		this.lignes = lignes;
 	}
+	public ArrayList<Point> getPoints() {
+		return points;
+	}
+	public double getPpm() {
+		return ppm;
+	}
 }

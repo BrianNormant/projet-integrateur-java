@@ -15,6 +15,8 @@ import composanteGraphique.Graphique;
 import composanteGraphique.Ligne;
 import composanteGraphique.Point;
 import gestionInformation.ReseauTMP;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class CarteInterface extends JPanel {
 
@@ -71,6 +73,20 @@ public class CarteInterface extends JPanel {
 		ArrayList<Point> listePoints= ReseauTMP.ajouterStation();
 		ArrayList<Ligne> listeLignes = ReseauTMP.ajouterRails(listePoints);
 		graphique = new Graphique(5972, listePoints, listeLignes);
+		graphique.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.out.println("postion X:"+e.getX()+" position y:"+ e.getY());
+				graphique.getPpm();
+				for(int i =0;i<graphique.getPoints().size();i++) {
+					
+					if(graphique.getPoints().get(i).contains(e.getX() / graphique.getPpm(), (graphique.getHeight() - e.getY()) / graphique.getPpm())) {
+						station();
+						break;
+					}
+				}
+			}
+		});
 		graphique.setBounds(10, 11, 980, 455);
 		add(graphique);
 		requestFocusInWindow();

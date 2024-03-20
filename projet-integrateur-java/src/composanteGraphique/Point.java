@@ -11,6 +11,8 @@ public class Point {
 	private int y;
 	private String nom;
 	private double rayon = 50;
+	private Ellipse2D cercle;
+	private double ppm;
 	
 	public Point (String nom, int x, int y) {
 		this.nom = nom;
@@ -19,10 +21,11 @@ public class Point {
 	}
 	
 	public void dessiner(Graphics2D g2d, double ppm) {
+		this.ppm=ppm;
 		Graphics2D g2dPrive = (Graphics2D) g2d.create();
 		AffineTransform mat = new AffineTransform();
 		mat.scale(ppm, -ppm);
-		Ellipse2D cercle = new Ellipse2D.Double(x - (rayon/2), y - (rayon/2), rayon, rayon);
+		cercle = new Ellipse2D.Double(x - (rayon/2), y - (rayon/2), rayon, rayon);
 		g2dPrive.setColor(Color.black);
 		g2dPrive.draw(mat.createTransformedShape(cercle));
 		g2dPrive.setColor(Color.red);
@@ -39,5 +42,9 @@ public class Point {
 
 	public int getY() {
 		return y;
+	}
+	public boolean contains(double posX, double posY) {
+		return cercle.contains(posX,posY);
+		
 	}
 }
