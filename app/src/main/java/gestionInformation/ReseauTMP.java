@@ -1,8 +1,13 @@
 package gestionInformation;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 
+import api.Endpoint;
+import api.Users;
 import composanteGraphique.Ligne;
 import composanteGraphique.Point;
 
@@ -12,35 +17,30 @@ public class ReseauTMP {
 		
 	}
 	
-	public static ArrayList<Point> ajouterStation(){
-		ArrayList<Point> points = new ArrayList();
-		for (int i = 0; i<10; i++) {
-			Random random = new Random();
-			int x = random.nextInt(5973);
-			int y = random.nextInt(2026);
-			Point point = new Point((String)"Ville"+i, x, y);
-			points.add(point);
-		}
-		return points;
+	public static ArrayList<Point> ajouterStation() {
+		Optional<List<Station>> optional = Users.requestStations();
+
+		if (!optional.isPresent()) {return new ArrayList<Point>();}
+
+		return (ArrayList<Point>) optional
+			.get()
+			.stream()
+			.map(s -> s.getPoint())
+			.collect(Collectors.toList());
 	}
 	
 	public static ArrayList<Ligne> ajouterRails(ArrayList<Point> listePoint){
-		ArrayList<Ligne> lignes = new ArrayList();
-		boolean exit = false;
-		for (int i = 0; i<10; i++) {
-			Random random = new Random();
-			Point point1 = listePoint.get(random.nextInt(10));
-			Point point2 = listePoint.get(random.nextInt(10));
-			while(!exit) {
-				if(point2.getX() == point1.getX() && point2.getY() == point1.getY()) {
-					point2 = listePoint.get(random.nextInt(10));
-				}else {
-					exit = true;
-				}
-			}
-			Ligne ligne = new Ligne(point1, point2);
-			lignes.add(ligne);
-		}
-		return lignes;
+		Optional<List<Rail>> optional = Users.requestRails();
+
+		if (!optional.isPresent()) {return new ArrayList<Ligne>();}
+
+		optional.get()
+			.forEach(e -> System.out.println(e.getPoint1() + " " + e.getPoint2()) );
+
+		return (ArrayList<Ligne>) optional
+			.get()
+			.stream()
+			.map(r -> new Ligne(r.getPoint1(), r.getPoint2()))
+			.collect(Collectors.toList());
 	}
 }

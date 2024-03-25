@@ -15,11 +15,11 @@ import org.json.JSONObject;
 import gestionInformation.Station;
 import gestionInformation.Rail;
 
-public class Users implements Endpoint {
+public final class Users implements Endpoint {
 
 	private static final String URL = "https://equipe500.tch099.ovh/projet6/api/";
 
-	public Optional<List<String>> requestUsers() {
+	public static Optional<List<String>> requestUsers() {
 		HttpRequest request = null;
 		ArrayList<String> users = new ArrayList<>();
 		try {
@@ -44,7 +44,7 @@ public class Users implements Endpoint {
 		return Optional.of(users);
 	}
 
-	public Optional<List<Station>> requestStations() {
+	public static Optional<List<Station>> requestStations() {
 		HttpRequest request = null;
 		ArrayList<Station> stations = new ArrayList<>();
 		try {
@@ -76,7 +76,7 @@ public class Users implements Endpoint {
 		return Optional.of(stations);
 	}
 
-	public Optional<List<Rail>> requestRails() {
+	public static Optional<List<Rail>> requestRails() {
 		HttpRequest request = null;
 		ArrayList<Rail> rails = new ArrayList<>();
 		try {

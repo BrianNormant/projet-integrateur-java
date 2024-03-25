@@ -1,5 +1,7 @@
 package gestionInformation;
 
+import composanteGraphique.Point;
+
 public class Rail {
 	private final Station con1, con2;
 
@@ -16,5 +18,13 @@ public class Rail {
 				   this.con1 == rail.con2 && this.con2 == rail.con1;
 		}
 		return false;
+	}
+
+	public Point getPoint1() {
+		return con1.getPoint();
+	}
+
+	public Point getPoint2() {
+		return con2.getPoint();
 	}
 }

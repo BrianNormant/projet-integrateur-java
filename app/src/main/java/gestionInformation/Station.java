@@ -2,21 +2,23 @@ package gestionInformation;
 
 import java.util.HashMap;
 
+import composanteGraphique.Point;
+
 public class Station {
 
 	private static final HashMap<Integer, Station> stations = new HashMap<>();
 
 	private final int id;
-	private final String nom;
+	private final String name;
 	private final int x;
 	private final int y;
 	
 	private Station(int id, String nom, int x, int y) {
 		this.id = id;
-		this.nom = nom;
+		this.name = nom;
 		this.x = x;
 		this.y = y;
-
+		stations.put(id, this);
 	}
 
 	public static Station createOrGetStation(int id, String nom, int x, int y) {
@@ -28,16 +30,18 @@ public class Station {
 	public static Station createOrGetStation(int id) {
 		if (stations.containsKey(id))
 			return stations.get(id);
-		else
+		else {
+			System.exit(1);
 			return new Station(id, null, 0, 0);
+		}
 	}
 
 	public int getId() {
 		return id;
 	}
 
-	public String getNom() {
-		return nom;
+	public String getName() {
+		return name;
 	}
 
 	public int getX() {
@@ -48,4 +52,7 @@ public class Station {
 		return y;
 	}
 
+	public Point getPoint() {
+		return new Point(name, x, y);
+	}
 }
