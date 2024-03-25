@@ -72,7 +72,7 @@ public class CarteInterface extends JPanel {
 		btnLogout.setBounds(406, 477, 122, 23);
 		add(btnLogout);
 		
-		ArrayList<Point> listePoints= ReseauTMP.ajouterStation();
+		ArrayList<Point> listePoints = ReseauTMP.ajouterStation();
 		ArrayList<Ligne> listeLignes = ReseauTMP.ajouterRails(listePoints);
 		graphique = new Graphique(5972, listePoints, listeLignes);
 		graphique.addMouseListener(new MouseAdapter() {

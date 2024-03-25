@@ -34,9 +34,6 @@ public class ReseauTMP {
 
 		if (!optional.isPresent()) {return new ArrayList<Ligne>();}
 
-		optional.get()
-			.forEach(e -> System.out.println(e.getPoint1() + " " + e.getPoint2()) );
-
 		return (ArrayList<Ligne>) optional
 			.get()
 			.stream()
