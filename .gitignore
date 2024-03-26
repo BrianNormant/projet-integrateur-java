@@ -1,2 +1,4 @@
 app/bin
 app/build
+.project
+app/.classpath
