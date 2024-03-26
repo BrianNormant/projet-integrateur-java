@@ -60,6 +60,7 @@ public class Main extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
+		
 		setContentPane(login);
 		
 		login.addPropertyChangeListener(new PropertyChangeListener(){
