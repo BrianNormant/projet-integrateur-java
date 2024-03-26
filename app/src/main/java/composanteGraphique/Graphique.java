@@ -14,8 +14,8 @@ public class Graphique extends JPanel{
 	
 	private double ppm;
 	private double largeur;
-	private ArrayList<Point> points = new ArrayList();
-	private ArrayList<Ligne> lignes = new ArrayList();
+	private ArrayList<Point> points = new ArrayList<>();
+	private ArrayList<Ligne> lignes = new ArrayList<>();
 	
 	public Graphique (double largeur, ArrayList<Point> points, ArrayList<Ligne> lignes) {
 		this.largeur = largeur;
@@ -31,16 +31,16 @@ public class Graphique extends JPanel{
 		ppm = getWidth() / largeur;
 		g2d.translate(0, getHeight());
 		mat.scale(ppm, -ppm);
-		
-		for (int i = 0; i< lignes.size(); i++) {
-			lignes.get(i).dessiner(g2d, ppm);
-		}
-		
-		for (int i = 0; i< points.size(); i++) {
-			points.get(i).dessiner(g2d, ppm);
-		}
-		
-		Rectangle2D.Double test = new Rectangle2D.Double(0, 0, 100, 100);
+
+        for (Ligne ligne : lignes) {
+            ligne.dessiner(g2d, ppm);
+        }
+
+        for (Point point : points) {
+            point.dessiner(g2d, ppm);
+        }
+
+        Rectangle2D.Double test = new Rectangle2D.Double(0, 0, 100, 100);
 		g2d.setColor(Color.RED);
 		g2d.fill(mat.createTransformedShape(test));
 	}
