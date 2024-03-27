@@ -62,6 +62,33 @@ public final class Users implements Endpoint {
 		return null;
 	}
 
+	public static boolean requestCheckLogin(String user, String token) {
+		HttpRequest request = null;
+		try {
+			request = HttpRequest.newBuilder()
+				.header("Authorization", token)
+				.uri( new URI(URL + "check_login/" + user) )
+				.POST(HttpRequest.BodyPublishers.noBody())
+				.build();
+		} catch (URISyntaxException fail) {
+			System.err.println("Fatal, Invalid URL");
+			System.exit(1);
+		};
+		try {
+			var client = HttpClient.newHttpClient();
+			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+			return switch (response.statusCode()) {
+				case 200 -> true;
+				case 417,404,408 -> false;
+				default -> false;
+			};
+		} catch (Exception ignored) {
+			System.exit(1);
+		};
+		return false;
+	}
+
 	public static Optional<List<String>> requestUsers() {
 		HttpRequest request = null;
 		ArrayList<String> users = new ArrayList<>();
