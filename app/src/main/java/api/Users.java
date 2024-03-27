@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import gestionInformation.Station;
 import gestionInformation.Train;
 import gestionInformation.Rail;
+import gestionInformation.Reservation;
 
 public final class Users implements Endpoint {
 
@@ -209,6 +210,34 @@ public final class Users implements Endpoint {
 		};
 		return Optional.of(trains);
 	
+	}
+
+	public static boolean requestPutReservation(String token, Reservation reservation) {
+		HttpRequest request = null;
+		try {
+			request = HttpRequest.newBuilder()
+				.uri( new URI(URL + String.format("reservations/%d/%d?date=%s&period=%s",
+								reservation.origin.getId(), reservation.destination.getId(),
+								reservation.date, reservation.period.name)))
+				.header("Authorization", token)
+				.PUT(HttpRequest.BodyPublishers.noBody())
+				.build();
+		} catch (URISyntaxException fatal) {
+			System.err.println("Fatal, Invalid URL");
+			System.exit(1);
+		};
+		try {
+			var client = HttpClient.newHttpClient();
+			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+			return switch (response.statusCode()) {
+				case 200 -> true;
+				default -> false;
+			};
+		} catch (Exception e) {
+			System.exit(1);
+		}
+		System.exit(1);
+		return false;
 	}
 	
 }

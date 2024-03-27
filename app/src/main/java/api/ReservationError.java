@@ -1,0 +1,10 @@
+package api;
+
+public enum ReservationError {
+	
+	MISSING_FIELD,
+	UNKNOW_ORIGIN_OR_DESTINATION,
+	INVALID_TOKEN_OR_USER,
+	TOKEN_TIMEOUT,
+	YOUR_TOO_POOR
+}
