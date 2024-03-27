@@ -29,8 +29,8 @@ public class Graphique extends JPanel{
 		Graphics2D g2d = (Graphics2D) g;
 		AffineTransform mat = new AffineTransform();
 		ppm = getWidth() / largeur;
-		g2d.translate(0, getHeight());
-		mat.scale(ppm, -ppm);
+		g2d.translate(getWidth(), 0);
+		mat.scale(-ppm, ppm);
 
         for (Ligne ligne : lignes) {
             ligne.dessiner(g2d, ppm);

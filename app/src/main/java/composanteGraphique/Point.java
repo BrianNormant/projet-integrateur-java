@@ -24,7 +24,7 @@ public class Point {
 		this.ppm=ppm;
 		Graphics2D g2dPrive = (Graphics2D) g2d.create();
 		AffineTransform mat = new AffineTransform();
-		mat.scale(ppm, -ppm);
+		mat.scale(-ppm, ppm);
 		cercle = new Ellipse2D.Double(x - (rayon/2), y - (rayon/2), rayon, rayon);
 		g2dPrive.setColor(Color.black);
 		g2dPrive.draw(mat.createTransformedShape(cercle));

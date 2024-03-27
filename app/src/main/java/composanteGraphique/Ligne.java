@@ -25,7 +25,7 @@ public class Ligne {
 	public void dessiner(Graphics2D g2d, double ppm) {
 		Graphics2D g2dPrive = (Graphics2D) g2d.create();
 		AffineTransform mat = new AffineTransform();
-		mat.scale(ppm, -ppm);
+		mat.scale(-ppm, ppm);
 		Line2D.Double ligne = new Line2D.Double(x1, y1, x2, y2);
 		g2dPrive.setColor(Color.black);
 		g2dPrive.setStroke(new BasicStroke(50));

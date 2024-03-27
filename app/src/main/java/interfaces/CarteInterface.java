@@ -31,7 +31,7 @@ public class CarteInterface extends JPanel {
 	
 	public CarteInterface(int x, int y, int tailleX, int tailleY) {
 		
-		setBounds(100, 100, 1000, 511);
+		setBounds(100, 100, 1000, 600);
 		setLayout(null);
 		
 		JButton btnReservation = new JButton("Reservation");
@@ -78,18 +78,17 @@ public class CarteInterface extends JPanel {
 		graphique.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("postion X:"+e.getX()+" position y:"+ e.getY());
+				System.out.println("postion X:"+(graphique.getWidth()-e.getX())+" position y:"+ e.getY());
 				graphique.getPpm();
 				for(int i =0;i<graphique.getPoints().size();i++) {
-					
-					if(graphique.getPoints().get(i).contains(e.getX() / graphique.getPpm(), (graphique.getHeight() - e.getY()) / graphique.getPpm())) {
+					if(graphique.getPoints().get(i).contains((graphique.getWidth() - e.getX()) / graphique.getPpm(), (e.getY()) / graphique.getPpm())) {
 						station();
 						break;
 					}
 				}
 			}
 		});
-		graphique.setBounds(10, 11, 980, 455);
+		graphique.setBounds(10, 11, 980, 318);
 		add(graphique);
 		requestFocusInWindow();
 		
