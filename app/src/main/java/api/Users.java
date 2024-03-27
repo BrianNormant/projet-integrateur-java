@@ -8,6 +8,7 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import io.vavr.control.Either;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,6 +19,44 @@ import gestionInformation.Rail;
 public final class Users implements Endpoint {
 
 	private static final String URL = "https://equipe500.tch099.ovh/projet6/api/";
+
+
+	/*
+	 *
+	 */
+	public static Either<String, LoginError> requestLogin(String user, String password) {
+		HttpRequest request = null;
+		try {
+			request = HttpRequest.newBuilder()
+				.uri( new URI(URL + "login/" + user) )
+				.PUT(HttpRequest.BodyPublishers.ofString(password))
+				.build();
+		} catch (URISyntaxException fatal) {
+			System.err.println("Fatal, Invalid URL");
+			System.exit(1);
+		};
+		try {
+			var client = HttpClient.newHttpClient();
+			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+			switch (response.statusCode()) {
+				case 200 -> {
+					var json = new JSONObject(response.body());
+					return Either.left(json.get("token").toString());
+				}
+				case 401 -> {
+					return Either.right(LoginError.NOT_AUTHORIZED);
+				}
+				case 404 -> {
+					return Either.right(LoginError.USER_NOT_FOUND);
+				}
+			}
+		} catch (Exception fail) {
+			System.exit(1);
+			return null;
+		};
+		assert false;
+		return null;
+	}
 
 	public static Optional<List<String>> requestUsers() {
 		HttpRequest request = null;
