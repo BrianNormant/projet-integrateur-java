@@ -3,16 +3,20 @@ package api;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
+import java.net.http.HttpHeaders;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import gestionInformation.Station;
+import gestionInformation.Train;
 import gestionInformation.Rail;
 
 public final class Users implements Endpoint {
@@ -104,6 +108,41 @@ public final class Users implements Endpoint {
 			return Optional.empty();
 		};
 		return Optional.of(rails);
+	}
+	
+	public static Optional<List<Train>> requestTrains() {
+		HttpRequest request = null;
+		ArrayList<Train> trains = new ArrayList<>();
+		String token = "aaaa";
+		
+		try {
+			request = HttpRequest.newBuilder()
+				.uri( new URI(URL + "trains") )
+				.header("Authorization", "admin " + token)
+				.GET()
+				.build();
+		} catch (URISyntaxException fatal) {
+			System.err.println("Fatal, Invalid URL");
+			System.exit(1);
+		};
+		try {
+			var client = HttpClient.newHttpClient();
+			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+			
+			var json = new JSONArray(response.body());
+			for (var jo : json) {
+				var data = (JSONObject)jo;
+				trains.add(new Train(
+							(String) data.get("id"),
+							(String) data.get("rail_id"),
+							(String) data.get("pos")
+						));
+			}
+		} catch (Exception fail) {
+			return Optional.empty();
+		};
+		return Optional.of(trains);
+	
 	}
 	
 }

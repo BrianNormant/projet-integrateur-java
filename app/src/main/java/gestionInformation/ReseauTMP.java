@@ -18,6 +18,22 @@ public class ReseauTMP {
 	}
 	
 	public static ArrayList<Point> ajouterStation() {
+		
+		Optional<List<Train>> trains = Users.requestTrains();
+		
+		/**
+		 * TEST POUR LISTE DE TRAIN, A ENLEVER LORSQUE FONCTIONNEL
+		 */
+		List<Train> listeTrains = trains.orElse(List.of());
+		System.out.println(listeTrains);
+		for(Train train : listeTrains) {
+			System.out.println(train.getId());
+			System.out.println(train.getRailId());
+			System.out.println(train.getPos());
+			System.out.println("\n");
+		}
+		
+		
 		Optional<List<Station>> optional = Users.requestStations();
 
 		if (!optional.isPresent()) {return new ArrayList<Point>();}

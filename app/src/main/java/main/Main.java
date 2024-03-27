@@ -13,6 +13,7 @@ import composanteGraphique.Graphique;
 import composanteGraphique.Ligne;
 import composanteGraphique.Point;
 import gestionInformation.ReseauTMP;
+import gestionInformation.Train;
 import interfaces.CarteInterface;
 import interfaces.LoginInterface;
 import interfaces.ReservationInterface;
@@ -37,6 +38,7 @@ public class Main extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -54,9 +56,8 @@ public class Main extends JFrame {
 	 * Create the frame.
 	 */
 	public Main() {
-		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 996, 623);
+		setBounds(100, 100, 1030, 623);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
