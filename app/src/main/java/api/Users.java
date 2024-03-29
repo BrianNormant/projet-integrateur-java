@@ -31,6 +31,7 @@ public final class Users implements Endpoint {
 	 */
 	public static Either<String, LoginError> requestLogin(String user, String password) {
 		HttpRequest request = null;
+		System.out.println("1111");
 		try {
 			request = HttpRequest.newBuilder()
 				.uri( new URI(URL + "login/" + user) )
@@ -43,15 +44,19 @@ public final class Users implements Endpoint {
 		try {
 			var client = HttpClient.newHttpClient();
 			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+			System.out.println(response.statusCode());
 			switch (response.statusCode()) {
 				case 200 -> {
+					System.out.println("aaaa");
 					var json = new JSONObject(response.body());
 					return Either.left(json.get("token").toString());
 				}
 				case 401 -> {
+					System.out.println("bbbb");
 					return Either.right(LoginError.NOT_AUTHORIZED);
 				}
 				case 404 -> {
+					System.out.println("cccc");
 					return Either.right(LoginError.USER_NOT_FOUND);
 				}
 			}
