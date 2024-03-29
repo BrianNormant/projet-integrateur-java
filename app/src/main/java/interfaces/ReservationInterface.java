@@ -28,7 +28,7 @@ public class ReservationInterface extends JPanel {
 
 	
 	public ReservationInterface(int x, int y, int tailleX, int tailleY) {
-		setBounds(100, 100, 898, 582);
+		setBounds(100, 100, 981, 582);
 		setLayout(null);
 		
 		JButton btnBack = new JButton("Back");

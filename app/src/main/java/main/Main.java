@@ -9,6 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import api.LoginError;
+import api.Users;
 import composanteGraphique.Graphique;
 import composanteGraphique.Ligne;
 import composanteGraphique.Point;
@@ -19,12 +21,11 @@ import interfaces.LoginInterface;
 import interfaces.ReservationInterface;
 import interfaces.StationInterface;
 import interfaces.TrainInterface;
+import io.vavr.control.Either;
 
 public class Main extends JFrame {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private CarteInterface carte = new CarteInterface(getX(),getY(),getWidth(),getHeight());
@@ -32,6 +33,12 @@ public class Main extends JFrame {
 	private ReservationInterface reservation = new ReservationInterface (getX(),getY(),getWidth(),getHeight());
 	private StationInterface station = new StationInterface(getX(),getY(),getWidth(),getHeight());
 	private TrainInterface train = new TrainInterface(getX(),getY(),getWidth(),getHeight());
+	private String token;
+	private String nom;
+	private String pwd;
+	
+	private boolean modeFlemme = false;
+	
 
 
 	/**
@@ -57,7 +64,7 @@ public class Main extends JFrame {
 	 */
 	public Main() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1030, 623);
+		setBounds(100, 100, 730, 450);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -68,6 +75,11 @@ public class Main extends JFrame {
 			public void propertyChange(PropertyChangeEvent evt) {
 				switch (evt.getPropertyName()) {
 				case "passerCarte":
+					setNom(login.getNom());
+					String password = new String(login.getPwd());
+					setPwd(password);
+					//token = setToken();
+					setBounds(100, 100, 1000, 600);
 					login.setVisible(false);
 					carte.setVisible(true);
 					setContentPane(carte);
@@ -82,24 +94,36 @@ public class Main extends JFrame {
 			public void propertyChange(PropertyChangeEvent evt) {
 				switch (evt.getPropertyName()) {
 				case "passerReservation":
+					setBounds(100, 100, 1000, 580);
 					carte.setVisible(false);
 					reservation.setVisible(true);
 					setContentPane(reservation);
 					reservation.requestFocusInWindow();
 					break;
 				case "passerStation":
+					
+					
+					//a mettre les bound
+					
+					
 					carte.setVisible(false);
 					station.setVisible(true);
 					setContentPane(station);
 					station.requestFocusInWindow();
 					break;
 				case "passerTrain":
+					
+					
+					//a mettre les bound
+					
+					
 					carte.setVisible(false);
 					train.setVisible(true);
 					setContentPane(train);
 					train.requestFocusInWindow();
 					break;
 				case "logout":
+					setBounds(100, 100, 730, 450);
 					carte.setVisible(false);
 					login.setVisible(true);
 					setContentPane(login);
@@ -113,6 +137,7 @@ public class Main extends JFrame {
 			public void propertyChange(PropertyChangeEvent evt) {
 				switch (evt.getPropertyName()) {
 				case "back":
+					setBounds(100, 100, 1000, 600);
 					reservation.setVisible(false);
 					carte.setVisible(true);
 					setContentPane(carte);
@@ -126,6 +151,7 @@ public class Main extends JFrame {
 			public void propertyChange(PropertyChangeEvent evt) {
 				switch (evt.getPropertyName()) {
 				case "back":
+					setBounds(100, 100, 1000, 600);
 					station.setVisible(false);
 					carte.setVisible(true);
 					setContentPane(carte);
@@ -139,6 +165,7 @@ public class Main extends JFrame {
 			public void propertyChange(PropertyChangeEvent evt) {
 				switch (evt.getPropertyName()) {
 				case "back":
+					setBounds(100, 100, 1000, 600);
 					train.setVisible(false);
 					carte.setVisible(true);
 					setContentPane(carte);
@@ -150,4 +177,32 @@ public class Main extends JFrame {
 		);
 	}
 
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public String getPwd() {
+		return pwd;
+	}
+
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
+	}
+
+	public String setToken() {
+		Either<String, LoginError> result = Users.requestLogin(nom, pwd);
+		System.out.println(result);
+		
+		if(result.isLeft()) {
+			return result.getLeft();
+		}else {
+			System.out.println("il y a eu un erreur en essayant d'avoir le token");
+			return null;
+		}
+
+	}
 }
