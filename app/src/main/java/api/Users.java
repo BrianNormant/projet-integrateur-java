@@ -33,16 +33,17 @@ public final class Users implements Endpoint {
 		HttpRequest request = null;
 		try {
 			request = HttpRequest.newBuilder()
-				.uri( new URI(URL + "login/" + user) )
 				.header("Authorization", password)
+				.uri( new URI(URL + "login/" + user) )
+				.PUT(HttpRequest.BodyPublishers.noBody())
 				.build();
 		} catch (URISyntaxException fatal) {
 			System.err.println("Fatal, Invalid URL");
-			System.exit(1);
 		};
 		try {
 			var client = HttpClient.newHttpClient();
 			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
 			switch (response.statusCode()) {
 				case 200 -> {
 					var json = new JSONObject(response.body());
@@ -56,7 +57,6 @@ public final class Users implements Endpoint {
 				}
 			}
 		} catch (Exception fail) {
-			System.exit(1);
 			return null;
 		};
 		assert false;
