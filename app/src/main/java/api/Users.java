@@ -34,7 +34,7 @@ public final class Users implements Endpoint {
 		try {
 			request = HttpRequest.newBuilder()
 				.uri( new URI(URL + "login/" + user) )
-				.PUT(HttpRequest.BodyPublishers.ofString(password))
+				.header("Authorization", password)
 				.build();
 		} catch (URISyntaxException fatal) {
 			System.err.println("Fatal, Invalid URL");
