@@ -73,7 +73,6 @@ public final class Users implements Endpoint {
 				.build();
 		} catch (URISyntaxException fail) {
 			System.err.println("Fatal, Invalid URL");
-			System.exit(1);
 		};
 		try {
 			var client = HttpClient.newHttpClient();
@@ -84,9 +83,7 @@ public final class Users implements Endpoint {
 				case 417,404,408 -> false;
 				default -> false;
 			};
-		} catch (Exception ignored) {
-			System.exit(1);
-		};
+		} catch (Exception ignored) {};
 		return false;
 	}
 
@@ -100,7 +97,6 @@ public final class Users implements Endpoint {
 				.build();
 		} catch (URISyntaxException fatal) {
 			System.err.println("Fatal, Invalid URL");
-			System.exit(1);
 		};
 		try {
 			var client = HttpClient.newHttpClient();
@@ -125,7 +121,6 @@ public final class Users implements Endpoint {
 				.build();
 		} catch (URISyntaxException fatal) {
 			System.err.println("Fatal, Invalid URL");
-			System.exit(1);
 		};
 		try {
 			var client = HttpClient.newHttpClient();
@@ -157,7 +152,6 @@ public final class Users implements Endpoint {
 				.build();
 		} catch (URISyntaxException fatal) {
 			System.err.println("Fatal, Invalid URL");
-			System.exit(1);
 		};
 		try {
 			var client = HttpClient.newHttpClient();
@@ -189,7 +183,6 @@ public final class Users implements Endpoint {
 				.build();
 		} catch (URISyntaxException fatal) {
 			System.err.println("Fatal, Invalid URL");
-			System.exit(1);
 		};
 		try {
 			var client = HttpClient.newHttpClient();
@@ -223,7 +216,6 @@ public final class Users implements Endpoint {
 				.build();
 		} catch (URISyntaxException fatal) {
 			System.err.println("Fatal, Invalid URL");
-			System.exit(1);
 		};
 		try {
 			var client = HttpClient.newHttpClient();
@@ -232,10 +224,7 @@ public final class Users implements Endpoint {
 				case 200 -> true;
 				default -> false;
 			};
-		} catch (Exception e) {
-			System.exit(1);
-		}
-		System.exit(1);
+		} catch (Exception e) { }
 		return false;
 	}
 	
