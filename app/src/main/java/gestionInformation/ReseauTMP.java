@@ -19,7 +19,7 @@ public class ReseauTMP {
 	
 	public static ArrayList<Point> ajouterStation() {
 		
-		Optional<List<Train>> trains = Users.requestTrains();
+		Optional<List<Train>> trains = Users.requestTrains("aaaa");
 		
 		/**
 		 * TEST POUR LISTE DE TRAIN, A ENLEVER LORSQUE FONCTIONNEL

@@ -177,15 +177,14 @@ public final class Users implements Endpoint {
 		return Optional.of(rails);
 	}
 	
-	public static Optional<List<Train>> requestTrains() {
+	public static Optional<List<Train>> requestTrains(String token) {
 		HttpRequest request = null;
 		ArrayList<Train> trains = new ArrayList<>();
-		String token = "aaaa";
 		
 		try {
 			request = HttpRequest.newBuilder()
 				.uri( new URI(URL + "trains") )
-				.header("Authorization", "admin " + token)
+				.header("Authorization", token)
 				.GET()
 				.build();
 		} catch (URISyntaxException fatal) {
