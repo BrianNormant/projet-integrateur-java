@@ -3,6 +3,7 @@ package gestionInformation;
 import composanteGraphique.Point;
 
 public class Rail {
+	
 	private final Station con1, con2;
 
 	public Rail(int con1, int con2) {

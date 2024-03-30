@@ -36,6 +36,7 @@ public final class Users implements Endpoint {
 			request = HttpRequest.newBuilder()
 				.uri( new URI(URL + "login/" + user) )
 				.header("Authorization", password)
+				.PUT(HttpRequest.BodyPublishers.noBody())
 				.build();
 		} catch (URISyntaxException fatal) {
 			System.err.println("Fatal, Invalid URL");
@@ -47,16 +48,14 @@ public final class Users implements Endpoint {
 			System.out.println(response.statusCode());
 			switch (response.statusCode()) {
 				case 200 -> {
-					System.out.println("aaaa");
 					var json = new JSONObject(response.body());
+					System.out.println(json.get("token").toString());
 					return Either.left(json.get("token").toString());
 				}
 				case 401 -> {
-					System.out.println("bbbb");
 					return Either.right(LoginError.NOT_AUTHORIZED);
 				}
 				case 404 -> {
-					System.out.println("cccc");
 					return Either.right(LoginError.USER_NOT_FOUND);
 				}
 			}

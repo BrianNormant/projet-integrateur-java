@@ -78,7 +78,7 @@ public class Main extends JFrame {
 					setNom(login.getNom());
 					String password = new String(login.getPwd());
 					setPwd(password);
-					//token = setToken();
+					token = setToken();
 					setBounds(100, 100, 1000, 600);
 					login.setVisible(false);
 					carte.setVisible(true);
