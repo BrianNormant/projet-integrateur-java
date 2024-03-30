@@ -167,8 +167,10 @@ public final class Users implements Endpoint {
 			for (var jo : json) {
 				var data = (JSONObject)jo;
 				rails.add(new Rail(
+							//(Integer) data.get("id"),
 							(Integer) data.get("con1"),
 							(Integer) data.get("con2")
+							
 						));
 			}
 		} catch (Exception fail) {
@@ -211,7 +213,7 @@ public final class Users implements Endpoint {
 	
 	}
 
-	public static boolean requestPutReservation(String token, Reservation reservation) {
+	/*public static boolean requestPutReservation(String token, Reservation reservation) {
 		HttpRequest request = null;
 		try {
 			request = HttpRequest.newBuilder()
@@ -237,6 +239,39 @@ public final class Users implements Endpoint {
 		}
 		System.exit(1);
 		return false;
-	}
+	}*/
 	
+	/*public static Optional<List<Reservation>> requestReservations() {
+		HttpRequest request = null;
+		ArrayList<Reservation> reservations = new ArrayList<>();
+		try {
+			request = HttpRequest.newBuilder()
+				.uri( new URI(URL + "list_reservations") )
+				.header("Authorization", "placeholder")
+				.GET()
+				.build();
+		} catch (URISyntaxException fatal) {
+			System.err.println("Fatal, Invalid URL");
+			System.exit(1);
+		};
+		try {
+			var client = HttpClient.newHttpClient();
+			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+			
+			var json = new JSONArray(response.body());
+			for (var jo : json) {
+				var data = (JSONObject)jo;
+				reservations.add(new Reservation(
+							(Integer)data.get("id"),
+							(String)data.get("company_id"),
+							Integer.parseInt((String)data.get("timeSlot")),
+							Integer.parseInt((String)data.get("dateReserv"))
+							
+							));
+			}
+		} catch (Exception fail) {
+			return Optional.empty();
+		};
+		return Optional.of(reservations);
+	}*/
 }
