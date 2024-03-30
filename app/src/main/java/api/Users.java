@@ -35,10 +35,7 @@ public final class Users implements Endpoint {
 		try {
 			request = HttpRequest.newBuilder()
 				.header("Authorization", password)
-<<<<<<< HEAD
-=======
 				.uri( new URI(URL + "login/" + user) )
->>>>>>> branch 'master' of https://github.com/BrianNormant/projet-integrateur-java.git
 				.PUT(HttpRequest.BodyPublishers.noBody())
 				.build();
 		} catch (URISyntaxException fatal) {
@@ -47,11 +44,6 @@ public final class Users implements Endpoint {
 		try {
 			var client = HttpClient.newHttpClient();
 			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-<<<<<<< HEAD
-			System.out.println(response.statusCode());
-=======
-
->>>>>>> branch 'master' of https://github.com/BrianNormant/projet-integrateur-java.git
 			switch (response.statusCode()) {
 				case 200 -> {
 					var json = new JSONObject(response.body());
