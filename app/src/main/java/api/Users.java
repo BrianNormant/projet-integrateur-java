@@ -35,10 +35,7 @@ public final class Users implements Endpoint {
 		try {
 			request = HttpRequest.newBuilder()
 				.header("Authorization", password)
-<<<<<<< HEAD
-=======
 				.uri( new URI(URL + "login/" + user) )
->>>>>>> branch 'master' of https://github.com/BrianNormant/projet-integrateur-java.git
 				.PUT(HttpRequest.BodyPublishers.noBody())
 				.build();
 		} catch (URISyntaxException fatal) {
@@ -47,11 +44,9 @@ public final class Users implements Endpoint {
 		try {
 			var client = HttpClient.newHttpClient();
 			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-<<<<<<< HEAD
-			System.out.println(response.statusCode());
-=======
 
->>>>>>> branch 'master' of https://github.com/BrianNormant/projet-integrateur-java.git
+			System.out.println(response.statusCode());
+
 			switch (response.statusCode()) {
 				case 200 -> {
 					var json = new JSONObject(response.body());
@@ -175,10 +170,11 @@ public final class Users implements Endpoint {
 			var json = new JSONArray(response.body());
 			for (var jo : json) {
 				var data = (JSONObject)jo;
+				System.out.println((Integer) data.get("id"));
 				rails.add(new Rail(
-							//(Integer) data.get("id"),
 							(Integer) data.get("con1"),
-							(Integer) data.get("con2")
+							(Integer) data.get("con2"),
+							(Integer) data.get("id")
 							
 						));
 			}
