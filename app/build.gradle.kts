@@ -16,14 +16,20 @@ repositories {
     mavenCentral()
 }
 
+tasks.withType<Test> {
+    this.testLogging {
+        this.showStandardStreams = true
+    }
+}
+
 dependencies {
     // Use JUnit test framework.
     testImplementation(libs.junit)
-	testImplementation("org.json:json:20240303")
-    testImplementation("io.vavr:vavr:0.10.0")
+	// testImplementation("org.json:json:20240303")
+ //    testImplementation("io.vavr:vavr:0.10.0")
 
     // This dependency is used by the application.
-    implementation(libs.guava)
+    // implementation(libs.guava)
 	implementation("org.json:json:20240303")
     implementation("io.vavr:vavr:0.10.0")
 }
