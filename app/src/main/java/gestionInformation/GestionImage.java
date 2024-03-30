@@ -11,7 +11,6 @@ public class GestionImage {
 	public static Image lireImage(String nomFichier) {
 		Image img = null;
 		URL urlFichier = GestionImage.class.getClassLoader().getResource(nomFichier);
-		System.out.println("URL: "+GestionImage.class.getClassLoader() );
 		if (urlFichier == null) {
 			System.out.println("Fichier d'image introuvable: " + nomFichier);
 		} 

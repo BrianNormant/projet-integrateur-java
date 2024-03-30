@@ -36,6 +36,7 @@ public class Main extends JFrame {
 	private String token;
 	private String nom;
 	private String pwd;
+	private boolean autorisation;
 	
 	private boolean modeFlemme = false;
 	
@@ -79,6 +80,14 @@ public class Main extends JFrame {
 					String password = new String(login.getPwd());
 					setPwd(password);
 					token = setToken();
+					if(token == null) {
+						login.mauvaisIdentifiant();
+						break;
+					}
+					if(!nom.equals("admin")) {
+						login.nonAutorise();
+						break;
+					}
 					setBounds(100, 100, 1000, 600);
 					login.setVisible(false);
 					carte.setVisible(true);

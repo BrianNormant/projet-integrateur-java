@@ -167,7 +167,6 @@ public final class Users implements Endpoint {
 			var json = new JSONArray(response.body());
 			for (var jo : json) {
 				var data = (JSONObject)jo;
-				System.out.println((Integer) data.get("id"));
 				rails.add(new Rail(
 							(Integer) data.get("con1"),
 							(Integer) data.get("con2"),
