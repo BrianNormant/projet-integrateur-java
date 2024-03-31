@@ -14,8 +14,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import api.Users;
 import composanteGraphique.Point;
 import gestionInformation.ReseauTMP;
+import gestionInformation.Train;
 
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
@@ -28,7 +30,10 @@ public class StationInterface extends JPanel {
 	private JPanel contentPane;
 	private JList list;
 	private JLabel lblNom;
+	private JLabel lblId;
 	private int id;
+	private String token;
+	private ArrayList<Train> listeTrains = new ArrayList();
 	private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 	
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -49,24 +54,16 @@ public class StationInterface extends JPanel {
 		btnBack.setBounds(10, 11, 89, 23);
 		add(btnBack);
 		
-		JList listTrains = new JList();
-		listTrains.setModel(new AbstractListModel() {
-			String[] values = new String[] {};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
-		listTrains.setBounds(34, 72, 539, 463);
-		add(listTrains);
-		
 		lblNom = new JLabel("New label");
 		lblNom.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNom.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		lblNom.setBounds(154, 19, 279, 42);
+		lblNom.setBounds(98, 20, 225, 42);
 		add(lblNom);
+		
+		lblId = new JLabel("New label");
+		lblId.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		lblId.setBounds(333, 18, 267, 46);
+		add(lblId);
 		requestFocusInWindow();
 	}
 	
@@ -88,7 +85,14 @@ public class StationInterface extends JPanel {
 
 	public void setId(int id) {
 		this.id=id;
-		this.lblNom.setText("STATION ID: "+ this.id);
+		this.lblId.setText("STATION ID: "+ this.id);
 		
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
+	
+	public void setListe() {
+		Users.requestTrainsPourStation(token, id);
 	}
 }

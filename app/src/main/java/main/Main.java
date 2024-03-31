@@ -114,6 +114,7 @@ public class Main extends JFrame {
 					break;
 				case "passerStation":
 					int id=(Integer)evt.getNewValue();
+					station.setToken(token);
 					station.setId(id);
 					carte.setVisible(false);
 					station.setVisible(true);
