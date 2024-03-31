@@ -5,8 +5,12 @@ import javax.swing.JLabel;
 import javax.swing.JSeparator;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+import javax.swing.SwingConstants;
 
 public class PanelReservation extends JPanel {
+	
+	private JLabel lblCompany,lblDate,lblPlageHoraire,lblOrigine,lblDestination,lblRail;
+	private JSeparator separator_1;
 
 	/**
 	 * Create the panel.
@@ -30,15 +34,15 @@ public class PanelReservation extends JPanel {
 		lblCompanyAff.setBounds(10, 20, 126, 37);
 		add(lblCompanyAff);
 		
-		JLabel lblCompany = new JLabel("...");
+		lblCompany = new JLabel("...");
 		lblCompany.setBounds(158, 20, 126, 37);
 		add(lblCompany);
 		
-		JLabel lblDate = new JLabel("...");
+		lblDate = new JLabel("...");
 		lblDate.setBounds(158, 68, 126, 37);
 		add(lblDate);
 		
-		JLabel lblPlageHoraire = new JLabel("...");
+		lblPlageHoraire = new JLabel("...");
 		lblPlageHoraire.setBounds(158, 118, 126, 37);
 		add(lblPlageHoraire);
 		
@@ -46,25 +50,40 @@ public class PanelReservation extends JPanel {
 		lblOrigineAff.setBounds(311, 32, 126, 37);
 		add(lblOrigineAff);
 		
-		JLabel lblOrigine = new JLabel("...");
-		lblOrigine.setBounds(311, 91, 126, 37);
+		lblOrigine = new JLabel("...");
+		lblOrigine.setBounds(311, 79, 126, 37);
 		add(lblOrigine);
 		
 		JLabel lblDestinationAff = new JLabel("Station Connectée 2: ");
 		lblDestinationAff.setBounds(678, 32, 126, 37);
 		add(lblDestinationAff);
 		
-		JLabel lblDestination = new JLabel("...");
-		lblDestination.setBounds(678, 91, 126, 37);
+		lblDestination = new JLabel("...");
+		lblDestination.setBounds(678, 79, 126, 37);
 		add(lblDestination);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(409, 79, 259, 15);
+		separator.setBounds(410, 90, 259, 15);
 		add(separator);
 		
-		JLabel lblRail = new JLabel("Rail Id:  ");
+		lblRail = new JLabel("Rail Id:  ");
 		lblRail.setBounds(495, 32, 126, 37);
 		add(lblRail);
+		
+		separator_1 = new JSeparator();
+		separator_1.setOrientation(SwingConstants.VERTICAL);
+		separator_1.setBounds(257, 10, 14, 140);
+		add(separator_1);
 
 	}
+	public void setAll(String date, String plage, String company,String station1, String station2, int rail_id) {
+		lblCompany.setText(company);
+		lblDate.setText(date);
+		lblPlageHoraire.setText(plage);
+		lblOrigine.setText(station1);
+		lblDestination.setText(station2);
+		lblRail.setText("Rail Id: "+rail_id);
+		
+	}
+	
 }

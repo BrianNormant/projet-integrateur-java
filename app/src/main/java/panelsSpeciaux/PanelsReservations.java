@@ -21,6 +21,7 @@ import gestionInformation.Train;
 public class PanelsReservations extends JPanel {
 	
 	private List<Reservation> reservations = new ArrayList<Reservation>() ;
+	private List<PanelReservation> panels = new ArrayList<PanelReservation>() ;
 
 	/**
 	 * Create the panel.
@@ -31,9 +32,19 @@ public class PanelsReservations extends JPanel {
 		System.out.println(reservations.size());
 		
 		
-		setLayout(new GridLayout(reservations.size(),1,0,10)); // Exemple de layout
-        for (int i = 1; i <= reservations.size(); i++) {
-            add(new PanelReservation());
+			for (int i = 0; i < reservations.size(); i++) {
+				panels.add(new PanelReservation());
+			}
+			
+			for (int i = 0; i < panels.size(); i++) {
+				panels.get(i).setAll(reservations.get(i).getDate(), reservations.get(i).getPeriod(), reservations.get(i).getCompany_id(), reservations.get(i).getRail().getCon1().getName(), reservations.get(i).getRail().getCon2().getName(), reservations.get(i).getRail().getId());
+			}
+		
+		
+		
+		setLayout(new GridLayout(panels.size(),1,0,10)); // Exemple de layout
+        for (int i = 0; i < panels.size(); i++) {
+            add(panels.get(i));
             
         }
         
