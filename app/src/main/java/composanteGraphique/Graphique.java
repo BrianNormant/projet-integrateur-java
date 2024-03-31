@@ -40,9 +40,9 @@ public class Graphique extends JPanel{
             point.dessiner(g2d, ppm);
         }
 
-        Rectangle2D.Double test = new Rectangle2D.Double(0, 0, 100, 100);
+        /*Rectangle2D.Double test = new Rectangle2D.Double(0, 0, 100, 100);
 		g2d.setColor(Color.RED);
-		g2d.fill(mat.createTransformedShape(test));
+		g2d.fill(mat.createTransformedShape(test));*/
 	}
 	
 	public void setPoints(ArrayList<Point> points) {
