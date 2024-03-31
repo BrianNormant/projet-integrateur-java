@@ -38,7 +38,7 @@ public class Main extends JFrame {
 	private String pwd;
 	private boolean autorisation;
 	
-	private boolean modeFlemme = false;
+	private boolean modeFlemme = true;
 	
 
 
@@ -68,14 +68,17 @@ public class Main extends JFrame {
 		setBounds(100, 100, 730, 450);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
 		
 		setContentPane(login);
+		if(modeFlemme) {
+			flemme();
+		}
 		
 		login.addPropertyChangeListener(new PropertyChangeListener(){
 			public void propertyChange(PropertyChangeEvent evt) {
 				switch (evt.getPropertyName()) {
 				case "passerCarte":
+					
 					setNom(login.getNom());
 					String password = new String(login.getPwd());
 					setPwd(password);
@@ -213,5 +216,16 @@ public class Main extends JFrame {
 			return null;
 		}
 
+	}
+	
+	private void flemme() {
+		setNom("admin");
+		setPwd("1234");
+		token = setToken();
+		setBounds(100, 100, 1000, 600);
+		login.setVisible(false);
+		carte.setVisible(true);
+		setContentPane(carte);
+		carte.requestFocusInWindow();
 	}
 }
