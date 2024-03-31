@@ -18,6 +18,7 @@ import org.json.JSONObject;
 
 import gestionInformation.Station;
 import gestionInformation.Train;
+import gestionInformation.Reservation.ReservationPeriod;
 import gestionInformation.Rail;
 import gestionInformation.Reservation;
 
@@ -31,6 +32,7 @@ public final class Users implements Endpoint {
 	 */
 	public static Either<String, LoginError> requestLogin(String user, String password) {
 		HttpRequest request = null;
+		System.out.println("1111");
 		try {
 			request = HttpRequest.newBuilder()
 				.header("Authorization", password)
@@ -43,10 +45,10 @@ public final class Users implements Endpoint {
 		try {
 			var client = HttpClient.newHttpClient();
 			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
 			switch (response.statusCode()) {
 				case 200 -> {
 					var json = new JSONObject(response.body());
+					System.out.println(json.get("token").toString());
 					return Either.left(json.get("token").toString());
 				}
 				case 401 -> {
@@ -162,8 +164,11 @@ public final class Users implements Endpoint {
 				var data = (JSONObject)jo;
 				rails.add(new Rail(
 							(Integer) data.get("con1"),
-							(Integer) data.get("con2")
+							(Integer) data.get("con2"),
+							(Integer) data.get("id")
+							
 						));
+				System.out.println("Rail: " +(Integer) data.get("con1")+" "+(Integer) data.get("con2")+" "+(Integer) data.get("id"));
 			}
 		} catch (Exception fail) {
 			return Optional.empty();
@@ -204,7 +209,7 @@ public final class Users implements Endpoint {
 	
 	}
 
-	public static boolean requestPutReservation(String token, Reservation reservation) {
+	/*public static boolean requestPutReservation(String token, Reservation reservation) {
 		HttpRequest request = null;
 		try {
 			request = HttpRequest.newBuilder()
@@ -226,6 +231,75 @@ public final class Users implements Endpoint {
 			};
 		} catch (Exception e) { }
 		return false;
+	}*/
+	
+	
+	
+	public static Optional<List<Reservation>> requestReservations() {
+		HttpRequest request = null;
+		ArrayList<Reservation> reservations = new ArrayList<>();
+		try {
+			request = HttpRequest.newBuilder()
+				.uri( new URI(URL + "list_reservations") )
+				.header("Authorization", "placeholder")
+				.GET()
+				.build();
+		} catch (URISyntaxException fatal) {
+			System.err.println("Fatal, Invalid URL");
+			System.exit(1);
+		};
+		try {
+			var client = HttpClient.newHttpClient();
+			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+			
+			var json = new JSONArray(response.body());
+			for (var jo : json) {
+				var data = (JSONObject)jo;
+				reservations.add(new Reservation(
+							(Integer)data.get("id"),
+							(String)data.get("company_id"),
+							(String)data.get("dateReserv"),
+							(String)data.get("timeSlot"),
+							requestRail((Integer)(data.get("id")))		
+							));
+				System.out.println("Reservation: "+(Integer)data.get("id")+ (String)data.get("company_id")+(String)data.get("dateReserv")+(String)data.get("timeSlot")+requestRail((Integer)(data.get("id"))));
+			}
+		} catch (Exception fail) {
+			return Optional.empty();
+		};
+		return Optional.of(reservations);
 	}
 	
+	
+	public static Optional<Rail> requestRail(int railNumber) {
+		HttpRequest request = null;
+		Rail rail = new Rail(0, 0, 0);
+		try {
+			request = HttpRequest.newBuilder()
+				.uri( new URI(URL + "rail/"+railNumber) )
+				.GET()
+				.build();
+		} catch (URISyntaxException fatal) {
+			System.err.println("Fatal, Invalid URL");
+			System.exit(1);
+		};
+		try {
+			var client = HttpClient.newHttpClient();
+			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+			
+			var json = new JSONArray(response.body());
+			for (var jo : json) {
+				var data = (JSONObject)jo;
+				rail = new Rail(
+							(Integer) data.get("con1"),
+							(Integer) data.get("con2"),
+							(Integer) data.get("id")
+						);
+				System.out.println("Rail perso: " +(Integer) data.get("con1")+" "+(Integer) data.get("con2")+" "+(Integer) data.get("id"));
+			}
+		} catch (Exception fail) {
+			return Optional.empty();
+		};
+		return Optional.of(rail);
+	}
 }

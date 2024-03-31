@@ -42,7 +42,7 @@ public class PanelReservation extends JPanel {
 		lblPlageHoraire.setBounds(158, 118, 126, 37);
 		add(lblPlageHoraire);
 		
-		JLabel lblOrigineAff = new JLabel("Station d'origine: ");
+		JLabel lblOrigineAff = new JLabel("Station Connectée 1: ");
 		lblOrigineAff.setBounds(311, 32, 126, 37);
 		add(lblOrigineAff);
 		
@@ -50,7 +50,7 @@ public class PanelReservation extends JPanel {
 		lblOrigine.setBounds(311, 91, 126, 37);
 		add(lblOrigine);
 		
-		JLabel lblDestinationAff = new JLabel("Station de Destination: ");
+		JLabel lblDestinationAff = new JLabel("Station Connectée 2: ");
 		lblDestinationAff.setBounds(678, 32, 126, 37);
 		add(lblDestinationAff);
 		
@@ -61,6 +61,10 @@ public class PanelReservation extends JPanel {
 		JSeparator separator = new JSeparator();
 		separator.setBounds(409, 79, 259, 15);
 		add(separator);
+		
+		JLabel lblRail = new JLabel("Rail Id:  ");
+		lblRail.setBounds(495, 32, 126, 37);
+		add(lblRail);
 
 	}
 }

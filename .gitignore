@@ -1,6 +1,6 @@
 app/bin
 app/build
 .project
-app/.classpath
 .settings
 .gradle
+/bin/

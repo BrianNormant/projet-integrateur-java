@@ -22,12 +22,14 @@ import java.awt.Image;
 import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import javax.swing.SwingConstants;
 
 public class LoginInterface extends JPanel {
 
 	private JPanel contentPane;
 	private JTextField textFieldMDP;
 	private JTextField textFieldNom;
+	private JLabel lblErreur;
 	private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 	private JPasswordField pwdPassword;
 	private String hint = "Password";
@@ -36,6 +38,7 @@ public class LoginInterface extends JPanel {
 	private Image img;
 	private String nom;
 	private char[] pwd;
+	private JLabel lblNonAutorise;
 	
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		PCS.addPropertyChangeListener(listener);
@@ -120,12 +123,27 @@ public class LoginInterface extends JPanel {
 		lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 40));
 		lblNewLabel.setBounds(480, 41, 217, 72);
 		add(lblNewLabel);
+		
+		lblErreur = new JLabel("<html>Wrong username or password.<br/>Try again.</html>");
+		lblErreur.setVerticalAlignment(SwingConstants.TOP);
+		lblErreur.setVisible(false);
+		lblErreur.setForeground(new Color(255, 0, 0));
+		lblErreur.setBounds(490, 277, 207, 38);
+		add(lblErreur);
+		
+		lblNonAutorise = new JLabel("<html>You don't have the necessary authorisation<br/>to access this application.</html>");
+		lblNonAutorise.setVisible(false);
+		lblNonAutorise.setForeground(new Color(255, 0, 0));
+		lblNonAutorise.setVerticalAlignment(SwingConstants.TOP);
+		lblNonAutorise.setBounds(490, 277, 230, 38);
+		add(lblNonAutorise);
 		requestFocusInWindow();
 		
 		
 	}
 	
 	public void login() {
+		
 		PCS.firePropertyChange("passerCarte", 0, -1);
 	}
 	
@@ -153,5 +171,15 @@ public class LoginInterface extends JPanel {
 
 	public void setPwd(char[] cs) {
 		this.pwd = cs;
+	}
+	public void nonAutorise() {
+		lblNonAutorise.setVisible(true);
+		lblErreur.setVisible(false);
+	}
+
+
+	public void mauvaisIdentifiant() {
+		lblErreur.setVisible(true);
+		lblNonAutorise.setVisible(false);
 	}
 }
