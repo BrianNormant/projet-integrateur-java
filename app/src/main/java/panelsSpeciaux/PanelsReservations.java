@@ -43,21 +43,12 @@ public class PanelsReservations extends JPanel {
     }
 	
 	public ArrayList<Reservation> ajouterReservations() {
-		
-		Optional<List<Reservation>> reservations = Users.requestReservations();
-		
-		System.out.println("ALLO "+reservations.isPresent());
-
-		if (!reservations.isPresent()) {return new ArrayList<Reservation>();}
-
-		return (ArrayList<Reservation>) reservations
-			.get()
-			.stream()
-			.collect(Collectors.toList());
-	
-			}
-		
-	
+		var reservations = Users.requestReservations();
+		return switch (true) {
+			case (reservations.isPresent()) -> 
+				(ArrayList<Reservation>) reservations.get();
+			default -> new ArrayList<Reservation>();
+		};
 
 	}
 
