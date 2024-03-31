@@ -208,6 +208,39 @@ public final class Users implements Endpoint {
 		return Optional.of(trains);
 	
 	}
+	
+	public static Optional<List<Train>> requestTrainsPourStation(String token, int id) {
+		HttpRequest request = null;
+		ArrayList<Train> trains = new ArrayList<>();
+		
+		try {
+			request = HttpRequest.newBuilder()
+				.uri( new URI(URL +"stations/"+ id +"/arrival") )
+				.header("Authorization", token)
+				.GET()
+				.build();
+		} catch (URISyntaxException fatal) {
+			System.err.println("Fatal, Invalid URL");
+		};
+		try {
+			var client = HttpClient.newHttpClient();
+			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+			
+			var json = new JSONArray(response.body());
+			for (var jo : json) {
+				var data = (JSONObject)jo;
+				trains.add(new Train(
+							(String) data.get("id"),
+							(String) data.get("rail_id"),
+							(String) data.get("pos")
+						));
+			}
+		} catch (Exception fail) {
+			return Optional.empty();
+		};
+		return Optional.of(trains);
+	
+	}
 
 	/*public static boolean requestPutReservation(String token, Reservation reservation) {
 		HttpRequest request = null;
