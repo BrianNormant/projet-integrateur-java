@@ -1,23 +1,18 @@
 package gestionInformation;
-
-import java.util.Optional;
-
 public class Reservation {
-	private Station conn_1, conn_2;
-	private Optional<Rail> rail;
+	private Rail rail;
 	private String date;
 	private String period;
 	private int id;
 	private String company_id;
 	
 	
-	public Reservation(int id, String company_id, String date, String period, Optional<Rail> rail) {
+	public Reservation(int id, String company_id, String date, String period, Rail rail) {
 		this.id=id;
 		this.company_id=company_id;
 		this.date=date;
 		this.period=period;
 		this.rail=rail;
-		System.out.println(""+this.id+" "+this.company_id+" "+this.date+" "+this.period+" "+this.rail);
 	}
 	
 
@@ -39,6 +34,9 @@ public class Reservation {
             return false; // Input is not a valid enum constant
         }
 	}
-    
+	@Override
+	public String toString() {
+		return "Reservation [rail=" + rail + ", date=" + date + ", period=" + period + ", id=" + id + ", company_id="
+				+ company_id + "]";
 	}
-
+}
