@@ -52,6 +52,6 @@ public class Station {
 	}
 
 	public Point getPoint() {
-		return new Point(name, x, y);
+		return new Point(name, x, y,id);
 	}
 }

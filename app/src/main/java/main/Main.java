@@ -110,11 +110,8 @@ public class Main extends JFrame {
 					reservation.requestFocusInWindow();
 					break;
 				case "passerStation":
-					
-					
-					//a mettre les bound
-					
-					
+					int id=(Integer)evt.getNewValue();
+					station.setId(id);
 					carte.setVisible(false);
 					station.setVisible(true);
 					setContentPane(station);

@@ -28,6 +28,7 @@ public class StationInterface extends JPanel {
 	private JPanel contentPane;
 	private JList list;
 	private JLabel lblNom;
+	private int id;
 	private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 	
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -82,5 +83,12 @@ public class StationInterface extends JPanel {
 				
 			}
 		}
+	}
+
+
+	public void setId(int id) {
+		this.id=id;
+		this.lblNom.setText("STATION ID: "+ this.id);
+		
 	}
 }

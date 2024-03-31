@@ -29,7 +29,7 @@ public class PanelsReservations extends JPanel {
 	public PanelsReservations() {
 		
 		reservations= ajouterReservations();
-		System.out.println(reservations.size());
+		System.out.println("nb Reservation: "+reservations.size());
 		
 		
 			for (int i = 0; i < reservations.size(); i++) {
@@ -57,7 +57,6 @@ public class PanelsReservations extends JPanel {
 		
 		Optional<List<Reservation>> reservations = Users.requestReservations();
 		
-		System.out.println("ALLO "+reservations.isPresent());
 
 		if (!reservations.isPresent()) {return new ArrayList<Reservation>();}
 

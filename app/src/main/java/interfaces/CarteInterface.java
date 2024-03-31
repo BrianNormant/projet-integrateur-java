@@ -81,8 +81,9 @@ public class CarteInterface extends JPanel {
 				System.out.println("postion X:"+(graphique.getWidth()-e.getX())+" position y:"+ e.getY());
 				graphique.getPpm();
 				for(int i =0;i<graphique.getPoints().size();i++) {
-					if(graphique.getPoints().get(i).contains((graphique.getWidth() - e.getX()) / graphique.getPpm(), (e.getY()) / graphique.getPpm())) {
-						station();
+					int id=graphique.getPoints().get(i).containsID((graphique.getWidth() - e.getX()) / graphique.getPpm(), (e.getY()) / graphique.getPpm());
+					if(id>0) {
+						station(id);
 						break;
 					}
 				}
@@ -101,6 +102,11 @@ public class CarteInterface extends JPanel {
 	public void station() {
 		PCS.firePropertyChange("passerStation", 0, -1);
 	}
+	
+	public void station(int id) {
+		PCS.firePropertyChange("passerStation", 0, id);
+	}
+	
 	public void train() {
 		PCS.firePropertyChange("passerTrain", 0, -1);
 	}
