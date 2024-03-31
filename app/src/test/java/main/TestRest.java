@@ -6,7 +6,9 @@ import api.Users;
 
 import static org.junit.Assert.*;
 
-public class Test1 {
+public class TestRest {
+
+	static String token;
 	@Test
 	public void testRequestLogin() {
 		var login = Users.requestLogin("admin", "1234");
@@ -17,6 +19,13 @@ public class Test1 {
 			}
 		}
 		System.out.printf("token is %s", login.getLeft());
+		token = login.getLeft();
 		assertTrue(login.isLeft());
+	}
+
+	@Test
+	public void testRequestCheckLogin() {
+		var checkLogin = Users.requestCheckLogin("admin", token);
+		assertTrue (checkLogin);
 	}
 }

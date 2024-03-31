@@ -31,7 +31,6 @@ public class Station {
 		if (stations.containsKey(id))
 			return stations.get(id);
 		else {
-			System.exit(1);
 			return new Station(id, null, 0, 0);
 		}
 	}
