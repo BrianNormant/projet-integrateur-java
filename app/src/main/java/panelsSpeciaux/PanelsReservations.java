@@ -38,7 +38,7 @@ public class PanelsReservations extends JPanel {
         }
         
        
-        setPreferredSize(new Dimension(900,165 * 2/*reservations.size()*/));
+        setPreferredSize(new Dimension(900,165 * reservations.size()));
         setBackground(Color.BLACK);
     }
 	
@@ -49,10 +49,7 @@ public class PanelsReservations extends JPanel {
 
 		if (!reservations.isPresent()) {return new ArrayList<Reservation>();}
 
-		return (ArrayList<Reservation>) reservations
-			.get()
-			.stream()
-			.collect(Collectors.toList());
+		return (ArrayList<Reservation>) reservations.get();
 	
 			}
 		
