@@ -20,7 +20,9 @@ import interfaces.CarteInterface;
 import interfaces.LoginInterface;
 import interfaces.ReservationInterface;
 import interfaces.StationInterface;
-import interfaces.TrainInterface;
+import interfaces.RailInterface;
+import interfaces.RechercheInterface;
+import interfaces.TrainChoisiInterface;
 import io.vavr.control.Either;
 
 public class Main extends JFrame {
@@ -32,7 +34,9 @@ public class Main extends JFrame {
 	private LoginInterface login = new LoginInterface(getX(),getY(),getWidth(),getHeight());
 	private ReservationInterface reservation = new ReservationInterface (getX(),getY(),getWidth(),getHeight());
 	private StationInterface station = new StationInterface(getX(),getY(),getWidth(),getHeight());
-	private TrainInterface train = new TrainInterface(getX(),getY(),getWidth(),getHeight());
+	private RailInterface rail = new RailInterface(getX(),getY(),getWidth(),getHeight());
+	private TrainChoisiInterface train= new TrainChoisiInterface(getX(),getY(),getWidth(),getHeight());
+	private RechercheInterface recherche= new RechercheInterface(getX(),getY(),getWidth(),getHeight());
 	private String token;
 	private String nom;
 	private String pwd;
@@ -112,6 +116,7 @@ public class Main extends JFrame {
 					setContentPane(reservation);
 					reservation.requestFocusInWindow();
 					break;
+					
 				case "passerStation":
 					int id=(Integer)evt.getNewValue();
 					station.setId(id);
@@ -120,23 +125,36 @@ public class Main extends JFrame {
 					setContentPane(station);
 					station.requestFocusInWindow();
 					break;
-				case "passerTrain":
 					
+				case "passerRail":
 					
 					//a mettre les bound
-					
-					
 					carte.setVisible(false);
-					train.setVisible(true);
-					setContentPane(train);
-					train.requestFocusInWindow();
+					rail.setVisible(true);
+					setContentPane(rail);
+					rail.requestFocusInWindow();
 					break;
+					
 				case "logout":
 					setBounds(100, 100, 730, 450);
 					carte.setVisible(false);
 					login.setVisible(true);
 					setContentPane(login);
 					login.requestFocusInWindow();
+					break;
+					
+				case "passerRecherche":
+					carte.setVisible(false);
+					recherche.setVisible(true);
+					setContentPane(recherche);
+					recherche.requestFocusInWindow();
+					break;
+					
+				case "passerTrain":
+					carte.setVisible(false);
+					train.setVisible(true);
+					setContentPane(train);
+					train.requestFocusInWindow();
 					break;
 				}
 			}
@@ -156,6 +174,7 @@ public class Main extends JFrame {
 			}
 		}
 		);
+		
 		station.addPropertyChangeListener(new PropertyChangeListener(){
 			public void propertyChange(PropertyChangeEvent evt) {
 				switch (evt.getPropertyName()) {
@@ -170,12 +189,42 @@ public class Main extends JFrame {
 			}
 		}
 		);
+		rail.addPropertyChangeListener(new PropertyChangeListener(){
+			public void propertyChange(PropertyChangeEvent evt) {
+				switch (evt.getPropertyName()) {
+				case "back":
+					setBounds(100, 100, 1000, 600);
+					rail.setVisible(false);
+					carte.setVisible(true);
+					setContentPane(carte);
+					carte.requestFocusInWindow();
+					break;
+				}
+			}
+		}
+		);
+		
 		train.addPropertyChangeListener(new PropertyChangeListener(){
 			public void propertyChange(PropertyChangeEvent evt) {
 				switch (evt.getPropertyName()) {
 				case "back":
 					setBounds(100, 100, 1000, 600);
 					train.setVisible(false);
+					carte.setVisible(true);
+					setContentPane(carte);
+					carte.requestFocusInWindow();
+					break;
+				}
+			}
+		}
+		);
+		
+		recherche.addPropertyChangeListener(new PropertyChangeListener(){
+			public void propertyChange(PropertyChangeEvent evt) {
+				switch (evt.getPropertyName()) {
+				case "back":
+					setBounds(100, 100, 1000, 600);
+					recherche.setVisible(false);
 					carte.setVisible(true);
 					setContentPane(carte);
 					carte.requestFocusInWindow();

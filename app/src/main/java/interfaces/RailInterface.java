@@ -11,7 +11,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class TrainInterface extends JPanel {
+public class RailInterface extends JPanel {
 
 	private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 	private JPanel contentPane;
@@ -20,7 +20,7 @@ public class TrainInterface extends JPanel {
 		PCS.addPropertyChangeListener(listener);
 	}
 	
-	public TrainInterface(int x, int y, int tailleX, int tailleY) {
+	public RailInterface(int x, int y, int tailleX, int tailleY) {
 		setBounds(100, 100, 904, 608);
 		setLayout(null);
 		

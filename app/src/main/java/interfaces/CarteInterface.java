@@ -45,23 +45,23 @@ public class CarteInterface extends JPanel {
 		btnReservation.setBounds(10, 477, 122, 23);
 		add(btnReservation);
 		
-		JButton btnStation = new JButton("Station");
+		/*JButton btnStation = new JButton("Station");
 		btnStation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				station();
 			}
 		});
 		btnStation.setBounds(142, 477, 122, 23);
-		add(btnStation);
+		add(btnStation);*/
 		
-		JButton btnTrain = new JButton("Train");
-		btnTrain.addActionListener(new ActionListener() {
+		JButton btnRail = new JButton("Rail");
+		btnRail.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				train();
+				rail();
 			}
 		});
-		btnTrain.setBounds(274, 477, 122, 23);
-		add(btnTrain);
+		btnRail.setBounds(274, 477, 122, 23);
+		add(btnRail);
 		
 		JButton btnLogout = new JButton("Logout");
 		btnLogout.addActionListener(new ActionListener() {
@@ -69,7 +69,7 @@ public class CarteInterface extends JPanel {
 				logout();
 			}
 		});
-		btnLogout.setBounds(406, 477, 122, 23);
+		btnLogout.setBounds(678, 477, 122, 23);
 		add(btnLogout);
 		
 		ArrayList<Point> listePoints = ReseauTMP.ajouterStation();
@@ -87,10 +87,36 @@ public class CarteInterface extends JPanel {
 						break;
 					}
 				}
+				for(int i =0;i<graphique.getLines().size();i++) {
+					int id=graphique.getLines().get(i).containsID((graphique.getWidth() - e.getX()) / graphique.getPpm(), (e.getY()) / graphique.getPpm());
+					if(id>0) {
+						rail(id);
+						break;
+					}
+				}
+				
 			}
 		});
 		graphique.setBounds(10, 11, 980, 318);
 		add(graphique);
+		
+		JButton btnRecherche = new JButton("Recherche");
+		btnRecherche.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				recherche();
+			}
+		});
+		btnRecherche.setBounds(409, 477, 122, 23);
+		add(btnRecherche);
+		
+		JButton btnTrain = new JButton("Train");
+		btnTrain.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				train();
+			}
+		});
+		btnTrain.setBounds(541, 478, 122, 23);
+		add(btnTrain);
 		requestFocusInWindow();
 		
 		
@@ -107,10 +133,19 @@ public class CarteInterface extends JPanel {
 		PCS.firePropertyChange("passerStation", 0, id);
 	}
 	
-	public void train() {
-		PCS.firePropertyChange("passerTrain", 0, -1);
+	public void rail() {
+		PCS.firePropertyChange("passerRail", 0, -1);
+	}
+	public void rail(int id) {
+		PCS.firePropertyChange("passerRail", 0, id);
 	}
 	public void logout() {
 		PCS.firePropertyChange("logout", 0, -1);
+	}
+	public void recherche() {
+		PCS.firePropertyChange("passerRecherche", 0, -1);
+	}
+	public void train() {
+		PCS.firePropertyChange("passerTrain", 0, -1);
 	}
 }
