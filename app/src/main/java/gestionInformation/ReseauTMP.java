@@ -53,7 +53,7 @@ public class ReseauTMP {
 		return (ArrayList<Ligne>) optional
 			.get()
 			.stream()
-			.map(r -> new Ligne(r.getPoint1(), r.getPoint2()))
+			.map(r -> new Ligne(r.getPoint1(), r.getPoint2(),r.getId()))
 			.collect(Collectors.toList());
 	}
 }

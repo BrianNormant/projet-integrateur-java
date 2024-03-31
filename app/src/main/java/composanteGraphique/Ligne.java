@@ -13,13 +13,16 @@ public class Ligne {
 	private int x2;
 	private int y1;
 	private int y2;
+	private int id;
 	
-	public Ligne(Point point1, Point point2) {
+	
+	public Ligne(Point point1, Point point2, int id) {
 		this.nom = "rail "+point1.getNom()+point2.getNom();
 		this.x1 = point1.getX();
 		this.y1 = point1.getY();
 		this.x2 = point2.getX();
 		this.y2 = point2.getY();
+		this.id=id;
 	}
 	
 	public void dessiner(Graphics2D g2d, double ppm) {
@@ -31,4 +34,5 @@ public class Ligne {
 		g2dPrive.setStroke(new BasicStroke(50));
 		g2d.draw(mat.createTransformedShape(ligne));
 	}
+	
 }

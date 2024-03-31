@@ -48,14 +48,13 @@ public class Point {
 	}
 	public boolean contains(double posX, double posY) {
 		return cercle.contains(posX,posY);
-		
 	}
+	
 	public int containsID(double posX, double posY) {
 		int id=0;
 		if(cercle.contains(posX,posY)) {
 			id=this.id;
 		}
-		return id;
-		
+		return id;	
 	}
 }
