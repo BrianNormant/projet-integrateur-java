@@ -4,7 +4,9 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 
 public class Ligne {
 
@@ -23,7 +25,7 @@ public class Ligne {
 		this.x2 = point2.getX();
 		this.y2 = point2.getY();
 		this.id=id;
-		System.out.println("ID:"+id);
+		System.out.println(x2-x1 + " " + (y2-y1));
 	}
 	
 	public void dessiner(Graphics2D g2d, double ppm) {
@@ -35,12 +37,13 @@ public class Ligne {
 		g2dPrive.setColor(Color.black);
 		g2dPrive.setStroke(new BasicStroke(50));
 		g2d.draw(mat.createTransformedShape(ligne));
+	
 	}
 	
 	public int containsID(double posX, double posY) {
 		int id=0;
-		System.out.println("DANS LIGNE "+ligneAttribute.contains(posX,posY));
-		if(ligneAttribute.contains(posX,posY)) {
+		Rectangle2D.Double cercleClick = new Rectangle2D.Double(posX-30,posY-30,60,60);
+		if(ligneAttribute.intersects(cercleClick)) {
 			id=this.id;
 		}
 		return id;	

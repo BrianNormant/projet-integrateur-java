@@ -23,6 +23,7 @@ public class CarteInterface extends JPanel {
 	private JPanel contentPane;
 	private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 	private Graphique graphique;
+	private boolean inStation=false;
 	
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		PCS.addPropertyChangeListener(listener);
@@ -83,18 +84,21 @@ public class CarteInterface extends JPanel {
 				for(int i =0;i<graphique.getPoints().size();i++) {
 					int id=graphique.getPoints().get(i).containsID((graphique.getWidth() - e.getX()) / graphique.getPpm(), (e.getY()) / graphique.getPpm());
 					if(id>0) {
+						inStation=true;
 						station(id);
 						break;
 					}
 				}
-				for(int i =0;i<graphique.getLines().size();i++) {
-					int id=graphique.getLines().get(i).containsID((graphique.getWidth() - e.getX()) / graphique.getPpm(), (e.getY()) / graphique.getPpm());
-					if(id>0) {
-						rail(id);
-						break;
+				if(!inStation) {
+					for(int i =0;i<graphique.getLines().size();i++) {
+						int id=graphique.getLines().get(i).containsID((graphique.getWidth() - e.getX()) / graphique.getPpm(), (e.getY()) / graphique.getPpm());
+						if(id>0) {
+							rail(id);
+							break;
+						}
 					}
 				}
-				
+				setInStationFalse();
 			}
 		});
 		graphique.setBounds(10, 11, 980, 318);
@@ -147,5 +151,9 @@ public class CarteInterface extends JPanel {
 	}
 	public void train() {
 		PCS.firePropertyChange("passerTrain", 0, -1);
+	}
+	
+	public void setInStationFalse() {
+		this.inStation=false;
 	}
 }

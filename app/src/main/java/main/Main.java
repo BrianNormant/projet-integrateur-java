@@ -127,8 +127,6 @@ public class Main extends JFrame {
 					break;
 					
 				case "passerRail":
-					
-					//a mettre les bound
 					carte.setVisible(false);
 					rail.setVisible(true);
 					setContentPane(rail);

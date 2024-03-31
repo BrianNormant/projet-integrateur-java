@@ -20,7 +20,6 @@ public class Point {
 		this.x = x;
 		this.y = y;
 		this.id=id;
-		System.out.println("ID: " + this.id+ " NAME: "+this.nom);
 	}
 	
 	public void dessiner(Graphics2D g2d, double ppm) {
