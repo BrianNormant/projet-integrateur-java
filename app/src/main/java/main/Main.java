@@ -128,6 +128,8 @@ public class Main extends JFrame {
 					break;
 					
 				case "passerRail":
+					int idRail=(Integer)evt.getNewValue();
+					rail.setId(idRail);
 					carte.setVisible(false);
 					rail.setVisible(true);
 					setContentPane(rail);

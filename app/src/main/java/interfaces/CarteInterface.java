@@ -46,23 +46,6 @@ public class CarteInterface extends JPanel {
 		btnReservation.setBounds(10, 477, 122, 23);
 		add(btnReservation);
 		
-		/*JButton btnStation = new JButton("Station");
-		btnStation.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				station();
-			}
-		});
-		btnStation.setBounds(142, 477, 122, 23);
-		add(btnStation);*/
-		
-		JButton btnRail = new JButton("Rail");
-		btnRail.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				rail();
-			}
-		});
-		btnRail.setBounds(274, 477, 122, 23);
-		add(btnRail);
 		
 		JButton btnLogout = new JButton("Logout");
 		btnLogout.addActionListener(new ActionListener() {

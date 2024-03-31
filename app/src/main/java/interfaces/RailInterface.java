@@ -10,11 +10,15 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import java.awt.Font;
 
 public class RailInterface extends JPanel {
 
 	private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 	private JPanel contentPane;
+	private int id;
+	private JLabel lblRailId; 
 	
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		PCS.addPropertyChangeListener(listener);
@@ -32,11 +36,22 @@ public class RailInterface extends JPanel {
 		});
 		btnBack.setBounds(10, 11, 89, 23);
 		add(btnBack);
+		
+		lblRailId = new JLabel("...");
+		lblRailId.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		lblRailId.setBounds(155, 16, 200, 47);
+		add(lblRailId);
 		requestFocusInWindow();
 	}
 	
 	public void back() {
 		PCS.firePropertyChange("back", 0, -1);
+	}
+
+	public void setId(int idRail) {
+		this.id=id;
+		this.lblRailId.setText("Rail id: "+idRail);
+		
 	}
 
 }
