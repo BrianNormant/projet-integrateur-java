@@ -9,15 +9,18 @@ public class Point {
 
 	private int x;
 	private int y;
+	private int id;
 	private String nom;
 	private double rayon = 50;
 	private Ellipse2D cercle;
 	private double ppm;
 	
-	public Point (String nom, int x, int y) {
+	public Point (String nom, int x, int y, int id) {
 		this.nom = nom;
 		this.x = x;
 		this.y = y;
+		this.id=id;
+		System.out.println("ID: " + this.id+ " NAME: "+this.nom);
 	}
 	
 	public void dessiner(Graphics2D g2d, double ppm) {
@@ -45,6 +48,14 @@ public class Point {
 	}
 	public boolean contains(double posX, double posY) {
 		return cercle.contains(posX,posY);
+		
+	}
+	public int containsID(double posX, double posY) {
+		int id=0;
+		if(cercle.contains(posX,posY)) {
+			id=this.id;
+		}
+		return id;
 		
 	}
 }

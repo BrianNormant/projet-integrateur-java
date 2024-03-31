@@ -168,7 +168,7 @@ public final class Users implements Endpoint {
 							(Integer) data.get("id")
 							
 						));
-				System.out.println("Rail: " +(Integer) data.get("con1")+" "+(Integer) data.get("con2")+" "+(Integer) data.get("id"));
+				//System.out.println("Rail: " +(Integer) data.get("con1")+" "+(Integer) data.get("con2")+" "+(Integer) data.get("id"));
 			}
 		} catch (Exception fail) {
 			return Optional.empty();
@@ -263,7 +263,7 @@ public final class Users implements Endpoint {
 						Rail.getRailIfExists((Integer)(data.get("rail")))
 						);
 				reservations.add(rail);
-				System.out.println(rail);
+				//System.out.println(rail);
 
 			}
 			return Optional.of(reservations);
