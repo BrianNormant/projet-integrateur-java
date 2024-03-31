@@ -28,7 +28,7 @@ public class PanelsReservations extends JPanel {
 	public PanelsReservations() {
 		
 		reservations= ajouterReservations();
-		System.out.println("Grandeur Reserv "+reservations.size());
+		System.out.println(reservations.size());
 		
 		
 		setLayout(new GridLayout(reservations.size(),1,0,10)); // Exemple de layout
@@ -46,7 +46,7 @@ public class PanelsReservations extends JPanel {
 		
 		Optional<List<Reservation>> reservations = Users.requestReservations();
 		
-		System.out.println("ALLO "+reservations.isPresent());
+		System.out.println("")
 
 		if (!reservations.isPresent()) {return new ArrayList<Reservation>();}
 

@@ -271,7 +271,7 @@ public final class Users implements Endpoint {
 							(String)data.get("company_id"),
 							(String)data.get("dateReserv"),
 							(String)data.get("timeSlot"),
-							requestRail((Integer)(data.get("id")))		
+							requestRail((Integer)(data.get("rail_id")))		
 							));
 				System.out.println("Reservation: "+(Integer)data.get("id")+ (String)data.get("company_id")+(String)data.get("dateReserv")+(String)data.get("timeSlot")+requestRail((Integer)(data.get("id"))));
 			}
