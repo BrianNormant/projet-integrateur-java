@@ -75,7 +75,6 @@ public final class Users implements Endpoint {
 				.build();
 		} catch (URISyntaxException fail) {
 			System.err.println("Fatal, Invalid URL");
-			System.exit(1);
 		};
 		try {
 			var client = HttpClient.newHttpClient();
@@ -86,9 +85,7 @@ public final class Users implements Endpoint {
 				case 417,404,408 -> false;
 				default -> false;
 			};
-		} catch (Exception ignored) {
-			System.exit(1);
-		};
+		} catch (Exception ignored) {};
 		return false;
 	}
 
@@ -102,7 +99,6 @@ public final class Users implements Endpoint {
 				.build();
 		} catch (URISyntaxException fatal) {
 			System.err.println("Fatal, Invalid URL");
-			System.exit(1);
 		};
 		try {
 			var client = HttpClient.newHttpClient();
@@ -127,7 +123,6 @@ public final class Users implements Endpoint {
 				.build();
 		} catch (URISyntaxException fatal) {
 			System.err.println("Fatal, Invalid URL");
-			System.exit(1);
 		};
 		try {
 			var client = HttpClient.newHttpClient();
@@ -159,7 +154,6 @@ public final class Users implements Endpoint {
 				.build();
 		} catch (URISyntaxException fatal) {
 			System.err.println("Fatal, Invalid URL");
-			System.exit(1);
 		};
 		try {
 			var client = HttpClient.newHttpClient();
@@ -168,7 +162,7 @@ public final class Users implements Endpoint {
 			var json = new JSONArray(response.body());
 			for (var jo : json) {
 				var data = (JSONObject)jo;
-				rails.add(new Rail(
+				rails.add(Rail.createRail(
 							(Integer) data.get("con1"),
 							(Integer) data.get("con2"),
 							(Integer) data.get("id")
@@ -194,7 +188,6 @@ public final class Users implements Endpoint {
 				.build();
 		} catch (URISyntaxException fatal) {
 			System.err.println("Fatal, Invalid URL");
-			System.exit(1);
 		};
 		try {
 			var client = HttpClient.newHttpClient();
@@ -228,7 +221,6 @@ public final class Users implements Endpoint {
 				.build();
 		} catch (URISyntaxException fatal) {
 			System.err.println("Fatal, Invalid URL");
-			System.exit(1);
 		};
 		try {
 			var client = HttpClient.newHttpClient();
@@ -237,10 +229,7 @@ public final class Users implements Endpoint {
 				case 200 -> true;
 				default -> false;
 			};
-		} catch (Exception e) {
-			System.exit(1);
-		}
-		System.exit(1);
+		} catch (Exception e) { }
 		return false;
 	}*/
 	
@@ -266,25 +255,29 @@ public final class Users implements Endpoint {
 			var json = new JSONArray(response.body());
 			for (var jo : json) {
 				var data = (JSONObject)jo;
-				reservations.add(new Reservation(
-							(Integer)data.get("id"),
-							(String)data.get("company_id"),
-							(String)data.get("dateReserv"),
-							(String)data.get("timeSlot"),
-							requestRail((Integer)(data.get("rail_id")))		
-							));
-				System.out.println("Reservation: "+(Integer)data.get("id")+ (String)data.get("company_id")+(String)data.get("dateReserv")+(String)data.get("timeSlot")+requestRail((Integer)(data.get("id"))));
+				var rail = new Reservation(
+						(Integer)data.get("id"),
+						(String)data.get("company_id"),
+						(String)data.get("date"),
+						(String)data.get("period"),
+						Rail.getRailIfExists((Integer)(data.get("rail")))
+						);
+				reservations.add(rail);
+				System.out.println(rail);
+
 			}
+			return Optional.of(reservations);
 		} catch (Exception fail) {
+			System.out.print("Failed");
+			fail.printStackTrace();
+
 			return Optional.empty();
-		};
-		return Optional.of(reservations);
+		}
 	}
 	
 	
 	public static Optional<Rail> requestRail(int railNumber) {
 		HttpRequest request = null;
-		Rail rail = new Rail(0, 0, 0);
 		try {
 			request = HttpRequest.newBuilder()
 				.uri( new URI(URL + "rail/"+railNumber) )
@@ -292,25 +285,25 @@ public final class Users implements Endpoint {
 				.build();
 		} catch (URISyntaxException fatal) {
 			System.err.println("Fatal, Invalid URL");
-			System.exit(1);
-		};
+		}
 		try {
 			var client = HttpClient.newHttpClient();
 			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 			
 			var json = new JSONArray(response.body());
+			Rail rail = null;
 			for (var jo : json) {
 				var data = (JSONObject)jo;
-				rail = new Rail(
+				rail = Rail.createRail(
 							(Integer) data.get("con1"),
 							(Integer) data.get("con2"),
 							(Integer) data.get("id")
 						);
-				System.out.println("Rail perso: " +(Integer) data.get("con1")+" "+(Integer) data.get("con2")+" "+(Integer) data.get("id"));
 			}
+			return Optional.of(rail);
+
 		} catch (Exception fail) {
 			return Optional.empty();
-		};
-		return Optional.of(rail);
+		}
 	}
 }

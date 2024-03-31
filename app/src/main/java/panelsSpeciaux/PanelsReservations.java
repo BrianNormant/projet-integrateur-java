@@ -46,7 +46,6 @@ public class PanelsReservations extends JPanel {
 		
 		Optional<List<Reservation>> reservations = Users.requestReservations();
 		
-		System.out.println("")
 
 		if (!reservations.isPresent()) {return new ArrayList<Reservation>();}
 
