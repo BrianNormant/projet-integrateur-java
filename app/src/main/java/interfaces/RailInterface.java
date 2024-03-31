@@ -49,8 +49,8 @@ public class RailInterface extends JPanel {
 	}
 
 	public void setId(int idRail) {
-		this.id=id;
-		this.lblRailId.setText("Rail id: "+idRail);
+		this.id=idRail;
+		this.lblRailId.setText("Rail id: "+id);
 		
 	}
 
