@@ -27,7 +27,7 @@ public class Rail {
 	private Rail(int con1, int con2, int id) {
 		this.con1 = Station.createOrGetStation(con1);
 		this.con2 = Station.createOrGetStation(con2);
-		this.id = 0;
+		this.id = id;
 
 		railMap.put(id, this);
 	}
@@ -49,5 +49,17 @@ public class Rail {
 
 	public Point getPoint2() {
 		return con2.getPoint();
+	}
+
+	public Station getCon1() {
+		return con1;
+	}
+
+	public Station getCon2() {
+		return con2;
+	}
+
+	public int getId() {
+		return id;
 	}
 }

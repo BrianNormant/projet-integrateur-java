@@ -39,4 +39,35 @@ public class Reservation {
 		return "Reservation [rail=" + rail + ", date=" + date + ", period=" + period + ", id=" + id + ", company_id="
 				+ company_id + "]";
 	}
+	public Rail getRail() {
+		return rail;
+	}
+	public void setRail(Rail rail) {
+		this.rail = rail;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public String getPeriod() {
+		return period;
+	}
+	public void setPeriod(String period) {
+		this.period = period;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getCompany_id() {
+		return company_id;
+	}
+	public void setCompany_id(String company_id) {
+		this.company_id = company_id;
+	}
+	
 }
