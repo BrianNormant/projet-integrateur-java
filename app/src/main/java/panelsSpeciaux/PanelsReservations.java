@@ -4,13 +4,19 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
+import api.Users;
+import composanteGraphique.Point;
+import gestionInformation.Rail;
 import gestionInformation.Reservation;
+import gestionInformation.Station;
+import gestionInformation.Train;
 
 public class PanelsReservations extends JPanel {
 	
@@ -20,8 +26,13 @@ public class PanelsReservations extends JPanel {
 	 * Create the panel.
 	 */
 	public PanelsReservations() {
-		setLayout(new GridLayout(/*reservations.size()*/2,1,0,10)); // Exemple de layout
-        for (int i = 1; i <= 2/*reservations.size()*/; i++) {
+		
+		reservations= ajouterReservations();
+		System.out.println("Grandeur Reserv "+reservations.size());
+		
+		
+		setLayout(new GridLayout(reservations.size(),1,0,10)); // Exemple de layout
+        for (int i = 1; i <= reservations.size(); i++) {
             add(new PanelReservation());
             
         }
@@ -30,6 +41,24 @@ public class PanelsReservations extends JPanel {
         setPreferredSize(new Dimension(900,165 * 2/*reservations.size()*/));
         setBackground(Color.BLACK);
     }
+	
+	public ArrayList<Reservation> ajouterReservations() {
+		
+		Optional<List<Reservation>> reservations = Users.requestReservations();
+		
+		System.out.println("ALLO "+reservations.isPresent());
+
+		if (!reservations.isPresent()) {return new ArrayList<Reservation>();}
+
+		return (ArrayList<Reservation>) reservations
+			.get()
+			.stream()
+			.collect(Collectors.toList());
+	
+			}
+		
+	
+
 	}
 
 

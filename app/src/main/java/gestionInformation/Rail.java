@@ -13,10 +13,6 @@ public class Rail {
 		this.id = 0;
 	}
 	
-	/*public Rail(int con1, int con2) {
-		this.con1 = Station.createOrGetStation(con1);
-		this.con2 = Station.createOrGetStation(con2);
-	}*/
 
 	@Override
 	public boolean equals(Object o) {
