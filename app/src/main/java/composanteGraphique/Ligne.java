@@ -13,13 +13,17 @@ public class Ligne {
 	private int x2;
 	private int y1;
 	private int y2;
+	private int id;
+	private Line2D.Double ligneAttribute;
 	
-	public Ligne(Point point1, Point point2) {
+	public Ligne(Point point1, Point point2, int id) {
 		this.nom = "rail "+point1.getNom()+point2.getNom();
 		this.x1 = point1.getX();
 		this.y1 = point1.getY();
 		this.x2 = point2.getX();
 		this.y2 = point2.getY();
+		this.id=id;
+		System.out.println("ID:"+id);
 	}
 	
 	public void dessiner(Graphics2D g2d, double ppm) {
@@ -27,8 +31,18 @@ public class Ligne {
 		AffineTransform mat = new AffineTransform();
 		mat.scale(-ppm, ppm);
 		Line2D.Double ligne = new Line2D.Double(x1, y1, x2, y2);
+		ligneAttribute=ligne;
 		g2dPrive.setColor(Color.black);
 		g2dPrive.setStroke(new BasicStroke(50));
 		g2d.draw(mat.createTransformedShape(ligne));
+	}
+	
+	public int containsID(double posX, double posY) {
+		int id=0;
+		System.out.println("DANS LIGNE "+ligneAttribute.contains(posX,posY));
+		if(ligneAttribute.contains(posX,posY)) {
+			id=this.id;
+		}
+		return id;	
 	}
 }
