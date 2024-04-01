@@ -1,26 +1,19 @@
 package interfaces;
 
-import java.awt.EventQueue;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
-import api.Users;
-import composanteGraphique.Point;
-import gestionInformation.ReseauTMP;
-import gestionInformation.Train;
+import api.RestApi;
+import composanteGraphique.Station;
+import composanteGraphique.Train;
 
 import javax.swing.JList;
-import javax.swing.AbstractListModel;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -33,7 +26,7 @@ public class StationInterface extends JPanel {
 	private JLabel lblId;
 	private int id;
 	private String token;
-	private ArrayList<Train> listeTrains = new ArrayList();
+	private ArrayList<Train> listeTrains = new ArrayList<>();
 	private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 	
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -72,27 +65,30 @@ public class StationInterface extends JPanel {
 	}
 	
 	public void ajouterInfoStation(int x, int y) {
-		ArrayList<Point> listePoints = ReseauTMP.ajouterStation();
-		
-		for(Point point: listePoints) {
-			if(point.contains(x, y)) {
-				lblNom.setText(point.getNom());
-				
-			}
-		}
+		// pas utiliser?
+		var ss = RestApi.requestStations()
+			.get()
+			.stream()
+			.filter(s -> s.contains(x,y))
+			.map(Station::getName)
+			.collect(Collectors.toList());
+
+		if (ss.size() == 0)
+			lblNom.setText(ss.get(0));
 	}
 
 
 	public void setId(int id) {
 		this.id=id;
 		this.lblId.setText("STATION ID: "+ this.id);
-		
+		this.lblNom.setText(Station.createOrGetStation(id).getName());
 	}
+
 	public void setToken(String token) {
 		this.token = token;
 	}
 	
 	public void setListe() {
-		Users.requestTrainsPourStation(token, id);
+		RestApi.requestTrainsPourStation(token, id);
 	}
 }

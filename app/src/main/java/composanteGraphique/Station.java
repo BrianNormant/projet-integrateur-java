@@ -1,10 +1,11 @@
-package gestionInformation;
+package composanteGraphique;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
 import java.util.HashMap;
-
-import composanteGraphique.Point;
-
-public class Station {
+public class Station implements Dessinable {
 
 	private static final HashMap<Integer, Station> stations = new HashMap<>();
 
@@ -60,8 +61,26 @@ public class Station {
 	public int getY() {
 		return y;
 	}
+	private static final double SIZE = 50;
 
-	public Point getPoint() {
-		return new Point(name, x, y,id);
+	public void dessiner(Graphics2D g2d, double ppm) {
+		Graphics2D g2dPrive = (Graphics2D) g2d.create();
+		AffineTransform mat = new AffineTransform();
+		mat.scale(-ppm, ppm);
+		var cercle = new Ellipse2D.Double(x - (SIZE/2), y - (SIZE/2), SIZE, SIZE);
+		g2dPrive.setColor(Color.black);
+		g2dPrive.draw(mat.createTransformedShape(cercle));
+		g2dPrive.setColor(Color.red);
+		g2dPrive.fill(mat.createTransformedShape(cercle));
+	}
+
+	public boolean contains(double x, double y) {
+
+		var cercle = new Ellipse2D.Double(this.x - (SIZE/2), this.y - (SIZE/2), SIZE, SIZE);
+
+		if (cercle.contains(x,y)) {
+			System.out.printf("Station id:%d contain pos (%.1f, %.1f)\n", id, x, y);
+		}
+		return cercle.contains(x, y);
 	}
 }

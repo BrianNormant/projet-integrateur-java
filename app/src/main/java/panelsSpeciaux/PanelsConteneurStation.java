@@ -1,26 +1,20 @@
 package panelsSpeciaux;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import api.Users;
-import composanteGraphique.Point;
-import gestionInformation.Rail;
-import gestionInformation.Reservation;
-import gestionInformation.Station;
-import gestionInformation.Train;
+import api.RestApi;
+import composanteGraphique.Train;
 
 public class PanelsConteneurStation extends JPanel {
 	
-	private ArrayList<Train> listeTrains = new ArrayList();
+	private ArrayList<Train> listeTrains = new ArrayList<>();
 	private List<PanelTrainVersStation> panels = new ArrayList<PanelTrainVersStation>() ;
 	private int id;
 	private String token;
@@ -34,7 +28,7 @@ public class PanelsConteneurStation extends JPanel {
 	
 	public ArrayList<Train> ajouterTrains() {
 		
-		Optional<List<Train>> trains = Users.requestTrainsPourStation(token, id);
+		Optional<List<Train>> trains = RestApi.requestTrainsPourStation(token, id);
 		
 
 		if (!trains.isPresent()) {return new ArrayList<Train>();}
@@ -90,6 +84,6 @@ public class PanelsConteneurStation extends JPanel {
 		
 	
 
-	}
+}
 
 

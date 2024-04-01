@@ -3,29 +3,24 @@ package api;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
-import java.net.http.HttpHeaders;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import io.vavr.control.Either;
+import main.Main;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import gestionInformation.Station;
-import gestionInformation.Train;
-import gestionInformation.Reservation.ReservationPeriod;
-import gestionInformation.Rail;
+import composanteGraphique.*;
+
 import gestionInformation.Reservation;
 
-public final class Users implements Endpoint {
+public final class RestApi {
 
 	private static final String URL = "https://equipe500.tch099.ovh/projet6/api/";
-
 
 	/*
 	 *
@@ -176,18 +171,18 @@ public final class Users implements Endpoint {
 		return Optional.of(rails);
 	}
 	
-	public static Optional<List<Train>> requestTrains(String token) {
+	public static Optional<List<Train>> requestTrains() {
 		HttpRequest request = null;
 		ArrayList<Train> trains = new ArrayList<>();
 		
 		try {
 			request = HttpRequest.newBuilder()
 				.uri( new URI(URL + "trains") )
-				.header("Authorization", token)
+				.header("Authorization", Main.getToken())
 				.GET()
 				.build();
 		} catch (URISyntaxException fatal) {
-			System.err.println("Fatal, Invalid URL");
+			System.out.println("Fatal, Invalid URL");
 		};
 		try {
 			var client = HttpClient.newHttpClient();
@@ -196,13 +191,14 @@ public final class Users implements Endpoint {
 			var json = new JSONArray(response.body());
 			for (var jo : json) {
 				var data = (JSONObject)jo;
-				trains.add(new Train(
-							(String) data.get("id"),
-							(String) data.get("rail_id"),
-							(String) data.get("pos")
+				trains.add(Train.createOrGet(
+							(Integer) data.get("id"),
+							(Integer) data.get("rail_id"),
+							(Integer) data.get("pos")
 						));
 			}
 		} catch (Exception fail) {
+			fail.printStackTrace();
 			return Optional.empty();
 		};
 		return Optional.of(trains);
@@ -229,10 +225,10 @@ public final class Users implements Endpoint {
 			var json = new JSONArray(response.body());
 			for (var jo : json) {
 				var data = (JSONObject)jo;
-				trains.add(new Train(
-							(String) data.get("id"),
-							(String) data.get("rail_id"),
-							(String) data.get("pos")
+				trains.add(Train.createOrGet(
+							(Integer) data.get("id"),
+							(Integer) data.get("rail_id"),
+							(Integer) data.get("pos")
 						));
 			}
 		} catch (Exception fail) {
@@ -265,8 +261,44 @@ public final class Users implements Endpoint {
 		} catch (Exception e) { }
 		return false;
 	}*/
-	
-	
+
+	/**
+	 * Recuperer et cree/update un train par rapport au details du dit train sur le reseaux actuel.
+	 * @param train l'id du train
+	 * @return un nouveau ou le meme train updater
+	 */
+	public static Optional<Train> requestTrain(Integer train) {
+		HttpRequest request = null;
+		try {
+			request = HttpRequest.newBuilder()
+				.uri( new URI(URL + "train/" + train + "/details") )
+				.header("Authorization", Main.getToken() )
+				.GET()
+				.build();
+		} catch (URISyntaxException fatal) {
+			System.err.println("Fatal, Invalid URL");
+		}
+
+		try {
+			var client = HttpClient.newHttpClient();
+			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+			Train trainRef = Train.createOrGet(train);
+			
+			var json = new JSONObject(response.body());
+			
+			trainRef.setRail((Integer) json.get("rail"));
+			trainRef.setPos( (Integer)  json.get("pos"));
+
+			return Optional.of(trainRef);
+
+		} catch (Exception fail) {
+			System.out.print("Failed");
+			fail.printStackTrace();
+
+			return Optional.empty();
+		}
+	}
 	
 	public static Optional<List<Reservation>> requestReservations() {
 		HttpRequest request = null;
@@ -279,7 +311,6 @@ public final class Users implements Endpoint {
 				.build();
 		} catch (URISyntaxException fatal) {
 			System.err.println("Fatal, Invalid URL");
-			System.exit(1);
 		};
 		try {
 			var client = HttpClient.newHttpClient();
@@ -308,6 +339,7 @@ public final class Users implements Endpoint {
 		}
 	}
 	
+
 	
 	public static Optional<Rail> requestRail(int railNumber) {
 		HttpRequest request = null;

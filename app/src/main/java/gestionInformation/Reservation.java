@@ -1,4 +1,7 @@
 package gestionInformation;
+
+import composanteGraphique.Rail;
+
 public class Reservation {
 	private Rail rail;
 	private String date;
