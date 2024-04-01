@@ -14,6 +14,10 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import gestionInformation.Rail;
+import gestionInformation.Station;
+
 import javax.swing.JComboBox;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -24,7 +28,11 @@ public class RechercheInterface extends JPanel {
 private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 
 	private String idAff = "ID";
-	private JTextField textid;
+	private JTextField textId;
+	private JComboBox cmbType;
+	private boolean exist;
+	private JLabel lblErrorIdNotFound;
+	private String error="Erreur, l'identifiant entrée ne correspond à aucun";
 	
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		PCS.addPropertyChangeListener(listener);
@@ -48,13 +56,14 @@ private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 		btnBack.setBounds(10, 11, 89, 23);
 		add(btnBack);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(189, 41, 172, 48);
-		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"RAIL", "STATION"}));
-		add(comboBox);
+		cmbType = new JComboBox();
+		cmbType.setBackground(Color.WHITE);
+		cmbType.setBounds(189, 41, 172, 48);
+		cmbType.setModel(new DefaultComboBoxModel<String>(new String[] {"RAIL", "STATION"}));
+		add(cmbType);
 	
-		textid = new JTextField();
-		textid.addKeyListener(new KeyAdapter() {
+		textId = new JTextField();
+		textId.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				if(!Character.isDigit(e.getKeyChar())) {
@@ -62,35 +71,58 @@ private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 					}
 				}
 		});
-		textid.setText(idAff);
-		textid.setFont(textid.getFont().deriveFont(Font.ITALIC));
-		textid.setForeground(new Color(128, 128, 128, 128));
-		textid.addFocusListener(new FocusAdapter() {
+		textId.setText(idAff);
+		textId.setFont(textId.getFont().deriveFont(Font.ITALIC));
+		textId.setForeground(new Color(128, 128, 128, 128));
+		textId.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				if (textid.getText().equals(idAff)) {
-					textid.setText("");
-					textid.setFont(textid.getFont().deriveFont(Font.PLAIN));
-					textid.setForeground(new Color(0, 0, 0, 255));
+				if (textId.getText().equals(idAff)) {
+					textId.setText("");
+					textId.setFont(textId.getFont().deriveFont(Font.PLAIN));
+					textId.setForeground(new Color(0, 0, 0, 255));
 				}
 			}
 			@Override
 			public void focusLost(FocusEvent e) {
-				if (textid.getText().equals("")) {
-					textid.setText(idAff);
-					textid.setFont(textid.getFont().deriveFont(Font.ITALIC));
-					textid.setForeground(new Color(128, 128, 128, 128));	
+				if (textId.getText().equals("")) {
+					textId.setText(idAff);
+					textId.setFont(textId.getFont().deriveFont(Font.ITALIC));
+					textId.setForeground(new Color(128, 128, 128, 128));	
 				}
 			}
 		});
-		textid.setBounds(550, 44, 172, 44);
-		add(textid);
-		textid.setColumns(10);
+		textId.setBounds(550, 44, 172, 44);
+		add(textId);
+		textId.setColumns(10);
 		
 		JButton btnRecherche = new JButton("Recherche");
 		btnRecherche.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//get type et id pour afficher bon type de panel
+				switch(cmbType.getSelectedIndex()) {
+				case 0: //Rail
+					exist=Rail.stationIfExists(Integer.parseInt(textId.getText()));
+					System.out.println("Rail "+ exist);
+					if(exist) {
+						lblErrorIdNotFound.setText("");
+						
+					}else {
+						lblErrorIdNotFound.setText(error+" rail.");
+					}
+					break;
+				case 1: // Station
+					exist=Station.stationIfExists(Integer.parseInt(textId.getText()));
+					System.out.println("Station "+ exist);
+					if(exist) {
+						lblErrorIdNotFound.setText("");
+						
+					}else {
+						lblErrorIdNotFound.setText(error+"e station.");
+					}	
+					break;
+				}
+				
+				
 			}
 		});
 		btnRecherche.setBounds(774, 45, 172, 41);
@@ -105,6 +137,11 @@ private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 		lblIdentifiant.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblIdentifiant.setBounds(399, 41, 141, 44);
 		add(lblIdentifiant);
+		
+		lblErrorIdNotFound = new JLabel("");
+		lblErrorIdNotFound.setForeground(Color.RED);
+		lblErrorIdNotFound.setBounds(48, 99, 708, 23);
+		add(lblErrorIdNotFound);
 	}
 	
 	public void back() {

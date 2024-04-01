@@ -23,6 +23,12 @@ public class Rail {
 			return railMap.get(id);
 		} else return null;
 	}
+	
+	public static Boolean stationIfExists(int id) {
+		if (railMap.containsKey(id)) {
+			return true;
+		} else return false;
+	}
 
 	private Rail(int con1, int con2, int id) {
 		this.con1 = Station.createOrGetStation(con1);

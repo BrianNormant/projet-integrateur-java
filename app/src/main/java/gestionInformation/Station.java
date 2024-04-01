@@ -34,6 +34,16 @@ public class Station {
 			return new Station(id, null, 0, 0);
 		}
 	}
+	public static Station getStationIfExists(int id) {
+		if (stations.containsKey(id)) {
+			return stations.get(id);
+		} else return null;
+	}
+	public static Boolean stationIfExists(int id) {
+		if (stations.containsKey(id)) {
+			return true;
+		} else return false;
+	}
 
 	public int getId() {
 		return id;
