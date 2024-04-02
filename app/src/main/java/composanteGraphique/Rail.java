@@ -71,12 +71,21 @@ public class Rail implements Dessinable {
 		return id;
 	}
 
+	public double getXLen() { return Math.abs(x1 - x2); }
+	public double getYLen() { return Math.abs(y1 - y2); }
+	public double getLen() {
+		return Math.sqrt(
+				getXLen() * getXLen() +
+				getYLen() * getYLen()
+				);
+	}
+
 
 	// Ces methodes s'occupe  de rendre cette classe dessinable
-	private int x1;
-	private int x2;
-	private int y1;
-	private int y2;
+	protected final int x1;
+	protected final int x2;
+	protected final int y1;
+	protected final int y2;
 	public void dessiner(Graphics2D g2d, double ppm) {
 		Graphics2D g2dPrive = (Graphics2D) g2d.create();
 		AffineTransform mat = new AffineTransform();

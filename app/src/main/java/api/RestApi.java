@@ -1,5 +1,6 @@
 package api;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
@@ -191,10 +192,20 @@ public final class RestApi {
 			var json = new JSONArray(response.body());
 			for (var jo : json) {
 				var data = (JSONObject)jo;
+				double pos;
+				if (data.get("pos") instanceof BigDecimal bd) {
+					pos = bd.doubleValue();
+				} else if (data.get("pos") instanceof Double d) {
+					pos = d;
+				} else if (data.get("pos") instanceof Integer i) {
+					pos = i;
+				} else {
+					pos = 50;
+				}
 				trains.add(Train.createOrGet(
 							(Integer) data.get("id"),
 							(Integer) data.get("rail_id"),
-							(Integer) data.get("pos")
+							pos
 						));
 			}
 		} catch (Exception fail) {
@@ -286,9 +297,21 @@ public final class RestApi {
 			Train trainRef = Train.createOrGet(train);
 			
 			var json = new JSONObject(response.body());
-			
-			trainRef.setRail((Integer) json.get("rail"));
-			trainRef.setPos( (Integer)  json.get("pos"));
+
+
+			trainRef.setLastStation((Integer) (( (JSONObject)json.get("next_station") ).get("id")) );
+			trainRef.setRail((Integer) (( (JSONObject)json.get("rail") ).get("id")) );
+			double pos;
+				if (json.get("pos") instanceof BigDecimal bd) {
+					pos = bd.doubleValue();
+				} else if (json.get("pos") instanceof Double d) {
+					pos = d;
+				} else if (json.get("pos") instanceof Integer i) {
+					pos = i;
+				} else {
+					pos = 50;
+				}
+			trainRef.setPos(pos);
 
 			return Optional.of(trainRef);
 

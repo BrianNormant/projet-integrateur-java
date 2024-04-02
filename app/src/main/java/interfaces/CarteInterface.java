@@ -135,11 +135,13 @@ public class CarteInterface extends JPanel implements Runnable {
 	 */
 	@Override
 	public void run() {
-		// graphique.updateTrains();
-		try {
-			Thread.sleep(250);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		while (true) {
+			graphique.tick();
+			try {
+				Thread.sleep(250);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }

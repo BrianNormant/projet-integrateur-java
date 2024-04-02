@@ -10,10 +10,9 @@ import java.util.stream.Collectors;
 import javax.swing.JPanel;
 
 import api.RestApi;
-import gestionInformation.*;
 import io.vavr.control.Either;
 
-public class Graphique extends JPanel{
+public class Graphique extends JPanel {
 	
 	private double ppm;
 	private double largeur;
@@ -24,6 +23,17 @@ public class Graphique extends JPanel{
 	private ArrayList<Train> trains = new ArrayList<>();
 	private ArrayList<Dessinable> dessinables = new ArrayList<>();
 	
+	public void tick() {
+		trains.addAll(
+				RestApi.requestTrains().get()
+				.stream()
+				.filter(t -> !trains.contains(t))
+				.collect(Collectors.toList())
+				);
+		trains.forEach(t -> RestApi.requestTrain(t.getId()));
+		this.repaint();
+	}
+
 	/**
 	 * Se charge de creer un graphique avec la largeur donne a l'element
 	 * Puisque le reseaux et fix, les station et rail ne seront recuper qu'a la creation
@@ -35,6 +45,8 @@ public class Graphique extends JPanel{
 		stations = (ArrayList<Station>) RestApi.requestStations().get();
 		rails = (ArrayList<Rail>) RestApi.requestRails().get();
 		trains = (ArrayList<Train>) RestApi.requestTrains().get();
+		
+		trains.forEach(t -> RestApi.requestTrain(t.getId()));
 
 		// first draw rail, then station and lastly trains
 		dessinables.addAll(rails);
