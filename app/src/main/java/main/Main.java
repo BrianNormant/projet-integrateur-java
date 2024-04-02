@@ -36,6 +36,7 @@ public class Main extends JFrame {
 	private static String pwd;
 	private boolean autorisation;
 	
+
 	private static boolean modeFlemme = true;
 
 	static {
@@ -45,9 +46,8 @@ public class Main extends JFrame {
 			token = setToken();
 		}
 	}
+
 	
-
-
 	/**
 	 * Launch the application.
 	 */
