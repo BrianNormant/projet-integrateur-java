@@ -42,7 +42,7 @@ public class Main extends JFrame {
 	private String pwd;
 	private boolean autorisation;
 	
-	private boolean modeFlemme = true;
+	private boolean modeFlemme = false;
 	
 
 
