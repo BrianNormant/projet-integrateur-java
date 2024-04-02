@@ -3,25 +3,19 @@ package main;
 import java.awt.EventQueue;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import api.LoginError;
-import api.Users;
-import composanteGraphique.Graphique;
-import composanteGraphique.Ligne;
-import composanteGraphique.Point;
-import gestionInformation.ReseauTMP;
-import gestionInformation.Train;
+import api.RestApi;
 import interfaces.CarteInterface;
 import interfaces.LoginInterface;
-import interfaces.ReservationInterface;
-import interfaces.StationInterface;
 import interfaces.RailInterface;
 import interfaces.RechercheInterface;
+import interfaces.ReservationInterface;
+import interfaces.StationInterface;
 import interfaces.TrainChoisiInterface;
 import io.vavr.control.Either;
 
@@ -37,15 +31,23 @@ public class Main extends JFrame {
 	private RailInterface rail = new RailInterface(getX(),getY(),getWidth(),getHeight());
 	private TrainChoisiInterface train= new TrainChoisiInterface(getX(),getY(),getWidth(),getHeight());
 	private RechercheInterface recherche= new RechercheInterface(getX(),getY(),getWidth(),getHeight());
-	private String token;
-	private String nom;
-	private String pwd;
+	private static String token;
+	private static String nom;
+	private static String pwd;
 	private boolean autorisation;
 	
-	private boolean modeFlemme = false;
+
+	private static boolean modeFlemme = true;
+
+	static {
+		if (modeFlemme) {
+			nom = "admin";
+			pwd = "1234";
+			token = setToken();
+		}
+	}
+
 	
-
-
 	/**
 	 * Launch the application.
 	 */
@@ -252,8 +254,8 @@ public class Main extends JFrame {
 		this.pwd = pwd;
 	}
 
-	public String setToken() {
-		Either<String, LoginError> result = Users.requestLogin(nom, pwd);
+	public static String setToken() {
+		Either<String, LoginError> result = RestApi.requestLogin(nom, pwd);
 		System.out.println(result);
 		
 		if(result.isLeft()) {
@@ -264,15 +266,17 @@ public class Main extends JFrame {
 		}
 
 	}
+
 	
 	private void flemme() {
-		setNom("admin");
-		setPwd("1234");
-		token = setToken();
 		setBounds(100, 100, 1000, 600);
 		login.setVisible(false);
 		carte.setVisible(true);
 		setContentPane(carte);
 		carte.requestFocusInWindow();
+	}
+
+	public static String getToken() {
+		return Main.token;
 	}
 }

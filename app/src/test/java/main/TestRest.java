@@ -2,7 +2,7 @@ package main;
 
 import org.junit.Test;
 
-import api.Users;
+import api.RestApi;
 
 import static org.junit.Assert.*;
 
@@ -11,7 +11,7 @@ public class TestRest {
 	static String token;
 	@Test
 	public void testRequestLogin() {
-		var login = Users.requestLogin("admin", "1234");
+		var login = RestApi.requestLogin("admin", "1234");
 		if (login.isRight()) {
 			switch (login.get()) {
 				case USER_NOT_FOUND -> System.out.println("User not found");
@@ -25,7 +25,7 @@ public class TestRest {
 
 	@Test
 	public void testRequestCheckLogin() {
-		var checkLogin = Users.requestCheckLogin("admin", token);
+		var checkLogin = RestApi.requestCheckLogin("admin", token);
 		assertTrue (checkLogin);
 	}
 }

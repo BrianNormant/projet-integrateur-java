@@ -1,26 +1,20 @@
 package interfaces;
 
-import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.JPanel;
+
 import composanteGraphique.Graphique;
-import composanteGraphique.Ligne;
-import composanteGraphique.Point;
-import gestionInformation.ReseauTMP;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
-public class CarteInterface extends JPanel {
+public class CarteInterface extends JPanel implements Runnable {
 
-	private JPanel contentPane;
 	private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 	private Graphique graphique;
 	private boolean inStation=false;
@@ -56,32 +50,27 @@ public class CarteInterface extends JPanel {
 		btnLogout.setBounds(678, 477, 122, 23);
 		add(btnLogout);
 		
-		ArrayList<Point> listePoints = ReseauTMP.ajouterStation();
-		ArrayList<Ligne> listeLignes = ReseauTMP.ajouterRails(listePoints);
-		graphique = new Graphique(5972, listePoints, listeLignes);
+		graphique = new Graphique(5972);
 		graphique.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("postion X:"+(graphique.getWidth()-e.getX())+" position y:"+ e.getY());
-				graphique.getPpm();
-				for(int i =0;i<graphique.getPoints().size();i++) {
-					int id=graphique.getPoints().get(i).containsID((graphique.getWidth() - e.getX()) / graphique.getPpm(), (e.getY()) / graphique.getPpm());
-					if(id>0) {
-						inStation=true;
-						station(id);
-						break;
-					}
+
+				var behindMouse = graphique.getElementOnPosition(e.getX(), e.getY());
+
+				if (!behindMouse.isPresent()) {
+					setInStationFalse(); // What?
+					return;
 				}
-				if(!inStation) {
-					for(int i =0;i<graphique.getLines().size();i++) {
-						int id=graphique.getLines().get(i).containsID((graphique.getWidth() - e.getX()) / graphique.getPpm(), (e.getY()) / graphique.getPpm());
-						if(id>0) {
-							rail(id);
-							break;
-						}
-					}
+
+				if (behindMouse.get().isLeft()) {
+					station(behindMouse.get().getLeft());
+				} else if (behindMouse.get().isRight()) {
+					rail(behindMouse.get().get());
 				}
 				setInStationFalse();
+
+				// j'ai gardé le comportement d'avant mais j'aimerai comprendre a quoi sert setInStationFalse()
+				// Surtout que inStation n'est jamais utiliser
 			}
 		});
 		graphique.setBounds(10, 11, 980, 318);
@@ -105,9 +94,9 @@ public class CarteInterface extends JPanel {
 		btnTrain.setBounds(541, 478, 122, 23);
 		add(btnTrain);
 		requestFocusInWindow();
-		
-		
-		
+
+		var t = new Thread(this);
+		t.start(); // start running the graphique
 	}
 	public void reservation() {
 		PCS.firePropertyChange("passerReservation", 0, -1);
@@ -138,5 +127,19 @@ public class CarteInterface extends JPanel {
 	
 	public void setInStationFalse() {
 		this.inStation=false;
+	}
+
+	/**
+	 * Update the position of each train on the network;
+	 * @author Brian Normant
+	 */
+	@Override
+	public void run() {
+		// graphique.updateTrains();
+		try {
+			Thread.sleep(250);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 }

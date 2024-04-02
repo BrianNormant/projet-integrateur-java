@@ -1,9 +1,14 @@
-package gestionInformation;
+package composanteGraphique;
 
-import composanteGraphique.Point;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 
-public class Rail {
+public class Rail implements Dessinable {
 	
 	private static final HashMap<Integer, Rail> railMap = new HashMap<>();
 
@@ -35,6 +40,11 @@ public class Rail {
 		this.con2 = Station.createOrGetStation(con2);
 		this.id = id;
 
+		this.x1 = this.con1.getX();
+		this.y1 = this.con1.getY();
+		this.x2 = this.con2.getX();
+		this.y2 = this.con2.getY();
+
 		railMap.put(id, this);
 	}
 	
@@ -49,14 +59,6 @@ public class Rail {
 		return false;
 	}
 
-	public Point getPoint1() {
-		return con1.getPoint();
-	}
-
-	public Point getPoint2() {
-		return con2.getPoint();
-	}
-
 	public Station getCon1() {
 		return con1;
 	}
@@ -67,5 +69,27 @@ public class Rail {
 
 	public int getId() {
 		return id;
+	}
+
+
+	// Ces methodes s'occupe  de rendre cette classe dessinable
+	private int x1;
+	private int x2;
+	private int y1;
+	private int y2;
+	public void dessiner(Graphics2D g2d, double ppm) {
+		Graphics2D g2dPrive = (Graphics2D) g2d.create();
+		AffineTransform mat = new AffineTransform();
+		mat.scale(-ppm, ppm);
+		Line2D.Double ligne = new Line2D.Double(x1, y1, x2, y2);
+		g2dPrive.setColor(Color.black);
+		g2dPrive.setStroke(new BasicStroke(50));
+		g2d.draw(mat.createTransformedShape(ligne));
+	}
+
+	public boolean contains(double x, double y) {
+		Line2D.Double ligne = new Line2D.Double(x1, y1, x2, y2);
+		Rectangle2D.Double cercleClick = new Rectangle2D.Double(x-30,y-30,60,60);
+		return ligne.intersects(cercleClick);
 	}
 }

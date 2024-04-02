@@ -4,3 +4,4 @@ app/build
 .settings
 .gradle
 /bin/
+app/src/main/resources
