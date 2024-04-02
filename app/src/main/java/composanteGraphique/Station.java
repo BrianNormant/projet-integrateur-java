@@ -5,6 +5,8 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.util.HashMap;
+import java.util.Optional;
+import java.util.stream.Collectors;
 public class Station implements Dessinable {
 
 	private static final HashMap<Integer, Station> stations = new HashMap<>();
@@ -44,6 +46,15 @@ public class Station implements Dessinable {
 		if (stations.containsKey(id)) {
 			return true;
 		} else return false;
+	}
+
+	public static Optional<Station> stationByName(String name) {
+		var matchs = stations.values()
+			.stream()
+			.filter(station -> station.getName().equals(name))
+			.collect(Collectors.toList());
+		if (matchs.size() == 0) return Optional.empty();
+		return Optional.of(matchs.get(0));
 	}
 
 	public int getId() {

@@ -64,6 +64,7 @@ private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 		textId.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
+				if (cmbType.getSelectedIndex() != 0) return;
 				if(!Character.isDigit(e.getKeyChar())) {
 					e.consume();
 					}
@@ -109,14 +110,17 @@ private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 					}
 					break;
 				case 1: // Station
-					exist=Station.stationIfExists(Integer.parseInt(textId.getText()));
-					System.out.println("Station "+ exist);
-					if(exist) {
-						lblErrorIdNotFound.setText("");
-						
-					}else {
+
+					var s = Station.stationByName(textId.getText());
+					if (s.isEmpty()) {
 						lblErrorIdNotFound.setText(error+"e station.");
-					}	
+						return;
+					}
+
+					lblErrorIdNotFound.setText("");
+					Station station = s.get();
+
+					// TODO do something with the station
 					break;
 				}
 				

@@ -202,9 +202,12 @@ public final class RestApi {
 				} else {
 					pos = 50;
 				}
+
+				if (data.isNull("rail_id")) continue;
+
 				trains.add(Train.createOrGet(
-							(Integer) data.get("id"),
-							(Integer) data.get("rail_id"),
+							data.getInt("id"),
+							data.getInt("rail_id"),
 							pos
 						));
 			}

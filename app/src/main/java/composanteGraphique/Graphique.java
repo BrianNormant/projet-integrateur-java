@@ -24,13 +24,16 @@ public class Graphique extends JPanel {
 	private ArrayList<Dessinable> dessinables = new ArrayList<>();
 	
 	public void tick() {
-		trains.addAll(
-				RestApi.requestTrains().get()
-				.stream()
-				.filter(t -> !trains.contains(t))
-				.collect(Collectors.toList())
-				);
+		// clear last data
+		dessinables.removeAll(trains);
+		trains.clear();
+
+		// get new data
+		trains = (ArrayList<Train>) RestApi.requestTrains().get();
 		trains.forEach(t -> RestApi.requestTrain(t.getId()));
+		dessinables.addAll(trains);
+
+		// refresh
 		this.repaint();
 	}
 
