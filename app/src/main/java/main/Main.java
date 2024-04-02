@@ -57,6 +57,7 @@ public class Main extends JFrame {
 			public void run() {
 				try {
 					Main frame = new Main();
+					frame.carte.setJFrame(frame);
 					frame.setVisible(true);
 					frame.login.requestFocusInWindow();
 				} catch (Exception e) {
@@ -97,7 +98,7 @@ public class Main extends JFrame {
 						login.nonAutorise();
 						break;
 					}
-					setBounds(100, 100, 1000, 600);
+					setBounds(100, 100, 1010, 600);
 					login.setVisible(false);
 					carte.setVisible(true);
 					setContentPane(carte);
@@ -167,7 +168,7 @@ public class Main extends JFrame {
 			public void propertyChange(PropertyChangeEvent evt) {
 				switch (evt.getPropertyName()) {
 				case "back":
-					setBounds(100, 100, 1000, 600);
+					setBounds(100, 100, 1010, 600);
 					reservation.setVisible(false);
 					carte.setVisible(true);
 					setContentPane(carte);
@@ -182,7 +183,7 @@ public class Main extends JFrame {
 			public void propertyChange(PropertyChangeEvent evt) {
 				switch (evt.getPropertyName()) {
 				case "back":
-					setBounds(100, 100, 1000, 600);
+					setBounds(100, 100, 1010, 600);
 					station.setVisible(false);
 					carte.setVisible(true);
 					setContentPane(carte);
@@ -196,7 +197,7 @@ public class Main extends JFrame {
 			public void propertyChange(PropertyChangeEvent evt) {
 				switch (evt.getPropertyName()) {
 				case "back":
-					setBounds(100, 100, 1000, 600);
+					setBounds(100, 100, 1010, 600);
 					rail.setVisible(false);
 					carte.setVisible(true);
 					setContentPane(carte);
@@ -211,7 +212,7 @@ public class Main extends JFrame {
 			public void propertyChange(PropertyChangeEvent evt) {
 				switch (evt.getPropertyName()) {
 				case "back":
-					setBounds(100, 100, 1000, 600);
+					setBounds(100, 100, 1010, 600);
 					train.setVisible(false);
 					carte.setVisible(true);
 					setContentPane(carte);
@@ -226,7 +227,7 @@ public class Main extends JFrame {
 			public void propertyChange(PropertyChangeEvent evt) {
 				switch (evt.getPropertyName()) {
 				case "back":
-					setBounds(100, 100, 1000, 600);
+					setBounds(100, 100, 1100, 600);
 					recherche.setVisible(false);
 					carte.setVisible(true);
 					setContentPane(carte);
@@ -269,7 +270,7 @@ public class Main extends JFrame {
 
 	
 	private void flemme() {
-		setBounds(100, 100, 1000, 600);
+		setBounds(100, 100, 1010, 600);
 		login.setVisible(false);
 		carte.setVisible(true);
 		setContentPane(carte);

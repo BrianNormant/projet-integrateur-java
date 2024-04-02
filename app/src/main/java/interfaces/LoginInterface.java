@@ -74,7 +74,7 @@ public class LoginInterface extends JPanel {
 			public void focusGained(FocusEvent e) {
 				if (String.valueOf(pwdPassword.getPassword()).equals(hint)) {
 					pwdPassword.setText("");
-					pwdPassword.setEchoChar('●');
+					pwdPassword.setEchoChar('*');
 					pwdPassword.setFont(pwdPassword.getFont().deriveFont(Font.PLAIN));
 					pwdPassword.setForeground(new Color(0, 0, 0, 255));
                 }

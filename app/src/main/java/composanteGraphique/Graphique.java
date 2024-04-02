@@ -2,6 +2,7 @@ package composanteGraphique;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -10,12 +11,14 @@ import java.util.stream.Collectors;
 import javax.swing.JPanel;
 
 import api.RestApi;
+import gestionInformation.GestionImage;
 import io.vavr.control.Either;
 
 public class Graphique extends JPanel {
 	
 	private double ppm;
 	private double largeur;
+	private Image img;
 
 
 	private ArrayList<Station> stations = new ArrayList<>();
@@ -43,6 +46,7 @@ public class Graphique extends JPanel {
 	 * @param largeur la largeur de l'element graphique dans la fenetre en pixel
 	 */
 	public Graphique (double largeur) {
+		img = GestionImage.lireImage("canada.gif");
 		this.largeur = largeur;
 
 		stations = (ArrayList<Station>) RestApi.requestStations().get();
@@ -61,6 +65,7 @@ public class Graphique extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
+		g2d.drawImage(img, 0, 0, getWidth(), getHeight(), this);
 		AffineTransform mat = new AffineTransform();
 		ppm = getWidth() / largeur;
 		g2d.translate(getWidth(), 0);
