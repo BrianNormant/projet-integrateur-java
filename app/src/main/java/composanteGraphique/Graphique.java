@@ -84,7 +84,7 @@ public class Graphique extends JPanel {
 	/**
 	 * renvoi l'id du rail ou de la station sous le curseur a la position x, y
 	 */
-	public Optional<Either<Integer,Integer>> getElementOnPosition(int x_full, int y_full) {
+	public Optional<Integer[]> getElementOnPosition(int x_full, int y_full) {
 		double x = (this.getWidth() - x_full)/ppm,
 			   y = y_full/ppm;
 		var matchedStations = stations
@@ -99,12 +99,20 @@ public class Graphique extends JPanel {
 			.map(Rail::getId)
 			.collect(Collectors.toList());
 
-		if (matchedStations.size() > 0) {
-			return Optional.of(Either.left(matchedStations.get(0)));
-		} else if (matchedRails.size() > 0) {
-			return Optional.of(Either.right(matchedRails.get(0)));
-		} else {
+		var matchedTrains = trains
+			.stream()
+			.filter(e -> e.contains(x, y))
+			.map(Train::getId)
+			.collect(Collectors.toList());
+		
+		if (matchedTrains.size() > 0)
+			return  Optional.of(new  Integer[]  {null,  null,  matchedTrains.get(0)});
+		
+		else if (matchedStations.size() > 0)
+			return  Optional.of(new  Integer[]  {matchedStations.get(0),  null,  null});
+		else if (matchedRails.size() > 0)
+			return  Optional.of(new  Integer[]  {null,  matchedRails.get(0),  null});
+		else 
 			return Optional.empty();
-		}
 	}
 }

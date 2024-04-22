@@ -69,20 +69,13 @@ public class CarteInterface extends JPanel implements Runnable {
 
 				var behindMouse = graphique.getElementOnPosition(e.getX(), e.getY());
 
-				if (!behindMouse.isPresent()) {
-					setInStationFalse(); // What?
-					return;
-				}
-
-				if (behindMouse.get().isLeft()) {
-					station(behindMouse.get().getLeft());
-				} else if (behindMouse.get().isRight()) {
-					rail(behindMouse.get().get());
-				}
+				behindMouse.ifPresent(el -> {
+					if (el[0] != null) station(el[0]);
+					if (el[1] != null) rail(el[1]);
+					if (el[2] != null) train(el[2]);
+					
+				});
 				setInStationFalse();
-
-				// j'ai gardé le comportement d'avant mais j'aimerai comprendre a quoi sert setInStationFalse()
-				// Surtout que inStation n'est jamais utiliser
 			}
 		});
 		graphique.setBounds(10, 62, 980, 318);
@@ -169,6 +162,11 @@ public class CarteInterface extends JPanel implements Runnable {
 	public void train() {
 		chckbxPleinEcran.setSelected(false);
 		PCS.firePropertyChange("passerTrain", 0, -1);
+	}
+
+	public void train(int id) {
+		chckbxPleinEcran.setSelected(false);
+		PCS.firePropertyChange("TrainInterface", 0, id);
 	}
 	
 	public void setInStationFalse() {

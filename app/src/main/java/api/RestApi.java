@@ -276,6 +276,52 @@ public final class RestApi {
 		return false;
 	}*/
 
+	public static record TrainDetails(
+			int puissance,
+			int charge,
+			double speed,
+			String company,
+			List<String> route
+			) {};
+
+	public static Optional<TrainDetails> requestDetails(Integer train) {
+		HttpRequest request = null;
+		try {
+			request = HttpRequest.newBuilder()
+				.uri( new URI(URL + "train/" + train + "/details") )
+				.header("Authorization", Main.getToken() )
+				.GET()
+				.build();
+		} catch (URISyntaxException fatal) {
+			System.err.println("Fatal, Invalid URL");
+		}
+
+		try {
+			var client = HttpClient.newHttpClient();
+			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+			var json = new JSONObject(response.body());
+			List<String> route = new ArrayList<String>();
+
+			for ( var o : json.getJSONArray("route") )
+				route.add(((JSONObject)o).getString("name") );
+
+			return Optional.of( new TrainDetails(
+						json.getInt("puissance"),
+						json.getInt("charge"),
+						json.getDouble("speed"),
+						json.getString("company_id"),
+						route
+						));
+
+
+		} catch (Exception fail) {
+			System.out.print("Failed");
+			fail.printStackTrace();
+
+			return Optional.empty();
+		}
+	}
+
 	/**
 	 * Recuperer et cree/update un train par rapport au details du dit train sur le reseaux actuel.
 	 * @param train l'id du train
@@ -303,6 +349,7 @@ public final class RestApi {
 
 
 			trainRef.setLastStation((Integer) (( (JSONObject)json.get("next_station") ).get("id")) );
+			trainRef.setNextStation((Integer) (( (JSONObject)json.get("prev_station") ).get("id")) );
 			trainRef.setRail((Integer) (( (JSONObject)json.get("rail") ).get("id")) );
 			double pos;
 				if (json.get("pos") instanceof BigDecimal bd) {
