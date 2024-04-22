@@ -81,7 +81,7 @@ public class Train implements Dessinable {
 		double x, y;
 		{
 			double x_off,y_off;
-			if (this.lastStation == rail.getCon1()) {
+			if (this.lastStation != rail.getCon1()) {
 				x_off = rail.getXLen() * this.pos/100;
 				y_off = rail.getYLen() * this.pos/100;
 			} else {
