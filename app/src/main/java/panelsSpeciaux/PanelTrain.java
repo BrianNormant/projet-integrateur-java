@@ -32,8 +32,6 @@ public class PanelTrain extends JPanel {
 	private JProgressBar prgbrPosition;
 	private JLabel lblTitreStation;
 	private JPanel routesp;
-	
-	private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 	private boolean stop = false;
 	/**
 	 * Create the panel.
@@ -119,17 +117,7 @@ public class PanelTrain extends JPanel {
 		setValues(train);
 
 	}
-	
-	
 
-	public void addPropertyChangeListener(PropertyChangeListener listener) {
-		PCS.addPropertyChangeListener(listener);
-	}
-
-	public void back() {
-		this.stop = !stop;
-		PCS.firePropertyChange("back", 0, -1);
-	}
 	private void setValues(Train train) {
 		
 		var details = RestApi.requestDetails(train.getId());

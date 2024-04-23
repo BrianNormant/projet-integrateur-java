@@ -162,8 +162,10 @@ public class Main extends JFrame {
 					train.setVisible(true);
 					setContentPane(train);
 					train.requestFocusInWindow();
+					train.setFalse();
 					train.refresh();
 					break;
+					
 				case "TrainInterface":
 					var idTrain = (Integer) evt.getNewValue();
 					carte.setVisible(false);
