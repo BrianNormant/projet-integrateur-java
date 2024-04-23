@@ -1,6 +1,7 @@
 package panelsSpeciaux;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.math.BigDecimal;
 import java.util.List;
@@ -44,9 +45,9 @@ public class PanelsConteneurStation extends JPanel {
 			}
 	
 	public void initialisation() {
+		reinitialisation();
 		listeTrains= ajouterTrains();
 		System.out.println("nb Trains: "+listeTrains.size());
-		
 		
 		for (int i = 0; i < listeTrains.size(); i++) {
 				panels.add(new PanelTrainVersStation());
@@ -75,9 +76,21 @@ public class PanelsConteneurStation extends JPanel {
             
         }
         
-       
-        //setPreferredSize(new Dimension(900,165 * reservations.size()));
+        if(listeTrains.size() == 0) {
+     	   setPreferredSize(new Dimension(900,200));
+     	   add(new aucunTrain());
+        }else {
+        	setPreferredSize(new Dimension(900, 100 * listeTrains.size()));
+        }
         setBackground(Color.BLACK);
+        
+	}
+
+	private void reinitialisation() {
+		this.removeAll();
+		setPreferredSize(new Dimension(900,200));
+		listeTrains.clear();
+		panels.clear();
 	}
 
 	public int getId() {

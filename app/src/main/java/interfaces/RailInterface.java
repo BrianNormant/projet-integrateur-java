@@ -1,5 +1,6 @@
 package interfaces;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -12,6 +13,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import java.awt.Font;
+import panelsSpeciaux.PanelsConteneurRails;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 public class RailInterface extends JPanel {
 
@@ -19,6 +23,9 @@ public class RailInterface extends JPanel {
 	private JPanel contentPane;
 	private int id;
 	private JLabel lblRailId; 
+	private String token;
+	private PanelsConteneurRails panelsConteneurRails;
+	private JScrollPane scrollPane;
 	
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		PCS.addPropertyChangeListener(listener);
@@ -41,7 +48,18 @@ public class RailInterface extends JPanel {
 		lblRailId.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		lblRailId.setBounds(155, 16, 200, 47);
 		add(lblRailId);
+		
+		panelsConteneurRails = new PanelsConteneurRails();
 		requestFocusInWindow();
+		
+		scrollPane = new JScrollPane(panelsConteneurRails);
+		scrollPane.setBounds(10, 93, 884, 493);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		add(scrollPane, BorderLayout.CENTER);
+		add(scrollPane);
+		
+		
 	}
 	
 	public void back() {
@@ -51,7 +69,10 @@ public class RailInterface extends JPanel {
 	public void setId(int idRail) {
 		this.id=idRail;
 		this.lblRailId.setText("Rail id: "+id);
-		
+		panelsConteneurRails.setId(idRail);
+		panelsConteneurRails.initialisation();
 	}
-
+	public void setToken(String token) {
+		this.token = token;
+	}
 }

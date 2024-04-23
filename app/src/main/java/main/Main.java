@@ -122,6 +122,7 @@ public class Main extends JFrame {
 					break;
 					
 				case "passerStation":
+					setBounds(100, 100, 1000, 400);
 					int id=(Integer)evt.getNewValue();
 					station.setToken(token);
 					station.setId(id);
@@ -133,6 +134,7 @@ public class Main extends JFrame {
 					
 				case "passerRail":
 					int idRail=(Integer)evt.getNewValue();
+					setBounds(100, 100, 1000, 700);
 					rail.setId(idRail);
 					carte.setVisible(false);
 					rail.setVisible(true);
@@ -165,7 +167,6 @@ public class Main extends JFrame {
 				case "TrainInterface":
 					var idTrain = (Integer) evt.getNewValue();
 					carte.setVisible(false);
-
 					var t = Train.createOrGet(idTrain);
 					var trainI = new TrainInterface(t);
 					trainI.addPropertyChangeListener(evt2 -> {

@@ -31,6 +31,7 @@ public class StationInterface extends JPanel {
 	private ArrayList<Train> listeTrains = new ArrayList<>();
 	private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 	private PanelsConteneurStation panelsConteneurStation;
+	private JScrollPane scrollPane;
 	
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		PCS.addPropertyChangeListener(listener);
@@ -38,7 +39,7 @@ public class StationInterface extends JPanel {
 
 	
 	public StationInterface(int x, int y, int tailleX, int tailleY) {
-		setBounds(100, 100, 800, 600);
+		setBounds(100, 100, 1000, 600);
 		setLayout(null);
 		
 		JButton btnBack = new JButton("Back");
@@ -53,18 +54,23 @@ public class StationInterface extends JPanel {
 		lblNom = new JLabel("...");
 		lblNom.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNom.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		lblNom.setBounds(174, 20, 225, 42);
+		lblNom.setBounds(170, 20, 225, 42);
 		add(lblNom);
 		
 		lblId = new JLabel("...");
+		lblId.setHorizontalAlignment(SwingConstants.CENTER);
 		lblId.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		lblId.setBounds(523, 18, 267, 46);
+		lblId.setBounds(510, 18, 267, 46);
 		add(lblId);
 		
 		panelsConteneurStation = new PanelsConteneurStation();
-		panelsConteneurStation.setBounds(10, 123, 780, 466);
-		add(panelsConteneurStation);
 		requestFocusInWindow();
+		
+		scrollPane = new JScrollPane(panelsConteneurStation);
+		scrollPane.setBounds(10, 123, 951, 223);
+		add(scrollPane);
+		
+		
 	}
 	
 	public void back() {
