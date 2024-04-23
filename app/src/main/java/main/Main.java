@@ -122,6 +122,7 @@ public class Main extends JFrame {
 					
 				case "passerStation":
 					int id=(Integer)evt.getNewValue();
+					setBounds(100, 100, 800, 580);
 					station.setToken(token);
 					station.setId(id);
 					carte.setVisible(false);

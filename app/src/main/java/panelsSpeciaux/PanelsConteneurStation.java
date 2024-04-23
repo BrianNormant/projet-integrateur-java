@@ -9,12 +9,14 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import org.json.JSONObject;
+
 import api.RestApi;
 import composanteGraphique.Train;
 
 public class PanelsConteneurStation extends JPanel {
 	
-	private ArrayList<Train> listeTrains = new ArrayList<>();
+	private ArrayList<JSONObject> listeTrains = new ArrayList<>();
 	private List<PanelTrainVersStation> panels = new ArrayList<PanelTrainVersStation>() ;
 	private int id;
 	private String token;
@@ -26,14 +28,14 @@ public class PanelsConteneurStation extends JPanel {
 		
     }
 	
-	public ArrayList<Train> ajouterTrains() {
+	public ArrayList<JSONObject> ajouterTrains() {
 		
-		Optional<List<Train>> trains = RestApi.requestTrainsPourStation(token, id);
+		Optional<List<JSONObject>> trains = RestApi.requestTrainsPourStation(token, id);
 		
 
-		if (!trains.isPresent()) {return new ArrayList<Train>();}
+		if (!trains.isPresent()) {return new ArrayList<JSONObject>();}
 
-		return (ArrayList<Train>) trains
+		return (ArrayList<JSONObject>) trains
 			.get()
 			.stream()
 			.collect(Collectors.toList());
@@ -45,13 +47,13 @@ public class PanelsConteneurStation extends JPanel {
 		System.out.println("nb Trains: "+listeTrains.size());
 		
 		
-			for (int i = 0; i < listeTrains.size(); i++) {
+		for (int i = 0; i < listeTrains.size(); i++) {
 				panels.add(new PanelTrainVersStation());
-			}
+		}
 			
-			for (int i = 0; i < panels.size(); i++) {
-				//panels.get(i).setAll(reservations.get(i).getDate(), reservations.get(i).getPeriod(), reservations.get(i).getCompany_id(), reservations.get(i).getRail().getCon1().getName(), reservations.get(i).getRail().getCon2().getName(), reservations.get(i).getRail().getId());
-			}
+		for (int i = 0; i < panels.size(); i++) {
+				panels.get(i).setAll(listeTrains.get(i).getInt("id"), listeTrains.get(i).getString("ETA"));
+		}
 		
 		
 		
@@ -72,6 +74,7 @@ public class PanelsConteneurStation extends JPanel {
 
 	public void setId(int id) {
 		this.id = id;
+		initialisation();
 	}
 
 	public String getToken() {

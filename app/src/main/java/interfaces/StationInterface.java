@@ -17,6 +17,8 @@ import javax.swing.JList;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import panelsSpeciaux.PanelsConteneurStation;
+import javax.swing.JScrollPane;
 
 public class StationInterface extends JPanel {
 
@@ -28,6 +30,7 @@ public class StationInterface extends JPanel {
 	private String token;
 	private ArrayList<Train> listeTrains = new ArrayList<>();
 	private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
+	private PanelsConteneurStation panelsConteneurStation;
 	
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		PCS.addPropertyChangeListener(listener);
@@ -35,7 +38,7 @@ public class StationInterface extends JPanel {
 
 	
 	public StationInterface(int x, int y, int tailleX, int tailleY) {
-		setBounds(100, 100, 610, 600);
+		setBounds(100, 100, 800, 600);
 		setLayout(null);
 		
 		JButton btnBack = new JButton("Back");
@@ -47,16 +50,20 @@ public class StationInterface extends JPanel {
 		btnBack.setBounds(10, 11, 89, 23);
 		add(btnBack);
 		
-		lblNom = new JLabel("New label");
+		lblNom = new JLabel("...");
 		lblNom.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNom.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		lblNom.setBounds(98, 20, 225, 42);
+		lblNom.setBounds(174, 20, 225, 42);
 		add(lblNom);
 		
-		lblId = new JLabel("New label");
+		lblId = new JLabel("...");
 		lblId.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		lblId.setBounds(333, 18, 267, 46);
+		lblId.setBounds(523, 18, 267, 46);
 		add(lblId);
+		
+		panelsConteneurStation = new PanelsConteneurStation();
+		panelsConteneurStation.setBounds(10, 123, 780, 466);
+		add(panelsConteneurStation);
 		requestFocusInWindow();
 	}
 	
@@ -82,10 +89,12 @@ public class StationInterface extends JPanel {
 		this.id=id;
 		this.lblId.setText("STATION ID: "+ this.id);
 		this.lblNom.setText(Station.createOrGetStation(id).getName());
+		panelsConteneurStation.setId(id);
 	}
 
 	public void setToken(String token) {
 		this.token = token;
+		panelsConteneurStation.setToken(token);
 	}
 	
 	public void setListe() {

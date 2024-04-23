@@ -219,14 +219,15 @@ public final class RestApi {
 	
 	}
 	
-	public static Optional<List<Train>> requestTrainsPourStation(String token, int id) {
+	public static Optional<List<JSONObject>> requestTrainsPourStation(String token, int id) {
 		HttpRequest request = null;
-		ArrayList<Train> trains = new ArrayList<>();
-		
+		ArrayList<JSONObject> trains = new ArrayList<>();
+		System.out.println(id);
+		System.out.println(Main.getToken());
 		try {
 			request = HttpRequest.newBuilder()
 				.uri( new URI(URL +"stations/"+ id +"/arrival") )
-				.header("Authorization", token)
+				.header("Authorization", Main.getToken())
 				.GET()
 				.build();
 		} catch (URISyntaxException fatal) {
@@ -235,17 +236,15 @@ public final class RestApi {
 		try {
 			var client = HttpClient.newHttpClient();
 			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-			
+			System.out.println(response);
+			System.out.println(response.body());
 			var json = new JSONArray(response.body());
 			for (var jo : json) {
 				var data = (JSONObject)jo;
-				trains.add(Train.createOrGet(
-							(Integer) data.get("id"),
-							(Integer) data.get("rail_id"),
-							(Integer) data.get("pos")
-						));
+				trains.add(data);
 			}
 		} catch (Exception fail) {
+
 			return Optional.empty();
 		};
 		return Optional.of(trains);
