@@ -22,7 +22,7 @@ public class AllTrainInterface extends JPanel {
 private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 
 private PanelAllTrains panelAllTrains;
-	
+	private boolean stop=false;
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		PCS.addPropertyChangeListener(listener);
 	}
@@ -63,13 +63,30 @@ private PanelAllTrains panelAllTrains;
 	
 	public void back() {
 		PCS.firePropertyChange("back", 0, -1);
+		this.stop = true;
+		panelAllTrains.removeAll();
+		
 	}
-
+	
+	public void setFalse() {
+		this.stop=false;
+	}
+	
 
 	public void refresh() {
-		panelAllTrains = new PanelAllTrains();
-		//etant donner que le system demande les trains en mouvement seulement au debut de l'app refresh permet de faire un nouveau get au serveur pour les trains sur le reseau. 
-		
+		new Thread(() -> {
+			System.out.println("test avant check");
+			while (!stop) {
+				panelAllTrains.Actualisation();
+				System.out.println("test thread");
+				panelAllTrains.repaint();
+				try {
+					Thread.sleep(30000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}).start();
 	}
 
 
