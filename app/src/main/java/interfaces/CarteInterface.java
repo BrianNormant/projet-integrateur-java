@@ -70,9 +70,9 @@ public class CarteInterface extends JPanel implements Runnable {
 				var behindMouse = graphique.getElementOnPosition(e.getX(), e.getY());
 
 				behindMouse.ifPresent(el -> {
+					if (el[2] != null) train(el[2]);
 					if (el[0] != null) station(el[0]);
 					if (el[1] != null) rail(el[1]);
-					if (el[2] != null) train(el[2]);
 					
 				});
 				setInStationFalse();

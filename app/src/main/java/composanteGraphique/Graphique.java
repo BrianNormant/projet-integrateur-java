@@ -87,6 +87,11 @@ public class Graphique extends JPanel {
 	public Optional<Integer[]> getElementOnPosition(int x_full, int y_full) {
 		double x = (this.getWidth() - x_full)/ppm,
 			   y = y_full/ppm;
+		var matchedTrains = trains
+			.stream()
+			.filter(e -> e.contains(x, y))
+			.map(Train::getId)
+			.collect(Collectors.toList());
 		var matchedStations = stations
 			.stream()
 			.filter(e -> e.contains(x, y))
@@ -99,11 +104,6 @@ public class Graphique extends JPanel {
 			.map(Rail::getId)
 			.collect(Collectors.toList());
 
-		var matchedTrains = trains
-			.stream()
-			.filter(e -> e.contains(x, y))
-			.map(Train::getId)
-			.collect(Collectors.toList());
 		
 		if (matchedTrains.size() > 0)
 			return  Optional.of(new  Integer[]  {null,  null,  matchedTrains.get(0)});
