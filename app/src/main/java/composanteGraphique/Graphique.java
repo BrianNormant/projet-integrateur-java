@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -46,7 +47,8 @@ public class Graphique extends JPanel {
 	 * @param largeur la largeur de l'element graphique dans la fenetre en pixel
 	 */
 	public Graphique (double largeur) {
-		img = GestionImage.lireImage("canada.gif");
+		// img = GestionImage.lireImage("canada.gif");
+		img = GestionImage.lireImage("carte_via_ville.png");
 		this.largeur = largeur;
 
 		stations = (ArrayList<Station>) RestApi.requestStations().get();
@@ -63,6 +65,7 @@ public class Graphique extends JPanel {
 	
 	@Override
 	public void paintComponent(Graphics g) {
+
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.drawImage(img, 0, 0, getWidth(), getHeight(), this);
@@ -70,12 +73,22 @@ public class Graphique extends JPanel {
 		ppm = getWidth() / largeur;
 		g2d.translate(getWidth(), 0);
 		mat.scale(-ppm, ppm);
-
-		dessinables.forEach(e -> e.dessiner(g2d, ppm));
+		
+		var dessinablesSyncronized = Collections.synchronizedList(dessinables);
+		synchronized (dessinablesSyncronized) {
+			dessinablesSyncronized.forEach(e -> e.dessiner(g2d, ppm));
+		}
 
         /*Rectangle2D.Double test = new Rectangle2D.Double(0, 0, 100, 100);
 		g2d.setColor(Color.RED);
 		g2d.fill(mat.createTransformedShape(test));*/
+	}
+
+	private boolean fullScreen = false;
+	public void fullScreen() {
+		this.fullScreen = !this.fullScreen;
+		rails.forEach(rail -> rail.fullScreen(this.fullScreen));
+		stations.forEach(station -> station.fullScreen(this.fullScreen));
 	}
 	public double getPpm() {
 		return ppm;

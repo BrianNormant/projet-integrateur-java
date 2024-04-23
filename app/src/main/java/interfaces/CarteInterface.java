@@ -81,7 +81,7 @@ public class CarteInterface extends JPanel implements Runnable {
 				setInStationFalse();
 			}
 		});
-		graphique.setBounds(10, 62, 980, 318);
+		graphique.setBounds(10, 62, 980, 320);
 		add(graphique);
 		
 		btnRecherche = new JButton("Recherche");
@@ -115,10 +115,12 @@ public class CarteInterface extends JPanel implements Runnable {
                      btnTrain.setBounds(10, 700, 122, 23);
                      btnRecherche.setBounds(274, 700, 122, 23);
                      btnReservation.setBounds(142, 700, 122, 23);
+					 graphique.fullScreen();
                  } else {
                 	 jframe.setBounds(100, 100, 1010, 470);
                 	 setBounds(100, 100, 1000, 470);
                 	 graphique.setBounds(10, 62, 980, 318);
+					 graphique.fullScreen();
                 	 lblPleinEcran.setBounds(897, 11, 66, 23);
                 	 chckbxPleinEcran.setBounds(969, 11, 21, 23);
                 	 btnTrain.setBounds(10, 391, 122, 23);

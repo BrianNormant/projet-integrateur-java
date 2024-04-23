@@ -69,7 +69,7 @@ public class Train implements Dessinable {
 	}
 
 	private static final Image IMAGE = GestionImage.lireImage("Train.png");
-	private static final double SIZE = 50;
+	private static final double SIZE = 25;
 
 	public int getId() { return id;}
 	public double getPos() { return pos;}
@@ -99,7 +99,7 @@ public class Train implements Dessinable {
 		// mat.translate(-x, -y);
 		mat.scale(-ppm, ppm);
 		// g2dPrive.drawImage(IMAGE, mat, null);
-		g2dPrive.setColor(Color.blue);
+		g2dPrive.setColor(Color.black);
 		g2dPrive.fill(mat.createTransformedShape(rec));
 	}
 
