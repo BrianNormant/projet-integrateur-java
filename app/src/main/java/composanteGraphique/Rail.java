@@ -3,6 +3,7 @@ package composanteGraphique;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
@@ -15,12 +16,13 @@ public class Rail implements Dessinable {
 
 	private final Station con1, con2;
 	private final int id;
+	private final Color color;
 
-	public static Rail createRail(int con1, int con2, int id) {
+	public static Rail createRail(int con1, int con2, int id, Color color) {
 		if (railMap.containsKey(id)) {
 			return railMap.get(id);
 		} else {
-			return new Rail(con1, con2, id);
+			return new Rail(con1, con2, id, color);
 		}
 	}
 
@@ -36,10 +38,11 @@ public class Rail implements Dessinable {
 		} else return false;
 	}
 
-	private Rail(int con1, int con2, int id) {
+	private Rail(int con1, int con2, int id, Color color) {
 		this.con1 = Station.createOrGetStation(con1);
 		this.con2 = Station.createOrGetStation(con2);
 		this.id = id;
+		this.color = color;
 
 		this.x1 = this.con1.getX();
 		this.y1 = this.con1.getY();
@@ -97,7 +100,8 @@ public class Rail implements Dessinable {
 		AffineTransform mat = new AffineTransform();
 		mat.scale(-ppm, ppm);
 		Line2D.Double ligne = new Line2D.Double(x1, y1, x2, y2);
-		g2dPrive.setColor(new Color(0x32, 0x31, 0x98));
+		g2dPrive.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2dPrive.setColor(color);
 		g2dPrive.setStroke(stroke);
 		g2dPrive.draw(mat.createTransformedShape(ligne));
 	}
