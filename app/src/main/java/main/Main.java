@@ -77,7 +77,8 @@ public class Main extends JFrame {
 	
 		carte.setJFrame(this);
 
-		setBounds(100, 100, 1010, 600);
+		setBounds(100, 100, 1010, 470);
+
 		login.setVisible(false);
 		carte.setVisible(true);
 		setContentPane(carte);
@@ -86,7 +87,7 @@ public class Main extends JFrame {
 			public void propertyChange(PropertyChangeEvent evt) {
 				switch (evt.getPropertyName()) {
 					case "passerReservation":
-						setBounds(100, 100, 1000, 580);
+						setBounds(100, 100, 1000, 600);
 						carte.setVisible(false);
 						reservation.setVisible(true);
 						setContentPane(reservation);
@@ -130,6 +131,7 @@ public class Main extends JFrame {
 						break;
 
 					case "passerTrain":
+						setBounds(100, 100, 1000, 600);
 						carte.setVisible(false);
 						train.setVisible(true);
 						setContentPane(train);
@@ -147,11 +149,13 @@ public class Main extends JFrame {
 							System.out.println(evt2.getPropertyName());
 							switch(evt2.getPropertyName()) {
 								case "back" -> {
-	setBounds(100, 100, 1010, 600);
-	trainI.setVisible(false);
-	carte.setVisible(true);
-	setContentPane(carte);
-	carte.requestFocusInWindow();
+
+									setBounds(100, 100, 1010, 470);
+									trainI.setVisible(false);
+									carte.setVisible(true);
+									setContentPane(carte);
+									carte.requestFocusInWindow();
+
 								}
 							}
 						});
@@ -168,7 +172,7 @@ public class Main extends JFrame {
 			public void propertyChange(PropertyChangeEvent evt) {
 				switch (evt.getPropertyName()) {
 					case "back":
-						setBounds(100, 100, 1010, 600);
+						setBounds(100, 100, 1010, 470);
 						reservation.setVisible(false);
 						carte.setVisible(true);
 						setContentPane(carte);
@@ -183,7 +187,7 @@ public class Main extends JFrame {
 			public void propertyChange(PropertyChangeEvent evt) {
 				switch (evt.getPropertyName()) {
 					case "back":
-						setBounds(100, 100, 1010, 600);
+						setBounds(100, 100, 1010, 470);
 						station.setVisible(false);
 						carte.setVisible(true);
 						setContentPane(carte);
@@ -197,7 +201,7 @@ public class Main extends JFrame {
 			public void propertyChange(PropertyChangeEvent evt) {
 				switch (evt.getPropertyName()) {
 					case "back":
-						setBounds(100, 100, 1010, 600);
+						setBounds(100, 100, 1010, 470);
 						rail.setVisible(false);
 						carte.setVisible(true);
 						setContentPane(carte);
@@ -212,7 +216,7 @@ public class Main extends JFrame {
 			public void propertyChange(PropertyChangeEvent evt) {
 				switch (evt.getPropertyName()) {
 					case "back":
-						setBounds(100, 100, 1010, 600);
+						setBounds(100, 100, 1010, 470);
 						train.setVisible(false);
 						carte.setVisible(true);
 						setContentPane(carte);
@@ -227,7 +231,7 @@ public class Main extends JFrame {
 			public void propertyChange(PropertyChangeEvent evt) {
 				switch (evt.getPropertyName()) {
 					case "back":
-						setBounds(100, 100, 1100, 600);
+						setBounds(100, 100, 1100, 470);
 						recherche.setVisible(false);
 						carte.setVisible(true);
 						setContentPane(carte);
@@ -257,6 +261,7 @@ public class Main extends JFrame {
 		login.addPropertyChangeListener(new PropertyChangeListener(){
 			public void propertyChange(PropertyChangeEvent evt) {
 				switch (evt.getPropertyName()) {
+
 					case "passerCarte":
 
 						setNom(login.getNom());
@@ -266,16 +271,19 @@ public class Main extends JFrame {
 						if(token == null) {
 							login.mauvaisIdentifiant();
 							break;
+
 						}
 						if(!nom.equals("admin")) {
 							login.nonAutorise();
 							break;
 						}
 
+
 						initAfterLogin();
 
 						carte.setJFrame(This);
 						setVisible(true);
+
 
 
 				}
@@ -315,7 +323,8 @@ public class Main extends JFrame {
 
 	private void flemme() {
 		initAfterLogin();
-		setBounds(100, 100, 1010, 600);
+
+		setBounds(100, 100, 1010, 470);
 		login.setVisible(false);
 		carte.setVisible(true);
 		setContentPane(carte);
