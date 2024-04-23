@@ -123,7 +123,6 @@ private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 						scrollPaneRail.setVisible(true);
 						rail.initialisation();
 						rail.repaint();
-						repaint();
 						
 					}else {
 						rail.removeAll();
@@ -150,7 +149,6 @@ private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 						stations.setId(Integer.parseInt(textId.getText()));
 						stations.repaint();
 						scrollPaneStation.setVisible(true);
-						repaint();
 						
 					}
 
@@ -189,8 +187,6 @@ private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 		scrollPaneStation.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPaneStation.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		add(scrollPaneStation, BorderLayout.CENTER);
-		
-		
 		
 
 	}
