@@ -26,7 +26,7 @@ public class CarteInterface extends JPanel implements Runnable {
 
 	private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 	private Graphique graphique;
-	private boolean inStation=false;
+	private boolean inStation = false;
 	private JCheckBox chckbxPleinEcran;
 	private JFrame jframe;
 	private JLabel lblPleinEcran;
