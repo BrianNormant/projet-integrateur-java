@@ -55,5 +55,5 @@ public class PanelTrainVersStation extends JPanel {
 		this.lblId.setText(trainId+"");
 		this.lblETA.setText((int) pos+" h");
 	}
-	
+
 }

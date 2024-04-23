@@ -122,6 +122,7 @@ private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 						rail.setId(Integer.parseInt(textId.getText()));
 						scrollPaneRail.setVisible(true);
 						rail.initialisation();
+						rail.revalidate();
 						rail.repaint();
 						
 					}else {
@@ -147,6 +148,7 @@ private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 						lblErrorIdNotFound.setText("");
 						scrollPaneRail.setVisible(false);
 						stations.setId(Integer.parseInt(textId.getText()));
+						stations.revalidate();
 						stations.repaint();
 						scrollPaneStation.setVisible(true);
 						

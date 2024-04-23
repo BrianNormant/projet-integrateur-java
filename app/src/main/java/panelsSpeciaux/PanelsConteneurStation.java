@@ -110,6 +110,7 @@ public class PanelsConteneurStation extends JPanel {
 	public void setToken(String token) {
 		this.token = token;
 	}
+	
 		
 	
 
