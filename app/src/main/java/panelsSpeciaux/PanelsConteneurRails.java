@@ -19,7 +19,7 @@ import gestionInformation.Reservation;
 
 public class PanelsConteneurRails extends JPanel {
 	
-	private ArrayList<Reservation> listeTrains = new ArrayList<>();
+	private ArrayList<Reservation> listeReservation = new ArrayList<>();
 	private List<PanelTrainVersRails> panels = new ArrayList<PanelTrainVersRails>() ;
 	private int id;
 	private String token;
@@ -48,15 +48,16 @@ public class PanelsConteneurRails extends JPanel {
 	
 	public void initialisation() {
 		reinitialisation();
-		listeTrains= ajouterTrains();
-		System.out.println("nb Trains: "+listeTrains.size());
+		listeReservation= ajouterTrains();
+		System.out.println("nb Trains: "+listeReservation.size());
 		System.out.println(id);
-		for (int i = 0; i < listeTrains.size(); i++) {
+		for (int i = 0; i < listeReservation.size(); i++) {
 			
-			System.out.println(listeTrains.get(i).getRail().getId());
-			if(listeTrains.get(i).getRail().getId() == id) {
+			System.out.println(listeReservation.get(i).getRail().getId());
+			if(listeReservation.get(i).getRail().getId() == id) {
+				System.out.println("aaaaaaa");
 				panels.add(new PanelTrainVersRails());
-				panels.get(nbPanel).setAll(listeTrains.get(i).getCompany_id(), listeTrains.get(i).getDate(), listeTrains.get(i).getPeriod());
+				panels.get(nbPanel).setAll(listeReservation.get(i).getCompany_id(), listeReservation.get(i).getDate(), listeReservation.get(i).getPeriod());
 				nbPanel = nbPanel+1;
 			}
 		}
@@ -98,7 +99,7 @@ public class PanelsConteneurRails extends JPanel {
 		this.removeAll();
 		setPreferredSize(new Dimension(900,200));
 		nbPanel = 0;
-		listeTrains.clear();
+		listeReservation.clear();
 		panels.clear();
 	}
 

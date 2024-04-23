@@ -36,7 +36,7 @@ public class PanelTrainVersRails extends JPanel {
 		separator.setBounds(328, 0, 18, 204);
 		add(separator);
 		
-		JLabel lblArrivee = new JLabel("date d'arrivée: ");
+		JLabel lblArrivee = new JLabel("date réservée:");
 		lblArrivee.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblArrivee.setBounds(356, 11, 169, 68);
 		add(lblArrivee);
@@ -46,7 +46,7 @@ public class PanelTrainVersRails extends JPanel {
 		lblDate.setBounds(535, 11, 334, 68);
 		add(lblDate);
 		
-		JLabel lblNewLabel = new JLabel("Plage d'arrivée:");
+		JLabel lblNewLabel = new JLabel("Plage réservée: ");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNewLabel.setBounds(356, 117, 181, 76);
 		add(lblNewLabel);
