@@ -69,7 +69,7 @@ public class Train implements Dessinable {
 	}
 
 	private static final Image IMAGE = GestionImage.lireImage("Train.png");
-	private static final double SIZE = 50;
+	private static final double SIZE = 25;
 
 	public int getId() { return id;}
 	public double getPos() { return pos;}
