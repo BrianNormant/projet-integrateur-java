@@ -38,7 +38,7 @@ public class Main extends JFrame {
 	private boolean autorisation;
 	
 
-	private static boolean modeFlemme = false;
+	private static boolean modeFlemme = true;
 
 	static {
 		if (modeFlemme) {
