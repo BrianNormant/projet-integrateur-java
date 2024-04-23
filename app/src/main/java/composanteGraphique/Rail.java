@@ -3,6 +3,7 @@ package composanteGraphique;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
@@ -81,6 +82,11 @@ public class Rail implements Dessinable {
 	}
 
 
+	private Stroke stroke = new BasicStroke(2);
+
+	public void fullScreen(boolean f) {
+		this.stroke = f? new BasicStroke(5) : new BasicStroke(2);
+	}
 	// Ces methodes s'occupe  de rendre cette classe dessinable
 	protected final int x1;
 	protected final int x2;
@@ -91,9 +97,9 @@ public class Rail implements Dessinable {
 		AffineTransform mat = new AffineTransform();
 		mat.scale(-ppm, ppm);
 		Line2D.Double ligne = new Line2D.Double(x1, y1, x2, y2);
-		g2dPrive.setColor(Color.black);
-		g2dPrive.setStroke(new BasicStroke(50));
-		g2d.draw(mat.createTransformedShape(ligne));
+		g2dPrive.setColor(new Color(0x32, 0x31, 0x98));
+		g2dPrive.setStroke(stroke);
+		g2dPrive.draw(mat.createTransformedShape(ligne));
 	}
 
 	public boolean contains(double x, double y) {

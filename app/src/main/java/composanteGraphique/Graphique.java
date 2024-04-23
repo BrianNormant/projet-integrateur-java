@@ -47,7 +47,8 @@ public class Graphique extends JPanel {
 	 * @param largeur la largeur de l'element graphique dans la fenetre en pixel
 	 */
 	public Graphique (double largeur) {
-		img = GestionImage.lireImage("canada.gif");
+		// img = GestionImage.lireImage("canada.gif");
+		img = GestionImage.lireImage("carte_via_ville.png");
 		this.largeur = largeur;
 
 		stations = (ArrayList<Station>) RestApi.requestStations().get();
@@ -81,6 +82,13 @@ public class Graphique extends JPanel {
         /*Rectangle2D.Double test = new Rectangle2D.Double(0, 0, 100, 100);
 		g2d.setColor(Color.RED);
 		g2d.fill(mat.createTransformedShape(test));*/
+	}
+
+	private boolean fullScreen = false;
+	public void fullScreen() {
+		this.fullScreen = !this.fullScreen;
+		rails.forEach(rail -> rail.fullScreen(this.fullScreen));
+		stations.forEach(station -> station.fullScreen(this.fullScreen));
 	}
 	public double getPpm() {
 		return ppm;

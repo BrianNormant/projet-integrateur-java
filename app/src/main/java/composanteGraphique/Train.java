@@ -99,7 +99,7 @@ public class Train implements Dessinable {
 		// mat.translate(-x, -y);
 		mat.scale(-ppm, ppm);
 		// g2dPrive.drawImage(IMAGE, mat, null);
-		g2dPrive.setColor(Color.blue);
+		g2dPrive.setColor(Color.black);
 		g2dPrive.fill(mat.createTransformedShape(rec));
 	}
 

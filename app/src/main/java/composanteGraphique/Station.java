@@ -1,7 +1,9 @@
 package composanteGraphique;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.util.HashMap;
@@ -74,15 +76,22 @@ public class Station implements Dessinable {
 	}
 	private static final double SIZE = 50;
 
+	private Stroke stroke = new BasicStroke(2);
+
+	public void fullScreen(boolean f) {
+		this.stroke = f? new BasicStroke(5) : new BasicStroke(2);
+	}
+
 	public void dessiner(Graphics2D g2d, double ppm) {
 		Graphics2D g2dPrive = (Graphics2D) g2d.create();
 		AffineTransform mat = new AffineTransform();
 		mat.scale(-ppm, ppm);
 		var cercle = new Ellipse2D.Double(x - (SIZE/2), y - (SIZE/2), SIZE, SIZE);
-		g2dPrive.setColor(Color.black);
-		g2dPrive.draw(mat.createTransformedShape(cercle));
-		g2dPrive.setColor(Color.red);
+		g2dPrive.setColor(Color.white);
 		g2dPrive.fill(mat.createTransformedShape(cercle));
+		g2dPrive.setColor(new Color(0x32, 0x31, 0x98));
+		g2dPrive.setStroke(stroke);
+		g2dPrive.draw(mat.createTransformedShape(cercle));
 	}
 
 	public boolean contains(double x, double y) {
