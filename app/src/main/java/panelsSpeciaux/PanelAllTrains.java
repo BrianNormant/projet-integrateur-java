@@ -37,7 +37,7 @@ public class PanelAllTrains extends JPanel {
 
 		}
 		
-		setPreferredSize(new Dimension(900,230 * allTrains.size()));
+		setPreferredSize(new Dimension(900, 230 * allTrains.size()));
 		setBackground(Color.BLACK);
 	}
 		

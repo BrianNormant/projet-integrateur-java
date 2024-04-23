@@ -164,8 +164,8 @@ public class PanelTrain extends JPanel {
 			new Thread(() -> {
 				while (!stop) {
 					prgbrPosition.setValue((int)train.getPos());
-					lblArrivee.setText(train.getNextStation().getName());
-					lblDepart.setText(train.getLastStation().getName());
+					lblArrivee.setText(train.getLastStation().getName());
+					lblDepart.setText(train.getNextStation().getName());
 
 					routesp.removeAll();
 					d.route()
