@@ -1,27 +1,24 @@
 package interfaces;
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
+import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
 
 import api.RestApi;
-
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.util.List;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
-import java.util.Random;
-
 import composanteGraphique.Train;
 
 
 public class TrainInterface extends JPanel {
 
-	private JSlider sl;
+	private JProgressBar sl;
 	private JLabel lastlbl, nextlbl;
 	private JPanel routesp;
 
@@ -68,7 +65,8 @@ public class TrainInterface extends JPanel {
 
 
 			c.gridx = 1; c.gridy = 5;
-			sl = new JSlider(0, 100, (int)(train.getPos()));
+			sl = new JProgressBar();
+			sl.setValue((int)(train.getPos()));
 			sl.setEnabled(false);
 			this.add(sl, c);
 
@@ -92,7 +90,7 @@ public class TrainInterface extends JPanel {
 			c.fill = GridBagConstraints.HORIZONTAL;  
 			c.gridx = 0; c.gridy = 6;
 			c.gridwidth = 3;
-			this.add(routesp, c);
+			this.add(new JScrollPane(routesp), c);
 
 			var btn = new JButton("Retour");
 			btn.addActionListener(i -> back());

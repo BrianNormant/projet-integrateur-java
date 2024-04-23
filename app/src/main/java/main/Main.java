@@ -16,7 +16,7 @@ import interfaces.RailInterface;
 import interfaces.RechercheInterface;
 import interfaces.ReservationInterface;
 import interfaces.StationInterface;
-import interfaces.TrainChoisiInterface;
+import interfaces.AllTrainInterface;
 import interfaces.TrainInterface;
 import io.vavr.control.Either;
 
@@ -30,7 +30,7 @@ public class Main extends JFrame {
 	private ReservationInterface reservation = new ReservationInterface (getX(),getY(),getWidth(),getHeight());
 	private StationInterface station = new StationInterface(getX(),getY(),getWidth(),getHeight());
 	private RailInterface rail = new RailInterface(getX(),getY(),getWidth(),getHeight());
-	private TrainChoisiInterface train= new TrainChoisiInterface(getX(),getY(),getWidth(),getHeight());
+	private AllTrainInterface train= new AllTrainInterface(getX(),getY(),getWidth(),getHeight());
 	private RechercheInterface recherche= new RechercheInterface(getX(),getY(),getWidth(),getHeight());
 	private static String token;
 	private static String nom;
@@ -160,6 +160,7 @@ public class Main extends JFrame {
 					train.setVisible(true);
 					setContentPane(train);
 					train.requestFocusInWindow();
+					train.refresh();
 					break;
 				case "TrainInterface":
 					var idTrain = (Integer) evt.getNewValue();
