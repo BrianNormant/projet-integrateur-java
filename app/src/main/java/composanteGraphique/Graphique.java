@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -22,10 +23,10 @@ public class Graphique extends JPanel {
 	private Image img;
 
 
-	private ArrayList<Station> stations = new ArrayList<>();
-	private ArrayList<Rail> rails = new ArrayList<>();
-	private ArrayList<Train> trains = new ArrayList<>();
-	private ArrayList<Dessinable> dessinables = new ArrayList<>();
+	private List<Station> stations = new ArrayList<>();
+	private List<Rail> rails = new ArrayList<>();
+	private List<Train> trains = new ArrayList<>();
+	private List<Dessinable> dessinables = new ArrayList<>();
 	
 	public void tick() {
 		// clear last data
@@ -51,10 +52,10 @@ public class Graphique extends JPanel {
 		img = GestionImage.lireImage("carte_via_ville.png");
 		this.largeur = largeur;
 
-		stations = (ArrayList<Station>) RestApi.requestStations().get();
-		rails = (ArrayList<Rail>) RestApi.requestRails().get();
-		trains = (ArrayList<Train>) RestApi.requestTrains().get();
-		
+		RestApi.requestStations().ifPresent(s -> stations = s);
+		RestApi.requestRails().ifPresent(r -> rails = r);
+		RestApi.requestTrains().ifPresent(r -> trains = r);
+	
 		trains.forEach(t -> RestApi.requestTrain(t.getId()));
 
 		// first draw rail, then station and lastly trains

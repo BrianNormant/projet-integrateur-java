@@ -3,6 +3,7 @@ package composanteGraphique;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
@@ -17,26 +18,28 @@ public class Station implements Dessinable {
 	private final String name;
 	private final int x;
 	private final int y;
+	private final Color color;
 	
-	private Station(int id, String nom, int x, int y) {
+	private Station(int id, String nom, int x, int y, Color color) {
 		this.id = id;
 		this.name = nom;
 		this.x = x;
 		this.y = y;
+		this.color = color;
 		stations.put(id, this);
 	}
 
-	public static Station createOrGetStation(int id, String nom, int x, int y) {
+	public static Station createOrGetStation(int id, String nom, int x, int y, Color color) {
 		if (stations.containsKey(id))
 			return stations.get(id);
 		else
-			return new Station(id, nom, x, y);
+			return new Station(id, nom, x, y, color);
 	}
 	public static Station createOrGetStation(int id) {
 		if (stations.containsKey(id))
 			return stations.get(id);
 		else {
-			return new Station(id, null, 0, 0);
+			return new Station(id, null, 0, 0, null);
 		}
 	}
 	public static Station getStationIfExists(int id) {
@@ -87,9 +90,10 @@ public class Station implements Dessinable {
 		AffineTransform mat = new AffineTransform();
 		mat.scale(-ppm, ppm);
 		var cercle = new Ellipse2D.Double(x - (SIZE/2), y - (SIZE/2), SIZE, SIZE);
+		g2dPrive.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2dPrive.setColor(Color.white);
 		g2dPrive.fill(mat.createTransformedShape(cercle));
-		g2dPrive.setColor(new Color(0x32, 0x31, 0x98));
+		g2dPrive.setColor(color);
 		g2dPrive.setStroke(stroke);
 		g2dPrive.draw(mat.createTransformedShape(cercle));
 	}

@@ -9,6 +9,7 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.awt.Color;
 import io.vavr.control.Either;
 import main.Main;
 
@@ -131,10 +132,12 @@ public final class RestApi {
 							(Integer)data.get("id"),
 							(String)data.get("name"),
 							Integer.parseInt((String)data.get("pos_x")),
-							Integer.parseInt((String)data.get("pos_y"))
+							Integer.parseInt((String)data.get("pos_y")),
+							new Color(Integer.parseInt(data.getString("color"), 16))
 							));
 			}
 		} catch (Exception fail) {
+			fail.printStackTrace();
 			return Optional.empty();
 		};
 		return Optional.of(stations);
@@ -161,9 +164,8 @@ public final class RestApi {
 				rails.add(Rail.createRail(
 							(Integer) data.get("con1"),
 							(Integer) data.get("con2"),
-							(Integer) data.get("id")
-							
-						));
+							(Integer) data.get("id"),
+							new Color(Integer.parseInt(data.getString("color"),16))						));
 				//System.out.println("Rail: " +(Integer) data.get("con1")+" "+(Integer) data.get("con2")+" "+(Integer) data.get("id"));
 			}
 		} catch (Exception fail) {
@@ -448,7 +450,8 @@ public final class RestApi {
 				rail = Rail.createRail(
 							(Integer) data.get("con1"),
 							(Integer) data.get("con2"),
-							(Integer) data.get("id")
+							(Integer) data.get("id"),
+							null
 						);
 			}
 			return Optional.of(rail);
