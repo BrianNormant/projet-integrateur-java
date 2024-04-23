@@ -3,6 +3,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JSlider;
 
 import api.RestApi;
@@ -21,7 +22,7 @@ import composanteGraphique.Train;
 
 public class TrainInterface extends JPanel {
 
-	private JSlider sl;
+	private JProgressBar sl;
 	private JLabel lastlbl, nextlbl;
 	private JPanel routesp;
 
@@ -68,7 +69,8 @@ public class TrainInterface extends JPanel {
 
 
 			c.gridx = 1; c.gridy = 5;
-			sl = new JSlider(0, 100, (int)(train.getPos()));
+			sl = new JProgressBar();
+			sl.setValue((int)(train.getPos()));
 			sl.setEnabled(false);
 			this.add(sl, c);
 
