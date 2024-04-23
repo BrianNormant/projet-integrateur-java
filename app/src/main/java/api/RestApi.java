@@ -222,11 +222,9 @@ public final class RestApi {
 	public static Optional<List<JSONObject>> requestTrainsPourStation(String token, int id) {
 		HttpRequest request = null;
 		ArrayList<JSONObject> trains = new ArrayList<>();
-		System.out.println(id);
-		System.out.println(Main.getToken());
 		try {
 			request = HttpRequest.newBuilder()
-				.uri( new URI(URL +"stations/"+ id +"/arrival") )
+				.uri( new URI(URL +"stations/"+ id +"/arrivals") )
 				.header("Authorization", Main.getToken())
 				.GET()
 				.build();
@@ -236,8 +234,6 @@ public final class RestApi {
 		try {
 			var client = HttpClient.newHttpClient();
 			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-			System.out.println(response);
-			System.out.println(response.body());
 			var json = new JSONArray(response.body());
 			for (var jo : json) {
 				var data = (JSONObject)jo;

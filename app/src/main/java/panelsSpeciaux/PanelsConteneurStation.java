@@ -2,6 +2,7 @@ package panelsSpeciaux;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -52,7 +53,18 @@ public class PanelsConteneurStation extends JPanel {
 		}
 			
 		for (int i = 0; i < panels.size(); i++) {
-				panels.get(i).setAll(listeTrains.get(i).getInt("id"), listeTrains.get(i).getString("ETA"));
+			double pos;
+			if (listeTrains.get(i).get("ETA") instanceof BigDecimal bd) {
+				pos = bd.doubleValue();
+			} else if (listeTrains.get(i).get("ETA") instanceof Double d) {
+				pos = d;
+			} else if (listeTrains.get(i).get("ETA") instanceof Integer j) {
+				pos = j;
+			} else {
+				pos = 50;
+			}
+
+				panels.get(i).setAll(listeTrains.get(i).getInt("id"), pos);
 		}
 		
 		

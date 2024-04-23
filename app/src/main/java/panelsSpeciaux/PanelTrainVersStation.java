@@ -47,9 +47,8 @@ public class PanelTrainVersStation extends JPanel {
 		add(lblETA);
 
 	}
-	public void setAll(int trainId, String arrivee) {
+	public void setAll(int trainId, double pos) {
 		this.lblId.setText(trainId+"");
-		this.lblETA.setText(arrivee);
-		
+		this.lblETA.setText(pos+"");
 	}
 }
