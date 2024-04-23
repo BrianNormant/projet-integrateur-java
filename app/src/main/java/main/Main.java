@@ -73,6 +73,10 @@ public class Main extends JFrame {
 		rail = new RailInterface(getX(),getY(),getWidth(),getHeight());
 		train = new AllTrainInterface(getX(),getY(),getWidth(),getHeight());
 		recherche = new RechercheInterface(getX(),getY(),getWidth(),getHeight());
+		
+	
+		carte.setJFrame(this);
+
 		setBounds(100, 100, 1010, 600);
 		login.setVisible(false);
 		carte.setVisible(true);
@@ -143,7 +147,6 @@ public class Main extends JFrame {
 							System.out.println(evt2.getPropertyName());
 							switch(evt2.getPropertyName()) {
 								case "back" -> {
-	System.out.printf("handled protected String name;\n");
 	setBounds(100, 100, 1010, 600);
 	trainI.setVisible(false);
 	carte.setVisible(true);
@@ -247,9 +250,7 @@ public class Main extends JFrame {
 		login = new LoginInterface(getX(),getY(),getWidth(),getHeight());
 
 		setContentPane(login);
-		if(modeFlemme) {
-			flemme();
-		}
+		if(modeFlemme) { flemme(); }
 
 		var This = this;
 
@@ -303,19 +304,17 @@ public class Main extends JFrame {
 		Either<String, LoginError> result = RestApi.requestLogin(nom, pwd);
 		System.out.println(result);
 
-		if(result.isLeft()) {
+		if (result.isLeft()) {
 			return result.getLeft();
-		}else {
+		} else {
 			System.out.println("il y a eu un erreur en essayant d'avoir le token");
 			return null;
 		}
-
 	}
 
 
 	private void flemme() {
 		initAfterLogin();
-
 		setBounds(100, 100, 1010, 600);
 		login.setVisible(false);
 		carte.setVisible(true);
@@ -323,7 +322,5 @@ public class Main extends JFrame {
 		carte.requestFocusInWindow();
 	}
 
-	public static String getToken() {
-		return Main.token;
-	}
+	public static String getToken() { return Main.token; }
 }
