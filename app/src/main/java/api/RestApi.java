@@ -355,6 +355,8 @@ public final class RestApi {
 			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
 			Train trainRef = Train.createOrGet(train);
+
+			if (response.statusCode() != 200) return Optional.empty();
 			
 			var json = new JSONObject(response.body());
 
