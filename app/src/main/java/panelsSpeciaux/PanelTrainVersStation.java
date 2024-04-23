@@ -36,18 +36,18 @@ public class PanelTrainVersStation extends JPanel {
 		separator.setBounds(389, 0, 18, 100);
 		add(separator);
 		
-		JLabel lblArrivee = new JLabel("Arrivée: ");
+		JLabel lblArrivee = new JLabel("Arrive dans: ");
 		lblArrivee.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		lblArrivee.setBounds(417, 11, 169, 68);
+		lblArrivee.setBounds(417, 11, 224, 68);
 		add(lblArrivee);
 		
 		lblETA = new JLabel("...");
 		lblETA.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		lblETA.setBounds(536, 11, 307, 68);
+		lblETA.setBounds(596, 11, 247, 68);
 		add(lblETA);
 		
 		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(0, 98, 900, 2);
+		separator_1.setBounds(0, 98, 991, 2);
 		add(separator_1);
 
 	}
