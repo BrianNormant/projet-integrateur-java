@@ -251,14 +251,15 @@ public final class RestApi {
 	
 	}
 
-	/*public static boolean requestPutReservation(String token, Reservation reservation) {
+	public static record Reservation(int origin, int destination, String date, String period) { }
+
+	public static void requestPutReservation(Reservation res) {
 		HttpRequest request = null;
 		try {
 			request = HttpRequest.newBuilder()
 				.uri( new URI(URL + String.format("reservations/%d/%d?date=%s&period=%s",
-								reservation.origin.getId(), reservation.destination.getId(),
-								reservation.date, reservation.period.name)))
-				.header("Authorization", token)
+								res.origin(), res.destination(), res.date(), res.period())))
+				.header("Authorization", Main.getToken())
 				.PUT(HttpRequest.BodyPublishers.noBody())
 				.build();
 		} catch (URISyntaxException fatal) {
@@ -266,14 +267,74 @@ public final class RestApi {
 		};
 		try {
 			var client = HttpClient.newHttpClient();
-			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-			return switch (response.statusCode()) {
-				case 200 -> true;
-				default -> false;
-			};
+			client.send(request, HttpResponse.BodyHandlers.ofString());
 		} catch (Exception e) { }
-		return false;
-	}*/
+	}
+
+	public static void requestPutTrain(Reservation res) {
+		HttpRequest request = null;
+		try {
+			request = HttpRequest.newBuilder()
+				.uri( new URI(URL + String.format("train/%d/%d",
+								res.origin(), res.destination())))
+				.header("Authorization", Main.getToken())
+				.PUT(HttpRequest.BodyPublishers.noBody())
+				.build();
+		} catch (URISyntaxException fatal) {
+			System.err.println("Fatal, Invalid URL");
+		};
+		try {
+			var client = HttpClient.newHttpClient();
+			client.send(request, HttpResponse.BodyHandlers.ofString());
+		} catch (Exception e) { }
+
+	}
+
+	public static record TrainDetails(
+			int puissance,
+			int charge,
+			double speed,
+			String company,
+			List<String> route
+			) {};
+
+	public static Optional<TrainDetails> requestDetails(Integer train) {
+		HttpRequest request = null;
+		try {
+			request = HttpRequest.newBuilder()
+				.uri( new URI(URL + "train/" + train + "/details") )
+				.header("Authorization", Main.getToken() )
+				.GET()
+				.build();
+		} catch (URISyntaxException fatal) {
+			System.err.println("Fatal, Invalid URL");
+		}
+
+		try {
+			var client = HttpClient.newHttpClient();
+			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+			var json = new JSONObject(response.body());
+			List<String> route = new ArrayList<String>();
+
+			for ( var o : json.getJSONArray("route") )
+				route.add(((JSONObject)o).getString("name") );
+
+			return Optional.of( new TrainDetails(
+						json.getInt("puissance"),
+						json.getInt("charge"),
+						json.getDouble("speed"),
+						json.getString("company_id"),
+						route
+						));
+
+
+		} catch (Exception fail) {
+			System.out.print("Failed");
+			fail.printStackTrace();
+
+			return Optional.empty();
+		}
+	}
 
 	/**
 	 * Recuperer et cree/update un train par rapport au details du dit train sur le reseaux actuel.
@@ -302,6 +363,7 @@ public final class RestApi {
 
 
 			trainRef.setLastStation((Integer) (( (JSONObject)json.get("next_station") ).get("id")) );
+			trainRef.setNextStation((Integer) (( (JSONObject)json.get("prev_station") ).get("id")) );
 			trainRef.setRail((Integer) (( (JSONObject)json.get("rail") ).get("id")) );
 			double pos;
 				if (json.get("pos") instanceof BigDecimal bd) {
@@ -325,9 +387,9 @@ public final class RestApi {
 		}
 	}
 	
-	public static Optional<List<Reservation>> requestReservations() {
+	public static Optional<List<gestionInformation.Reservation>> requestReservations() {
 		HttpRequest request = null;
-		ArrayList<Reservation> reservations = new ArrayList<>();
+		ArrayList<gestionInformation.Reservation> reservations = new ArrayList<>();
 		try {
 			request = HttpRequest.newBuilder()
 				.uri( new URI(URL + "list_reservations") )
@@ -344,7 +406,7 @@ public final class RestApi {
 			var json = new JSONArray(response.body());
 			for (var jo : json) {
 				var data = (JSONObject)jo;
-				var rail = new Reservation(
+				var rail = new gestionInformation.Reservation(
 						(Integer)data.get("id"),
 						(String)data.get("company_id"),
 						(String)data.get("date"),

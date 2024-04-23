@@ -29,10 +29,14 @@ public class Train implements Dessinable {
 
 	private final int id;
 
-	private Station lastStation;
+	private Station lastStation, nextStation;
 	private Rail rail;
 
 	private double pos;
+
+	public Station getLastStation() { return lastStation; }
+	public Station getNextStation() { return nextStation; }
+	
 
 	private Train(int id) {
 		this.id = id;
@@ -47,6 +51,9 @@ public class Train implements Dessinable {
 
 	public void setLastStation(int id) {
 		this.lastStation = Station.getStationIfExists(id);
+	}
+	public void setNextStation(int id) {
+		this.nextStation = Station.getStationIfExists(id);
 	}
 
 	public void setRail(int railId) {
@@ -94,5 +101,22 @@ public class Train implements Dessinable {
 		// g2dPrive.drawImage(IMAGE, mat, null);
 		g2dPrive.setColor(Color.blue);
 		g2dPrive.fill(mat.createTransformedShape(rec));
+	}
+
+	public boolean contains(double px, double py) {
+		double x_off,y_off;
+		if (this.lastStation == rail.getCon1()) {
+			x_off = rail.getXLen() * this.pos/100;
+			y_off = rail.getYLen() * this.pos/100;
+		} else {
+			x_off = rail.getXLen() * (100 - this.pos)/100;
+			y_off = rail.getYLen() * (100 - this.pos)/100;
+		}
+
+		var x = rail.getCon1().getX() + x_off * (rail.x1 < rail.x2?1:-1);
+		var y = rail.getCon1().getY() + y_off * (rail.y1 < rail.y2?1:-1);
+
+		var rec = new Rectangle2D.Double(x - SIZE/2, y - SIZE/2, SIZE, SIZE);
+		return rec.contains(px, py);
 	}
 }

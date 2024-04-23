@@ -1,5 +1,4 @@
 package main;
-
 import java.awt.EventQueue;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -10,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import api.LoginError;
 import api.RestApi;
+import composanteGraphique.Train;
 import interfaces.CarteInterface;
 import interfaces.LoginInterface;
 import interfaces.RailInterface;
@@ -17,6 +17,7 @@ import interfaces.RechercheInterface;
 import interfaces.ReservationInterface;
 import interfaces.StationInterface;
 import interfaces.TrainChoisiInterface;
+import interfaces.TrainInterface;
 import io.vavr.control.Either;
 
 public class Main extends JFrame {
@@ -122,7 +123,6 @@ public class Main extends JFrame {
 					
 				case "passerStation":
 					int id=(Integer)evt.getNewValue();
-					setBounds(100, 100, 800, 580);
 					station.setToken(token);
 					station.setId(id);
 					carte.setVisible(false);
@@ -160,6 +160,29 @@ public class Main extends JFrame {
 					train.setVisible(true);
 					setContentPane(train);
 					train.requestFocusInWindow();
+					break;
+				case "TrainInterface":
+					var idTrain = (Integer) evt.getNewValue();
+					carte.setVisible(false);
+
+					var t = Train.createOrGet(idTrain);
+					var trainI = new TrainInterface(t);
+					trainI.addPropertyChangeListener(evt2 -> {
+						System.out.println(evt2.getPropertyName());
+						switch(evt2.getPropertyName()) {
+						case "back" -> {
+							System.out.printf("handled protected String name;\n");
+							setBounds(100, 100, 1010, 600);
+							trainI.setVisible(false);
+							carte.setVisible(true);
+							setContentPane(carte);
+							carte.requestFocusInWindow();
+						}
+						}
+					});
+					setContentPane(trainI);
+					trainI.requestFocusInWindow();
+					pack();
 					break;
 				}
 			}
