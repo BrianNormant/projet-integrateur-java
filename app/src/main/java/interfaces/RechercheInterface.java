@@ -1,5 +1,6 @@
 package interfaces;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -16,7 +17,9 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 
 import composanteGraphique.Rail;
 import composanteGraphique.Station;
@@ -37,6 +40,8 @@ private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 	private String error="Erreur, l'identifiant entrée ne correspond à aucun";
 	private PanelsConteneurRails rail = new PanelsConteneurRails();
 	private PanelsConteneurStation stations = new PanelsConteneurStation();
+	private JScrollPane scrollPaneStation = new JScrollPane(stations);
+	private JScrollPane scrollPaneRail = new JScrollPane(rail);
 	
 	
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -48,7 +53,7 @@ private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 	 */
 	public RechercheInterface(int x, int y, int tailleX, int tailleY) {
 
-		setBounds(100, 100, 1000, 580);
+		setBounds(100, 100, 1010, 470);
 		setLayout(null);
 		
 		
@@ -107,33 +112,44 @@ private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 			public void actionPerformed(ActionEvent e) {
 				switch(cmbType.getSelectedIndex()) {
 				case 0: //Rail
-					exist=Rail.stationIfExists(Integer.parseInt(textId.getText()));
+					exist=Rail.railIfExists(Integer.parseInt(textId.getText()));
 					System.out.println("Rail "+ exist);
 					if(exist) {
 						lblErrorIdNotFound.setText("");
-						stations.setVisible(false);
-						rail=new PanelsConteneurRails(Integer.parseInt(textId.getText()));
-						rail.setVisible(true);
+						rail.removeAll();
+						stations.removeAll();
+						scrollPaneStation.setVisible(false);
+						rail.setId(Integer.parseInt(textId.getText()));
+						scrollPaneRail.setVisible(true);
 						rail.initialisation();
+						rail.repaint();
 						
 					}else {
-						rail.setVisible(false);
-						stations.setVisible(false);
+						rail.removeAll();
+						stations.removeAll();
+						scrollPaneRail.setVisible(false);
+						scrollPaneStation.setVisible(false);
 						lblErrorIdNotFound.setText(error+" rail.");
 					}
 					break;
+					
 				case 1: // Station
-					var s = Station.stationByName(textId.getText());
-					if (s.isEmpty()) {
-						rail.setVisible(false);
-						stations.setVisible(false);
+					boolean exist = Station.stationIfExists(Integer.parseInt(textId.getText()));
+					if (!exist) {
+						rail.removeAll();
+						stations.removeAll();
+						scrollPaneRail.setVisible(false);
+						scrollPaneStation.setVisible(false);
 						lblErrorIdNotFound.setText(error+"e station.");
 					}else {
+						rail.removeAll();
+						stations.removeAll();
 						lblErrorIdNotFound.setText("");
-						rail.setVisible(false);
-						stations=new PanelsConteneurStation(Integer.parseInt(textId.getText()));
-						stations.setVisible(true);
-						stations.initialisation();
+						scrollPaneRail.setVisible(false);
+						stations.setId(Integer.parseInt(textId.getText()));
+						stations.repaint();
+						scrollPaneStation.setVisible(true);
+						
 					}
 
 					break;
@@ -160,14 +176,19 @@ private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 		add(lblErrorIdNotFound);
 		
 		
-		rail.setBounds(48, 168, 887, 329);
-		rail.setVisible(false);
-		add(rail);
+		
+		scrollPaneRail.setBounds(48, 168, 887, 263);
+		scrollPaneRail.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPaneRail.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		add(scrollPaneRail, BorderLayout.CENTER);
+		
+	
+		scrollPaneStation.setBounds(48, 168, 887, 263);
+		scrollPaneStation.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPaneStation.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		add(scrollPaneStation, BorderLayout.CENTER);
 		
 		
-		stations.setBounds(48, 168, 887, 329);
-		stations.setVisible(false);
-		add(stations);
 		
 
 	}

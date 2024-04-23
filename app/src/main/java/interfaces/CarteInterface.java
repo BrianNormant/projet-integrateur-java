@@ -26,10 +26,13 @@ public class CarteInterface extends JPanel implements Runnable {
 
 	private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 	private Graphique graphique;
-	private boolean inStation=false;
+	private boolean inStation = false;
 	private JCheckBox chckbxPleinEcran;
 	private JFrame jframe;
 	private JLabel lblPleinEcran;
+	private JButton btnTrain;
+	private JButton btnRecherche;
+	private JButton btnLogout;
 	
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		PCS.addPropertyChangeListener(listener);
@@ -37,7 +40,7 @@ public class CarteInterface extends JPanel implements Runnable {
 
 	
 	public CarteInterface(int x, int y, int tailleX, int tailleY) {
-		setBounds(100, 100, 1000, 600);
+		setBounds(100, 100, 1000, 420);
 		setLayout(null);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		
@@ -49,11 +52,11 @@ public class CarteInterface extends JPanel implements Runnable {
 			}
 		});
 		
-		btnReservation.setBounds(274, 11, 122, 23);
+		btnReservation.setBounds(142, 391, 122, 23);
 		add(btnReservation);
 		
 		
-		JButton btnLogout = new JButton("Logout");
+		btnLogout = new JButton("Logout");
 		btnLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				logout();
@@ -81,22 +84,22 @@ public class CarteInterface extends JPanel implements Runnable {
 		graphique.setBounds(10, 62, 980, 318);
 		add(graphique);
 		
-		JButton btnRecherche = new JButton("Recherche");
+		btnRecherche = new JButton("Recherche");
 		btnRecherche.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				recherche();
 			}
 		});
-		btnRecherche.setBounds(406, 11, 122, 23);
+		btnRecherche.setBounds(274, 391, 122, 23);
 		add(btnRecherche);
 		
-		JButton btnTrain = new JButton("Train");
+		btnTrain = new JButton("Train");
 		btnTrain.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				train();
 			}
 		});
-		btnTrain.setBounds(142, 11, 122, 23);
+		btnTrain.setBounds(10, 391, 122, 23);
 		add(btnTrain);
 		
 		chckbxPleinEcran = new JCheckBox("");
@@ -109,12 +112,18 @@ public class CarteInterface extends JPanel implements Runnable {
                      graphique.setBounds(10, 30, (int) screenSize.getWidth()-10, (int) (screenSize.getWidth()*0.33908));
                      chckbxPleinEcran.setBounds((int) screenSize.getWidth()-  chckbxPleinEcran.getWidth()-20, 11, 21, 23);
                      lblPleinEcran.setBounds((int) screenSize.getWidth() - lblPleinEcran.getWidth() - chckbxPleinEcran.getWidth()-20, 11, 66, 23);
+                     btnTrain.setBounds(10, 700, 122, 23);
+                     btnRecherche.setBounds(274, 700, 122, 23);
+                     btnReservation.setBounds(142, 700, 122, 23);
                  } else {
-                	 jframe.setBounds(100, 100, 1010, 600);
-                	 setBounds(100, 100, 1000, 600);
+                	 jframe.setBounds(100, 100, 1010, 470);
+                	 setBounds(100, 100, 1000, 470);
                 	 graphique.setBounds(10, 62, 980, 318);
                 	 lblPleinEcran.setBounds(897, 11, 66, 23);
                 	 chckbxPleinEcran.setBounds(969, 11, 21, 23);
+                	 btnTrain.setBounds(10, 391, 122, 23);
+                	 btnRecherche.setBounds(274, 391, 122, 23);
+                	 btnReservation.setBounds(142, 391, 122, 23);
                  }
 			}
 		});

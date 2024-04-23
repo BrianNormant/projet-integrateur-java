@@ -29,7 +29,7 @@ public class Rail implements Dessinable {
 		} else return null;
 	}
 	
-	public static Boolean stationIfExists(int id) {
+	public static Boolean railIfExists(int id) {
 		if (railMap.containsKey(id)) {
 			return true;
 		} else return false;
