@@ -64,7 +64,7 @@ private PanelAllTrains panelAllTrains;
 	public void back() {
 		PCS.firePropertyChange("back", 0, -1);
 		this.stop = true;
-		panelAllTrains.removeAll();
+		//panelAllTrains.removeAll();
 		
 	}
 	

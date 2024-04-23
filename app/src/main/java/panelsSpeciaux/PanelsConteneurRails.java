@@ -31,6 +31,10 @@ public class PanelsConteneurRails extends JPanel {
 	public PanelsConteneurRails() {
 		
     }
+	public PanelsConteneurRails(int id) {
+	this.id=id	;
+    }
+	
 	
 	public ArrayList<Reservation> ajouterTrains() {
 		

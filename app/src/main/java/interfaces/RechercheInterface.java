@@ -20,6 +20,10 @@ import javax.swing.JTextField;
 
 import composanteGraphique.Rail;
 import composanteGraphique.Station;
+import panelsSpeciaux.PanelTrainVersRails;
+import panelsSpeciaux.PanelTrainVersStation;
+import panelsSpeciaux.PanelsConteneurRails;
+import panelsSpeciaux.PanelsConteneurStation;
 
 public class RechercheInterface extends JPanel {
 
@@ -31,6 +35,9 @@ private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 	private boolean exist;
 	private JLabel lblErrorIdNotFound;
 	private String error="Erreur, l'identifiant entrée ne correspond à aucun";
+	private PanelsConteneurRails rail = new PanelsConteneurRails();
+	private PanelsConteneurStation stations = new PanelsConteneurStation();
+	
 	
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		PCS.addPropertyChangeListener(listener);
@@ -104,26 +111,33 @@ private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 					System.out.println("Rail "+ exist);
 					if(exist) {
 						lblErrorIdNotFound.setText("");
+						stations.setVisible(false);
+						rail=new PanelsConteneurRails(Integer.parseInt(textId.getText()));
+						rail.setVisible(true);
+						rail.initialisation();
 						
 					}else {
+						rail.setVisible(false);
+						stations.setVisible(false);
 						lblErrorIdNotFound.setText(error+" rail.");
 					}
 					break;
 				case 1: // Station
-
 					var s = Station.stationByName(textId.getText());
 					if (s.isEmpty()) {
+						rail.setVisible(false);
+						stations.setVisible(false);
 						lblErrorIdNotFound.setText(error+"e station.");
-						return;
+					}else {
+						lblErrorIdNotFound.setText("");
+						rail.setVisible(false);
+						stations=new PanelsConteneurStation(Integer.parseInt(textId.getText()));
+						stations.setVisible(true);
+						stations.initialisation();
 					}
 
-					lblErrorIdNotFound.setText("");
-					Station station = s.get();
-
-					// TODO do something with the station
 					break;
 				}
-				
 				
 			}
 		});
@@ -144,6 +158,18 @@ private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 		lblErrorIdNotFound.setForeground(Color.RED);
 		lblErrorIdNotFound.setBounds(48, 99, 708, 23);
 		add(lblErrorIdNotFound);
+		
+		
+		rail.setBounds(48, 168, 887, 329);
+		rail.setVisible(false);
+		add(rail);
+		
+		
+		stations.setBounds(48, 168, 887, 329);
+		stations.setVisible(false);
+		add(stations);
+		
+
 	}
 	
 	public void back() {

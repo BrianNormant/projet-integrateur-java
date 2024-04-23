@@ -30,6 +30,10 @@ public class PanelsConteneurStation extends JPanel {
 		
     }
 	
+	public PanelsConteneurStation(int id) {
+		this.id=id;
+    }
+	
 	public ArrayList<JSONObject> ajouterTrains() {
 		
 		Optional<List<JSONObject>> trains = RestApi.requestTrainsPourStation(token, id);
