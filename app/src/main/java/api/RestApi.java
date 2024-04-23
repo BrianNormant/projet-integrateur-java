@@ -338,6 +338,7 @@ public final class RestApi {
 	 * @return un nouveau ou le meme train updater
 	 */
 	public static Optional<Train> requestTrain(Integer train) {
+		if (Main.getToken() == null) return Optional.empty();
 		HttpRequest request = null;
 		try {
 			request = HttpRequest.newBuilder()
