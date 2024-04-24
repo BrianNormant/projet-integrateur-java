@@ -42,6 +42,8 @@ private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 	private PanelsConteneurStation stations = new PanelsConteneurStation();
 	private JScrollPane scrollPaneStation = new JScrollPane(stations);
 	private JScrollPane scrollPaneRail = new JScrollPane(rail);
+	private JLabel lblId = new JLabel();
+	private JLabel lblType = new JLabel();
 	
 	
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -120,6 +122,10 @@ private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 						stations.removeAll();
 						scrollPaneStation.setVisible(false);
 						rail.setId(Integer.parseInt(textId.getText()));
+						lblType.setText("Rail Id: ");
+						lblType.setVisible(true);
+						lblId.setText(textId.getText());
+						lblId.setVisible(true);
 						scrollPaneRail.setVisible(true);
 						rail.initialisation();
 						rail.revalidate();
@@ -130,6 +136,10 @@ private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 						stations.removeAll();
 						scrollPaneRail.setVisible(false);
 						scrollPaneStation.setVisible(false);
+						lblType.setText("");
+						lblType.setVisible(false);
+						lblId.setText(textId.getText());
+						lblId.setVisible(false);
 						lblErrorIdNotFound.setText(error+" rail.");
 					}
 					break;
@@ -141,6 +151,10 @@ private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 						stations.removeAll();
 						scrollPaneRail.setVisible(false);
 						scrollPaneStation.setVisible(false);
+						lblType.setText("");
+						lblType.setVisible(false);
+						lblId.setText(textId.getText());
+						lblId.setVisible(false);
 						lblErrorIdNotFound.setText(error+"e station.");
 					}else {
 						rail.removeAll();
@@ -148,6 +162,10 @@ private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 						lblErrorIdNotFound.setText("");
 						scrollPaneRail.setVisible(false);
 						stations.setId(Integer.parseInt(textId.getText()));
+						lblType.setText("Station: ");
+						lblType.setVisible(true);
+						lblId.setText(Station.createOrGetStation(Integer.parseInt(textId.getText())).getName());
+						lblId.setVisible(true);
 						stations.revalidate();
 						stations.repaint();
 						scrollPaneStation.setVisible(true);
@@ -189,6 +207,18 @@ private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 		scrollPaneStation.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPaneStation.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		add(scrollPaneStation, BorderLayout.CENTER);
+		lblType.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		
+		
+		lblType.setBounds(62, 132, 172, 26);
+		lblType.setVisible(false);
+		add(lblType);
+		lblId.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		
+		
+		lblId.setBounds(264, 132, 172, 26);
+		lblId.setVisible(false);
+		add(lblId);
 		
 
 	}
