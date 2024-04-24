@@ -1,5 +1,7 @@
 package main;
 import java.awt.EventQueue;
+import java.awt.Rectangle;
+import java.awt.event.ComponentEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -37,7 +39,7 @@ public class Main extends JFrame {
 	private AllTrainInterface train;
 
 
-	private static boolean modeFlemme = false;
+	private static boolean modeFlemme = true;
 
 	static {
 		if (modeFlemme) {
@@ -67,7 +69,7 @@ public class Main extends JFrame {
 	}
 
 	public void initAfterLogin() {
-		carte = new CarteInterface(getX(),getY(),getWidth(),getHeight());
+		carte = new CarteInterface(getX(),getY(),getWidth(),getHeight(), this);
 		reservation = new ReservationInterface (getX(),getY(),getWidth(),getHeight());
 		station = new StationInterface(getX(),getY(),getWidth(),getHeight());
 		rail = new RailInterface(getX(),getY(),getWidth(),getHeight());
