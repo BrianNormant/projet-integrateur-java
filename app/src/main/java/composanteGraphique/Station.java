@@ -85,10 +85,10 @@ public class Station implements Dessinable {
 		this.stroke = f? new BasicStroke(5) : new BasicStroke(2);
 	}
 
-	public void dessiner(Graphics2D g2d, double ppm) {
+	public void dessiner(Graphics2D g2d, double ppmX, double ppmY) {
 		Graphics2D g2dPrive = (Graphics2D) g2d.create();
 		AffineTransform mat = new AffineTransform();
-		mat.scale(-ppm, ppm);
+		mat.scale(-ppmX, ppmY);
 		var cercle = new Ellipse2D.Double(x - (SIZE/2), y - (SIZE/2), SIZE, SIZE);
 		g2dPrive.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2dPrive.setColor(Color.white);

@@ -60,7 +60,7 @@ public class CarteInterface extends JPanel implements Runnable {
 
 		gbc.gridx = 0; gbc.gridy = 1; gbc.gridwidth = 3;
 		gbc.weightx = 20; gbc.weighty = 20;
-		graphique = new Graphique(5973);
+		graphique = new Graphique(5973, 2025);
 		graphique.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -123,24 +123,24 @@ public class CarteInterface extends JPanel implements Runnable {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
 					jframe.setBounds(0, 0, (int) screenSize.getWidth(), (int) screenSize.getHeight());
-					setBounds(10, 10, (int) screenSize.getWidth() - 10, (int) screenSize.getHeight() - 10);
-					graphique.setBounds(10, 30, (int) screenSize.getWidth()-10, (int) (screenSize.getWidth()*0.33908));
-					chckbxPleinEcran.setBounds((int) screenSize.getWidth()-  chckbxPleinEcran.getWidth()-20, 11, 21, 23);
-					lblPleinEcran.setBounds((int) screenSize.getWidth() - lblPleinEcran.getWidth() - chckbxPleinEcran.getWidth()-20, 11, 66, 23);
-					btnTrain.setBounds(10, 700, 122, 23);
-					btnRecherche.setBounds(274, 700, 122, 23);
-					btnReservation.setBounds(142, 700, 122, 23);
-					graphique.fullScreen();
+					// setBounds(10, 10, (int) screenSize.getWidth() - 10, (int) screenSize.getHeight() - 10);
+					// graphique.setBounds(10, 30, (int) screenSize.getWidth()-10, (int) (screenSize.getWidth()*0.33908));
+					// chckbxPleinEcran.setBounds((int) screenSize.getWidth()-  chckbxPleinEcran.getWidth()-20, 11, 21, 23);
+					// lblPleinEcran.setBounds((int) screenSize.getWidth() - lblPleinEcran.getWidth() - chckbxPleinEcran.getWidth()-20, 11, 66, 23);
+					// btnTrain.setBounds(10, 700, 122, 23);
+					// btnRecherche.setBounds(274, 700, 122, 23);
+					// btnReservation.setBounds(142, 700, 122, 23);
+					// graphique.fullScreen();
 				} else {
 					jframe.setBounds(100, 100, 1010, 470);
-					setBounds(100, 100, 1000, 470);
-					graphique.setBounds(10, 62, 980, 318);
-					graphique.fullScreen();
-					lblPleinEcran.setBounds(897, 11, 66, 23);
-					chckbxPleinEcran.setBounds(969, 11, 21, 23);
-					btnTrain.setBounds(10, 391, 122, 23);
-					btnRecherche.setBounds(274, 391, 122, 23);
-					btnReservation.setBounds(142, 391, 122, 23);
+					// setBounds(100, 100, 1000, 470);
+					// graphique.setBounds(10, 62, 980, 318);
+					// graphique.fullScreen();
+					// lblPleinEcran.setBounds(897, 11, 66, 23);
+					// chckbxPleinEcran.setBounds(969, 11, 21, 23);
+					// btnTrain.setBounds(10, 391, 122, 23);
+					// btnRecherche.setBounds(274, 391, 122, 23);
+					// btnReservation.setBounds(142, 391, 122, 23);
 				}
 			}
 		});

@@ -95,10 +95,10 @@ public class Rail implements Dessinable {
 	protected final int x2;
 	protected final int y1;
 	protected final int y2;
-	public void dessiner(Graphics2D g2d, double ppm) {
+	public void dessiner(Graphics2D g2d, double ppmX, double ppmY) {
 		Graphics2D g2dPrive = (Graphics2D) g2d.create();
 		AffineTransform mat = new AffineTransform();
-		mat.scale(-ppm, ppm);
+		mat.scale(-ppmX, ppmY);
 		Line2D.Double ligne = new Line2D.Double(x1, y1, x2, y2);
 		g2dPrive.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2dPrive.setColor(color);

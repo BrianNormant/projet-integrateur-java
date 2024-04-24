@@ -18,8 +18,9 @@ import io.vavr.control.Either;
 
 public class Graphique extends JPanel {
 	
-	private double ppm;
+	private double ppmX, ppmY;
 	private double largeur;
+	private double hauteur;
 	private Image img;
 
 
@@ -47,10 +48,11 @@ public class Graphique extends JPanel {
 	 * Puisque le reseaux et fix, les station et rail ne seront recuper qu'a la creation
 	 * @param largeur la largeur de l'element graphique dans la fenetre en pixel
 	 */
-	public Graphique (double largeur) {
+	public Graphique (double largeur, double hauteur) {
 		// img = GestionImage.lireImage("canada.gif");
 		img = GestionImage.lireImage("carte_via_ville.png");
 		this.largeur = largeur;
+		this.hauteur = hauteur;
 
 		RestApi.requestStations().ifPresent(s -> stations = s);
 		RestApi.requestRails().ifPresent(r -> rails = r);
@@ -63,6 +65,11 @@ public class Graphique extends JPanel {
 		dessinables.addAll(stations);
 		dessinables.addAll(trains);
 	}
+
+	public void updateDimension(double largeur, double hauteur) {
+		this.largeur = largeur;
+		this.hauteur = hauteur;
+	}
 	
 	@Override
 	public void paintComponent(Graphics g) {
@@ -71,13 +78,15 @@ public class Graphique extends JPanel {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.drawImage(img, 0, 0, getWidth(), getHeight(), this);
 		AffineTransform mat = new AffineTransform();
-		ppm = getWidth() / largeur;
+		ppmX = getWidth() / largeur;
+		ppmY = getHeight() / hauteur;
+		
 		g2d.translate(getWidth(), 0);
-		mat.scale(-ppm, ppm);
+		mat.scale(-ppmX, ppmY);
 		
 		var dessinablesSyncronized = Collections.synchronizedList(dessinables);
 		synchronized (dessinablesSyncronized) {
-			dessinablesSyncronized.forEach(e -> e.dessiner(g2d, ppm));
+			dessinablesSyncronized.forEach(e -> e.dessiner(g2d, ppmX, ppmY));
 		}
 
         /*Rectangle2D.Double test = new Rectangle2D.Double(0, 0, 100, 100);
@@ -91,16 +100,12 @@ public class Graphique extends JPanel {
 		rails.forEach(rail -> rail.fullScreen(this.fullScreen));
 		stations.forEach(station -> station.fullScreen(this.fullScreen));
 	}
-	public double getPpm() {
-		return ppm;
-	}
-
 	/**
 	 * renvoi l'id du rail ou de la station sous le curseur a la position x, y
 	 */
 	public Optional<Integer[]> getElementOnPosition(int x_full, int y_full) {
-		double x = (this.getWidth() - x_full)/ppm,
-			   y = y_full/ppm;
+		double x = (this.getWidth() - x_full)/ppmX,
+			   y = y_full/ppmY;
 		var matchedTrains = trains
 			.stream()
 			.filter(e -> e.contains(x, y))

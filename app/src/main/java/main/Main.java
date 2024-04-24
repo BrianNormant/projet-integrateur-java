@@ -39,7 +39,7 @@ public class Main extends JFrame {
 	private AllTrainInterface train;
 
 
-	private static boolean modeFlemme = true;
+	private static boolean modeFlemme = false;
 
 	static {
 		if (modeFlemme) {

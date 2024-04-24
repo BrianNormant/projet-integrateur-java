@@ -74,7 +74,7 @@ public class Train implements Dessinable {
 	public int getId() { return id;}
 	public double getPos() { return pos;}
 
-	public void dessiner(Graphics2D g2d, double ppm) {
+	public void dessiner(Graphics2D g2d, double ppmX, double ppmY) {
 		Graphics2D g2dPrive = (Graphics2D) g2d.create();
 		AffineTransform mat = new AffineTransform();
 
@@ -97,7 +97,7 @@ public class Train implements Dessinable {
 		var rec = new Rectangle2D.Double(x - SIZE/2, y - SIZE/2, SIZE, SIZE);
 
 		// mat.translate(-x, -y);
-		mat.scale(-ppm, ppm);
+		mat.scale(-ppmX, ppmY);
 		// g2dPrive.drawImage(IMAGE, mat, null);
 		g2dPrive.setColor(Color.black);
 		g2dPrive.fill(mat.createTransformedShape(rec));
