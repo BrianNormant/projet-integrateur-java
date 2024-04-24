@@ -79,6 +79,7 @@ private PanelAllTrains panelAllTrains;
 			while (!stop) {
 				panelAllTrains.Actualisation();
 				System.out.println("test thread");
+				panelAllTrains.revalidate();
 				panelAllTrains.repaint();
 				try {
 					Thread.sleep(30000);
