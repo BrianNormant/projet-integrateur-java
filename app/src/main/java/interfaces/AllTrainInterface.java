@@ -82,7 +82,7 @@ private PanelAllTrains panelAllTrains;
 				panelAllTrains.revalidate();
 				panelAllTrains.repaint();
 				try {
-					Thread.sleep(30000);
+					Thread.sleep(60000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
